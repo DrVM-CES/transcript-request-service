@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TranscriptRequest xmlns="urn:org:pesc:message:TranscriptRequest:v1.2.0" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="urn:org:pesc:message:TranscriptRequest:v1.2.0 
+                   http://www.pesc.org/transcriptrequest.xsd">
+  
+  <!-- Document Identification -->
+  <DocumentID>PESC20231105143022A1B2C3D4E5F6G7H8</DocumentID>
+  <CreatedDateTime>2023-11-05T14:30:22.000Z</CreatedDateTime>
+  <DocumentTypeCode>Request</DocumentTypeCode>
+  <DocumentOfficialCode>Original</DocumentOfficialCode>
+  
+  <!-- Transmission Data -->
+  <TransmissionData>
+    <DocumentProcessCode>PRODUCTION</DocumentProcessCode>
+    <TransmissionType>Original</TransmissionType>
+    <Source>
+      <Organization>
+        <OrganizationName>My Future Capacity</OrganizationName>
+        <CEEB>999999</CEEB>
+        <Contacts>
+          <Address>
+            <AddressLine>123 Education Street</AddressLine>
+            <City>Chicago</City>
+            <StateProvinceCode>IL</StateProvinceCode>
+            <PostalCode>60601</PostalCode>
+          </Address>
+          <Phone>
+            <PhoneNumber>312-555-0100</PhoneNumber>
+          </Phone>
+          <Email>
+            <EmailAddress>support@myfuturecapacity.com</EmailAddress>
+          </Email>
+        </Contacts>
+      </Organization>
+    </Source>
+  </TransmissionData>
+  
+  <!-- Student Information -->
+  <Student>
+    <Person>
+      <SchoolAssignedPersonID>STU123456</SchoolAssignedPersonID>
+      <Name>
+        <FirstName>John</FirstName>
+        <MiddleName>Michael</MiddleName>
+        <LastName>Doe</LastName>
+      </Name>
+      <Birth>
+        <BirthDate>2000-01-15</BirthDate>
+      </Birth>
+      <Gender>M</Gender>
+      <Email>
+        <EmailAddress>john.doe@email.com</EmailAddress>
+      </Email>
+      <Phone>
+        <PhoneNumber>555-123-4567</PhoneNumber>
+      </Phone>
+      <SSN>
+        <PartialSSN>1234</PartialSSN>
+      </SSN>
+    </Person>
+    
+    <!-- Student Attendance Information -->
+    <K12School>
+      <OrganizationName>Lincoln High School</OrganizationName>
+      <CEEB>123456</CEEB>
+      <Contacts>
+        <Address>
+          <AddressLine>123 School Street</AddressLine>
+          <City>Springfield</City>
+          <StateProvinceCode>IL</StateProvinceCode>
+          <PostalCode>62701</PostalCode>
+          <CountryCode>US</CountryCode>
+        </Address>
+        <Phone>
+          <PhoneNumber>217-555-0123</PhoneNumber>
+        </Phone>
+        <Email>
+          <EmailAddress>registrar@lincolnhs.edu</EmailAddress>
+        </Email>
+      </Contacts>
+      <School>
+        <SchoolLevel>Secondary</SchoolLevel>
+        <SchoolType>Public</SchoolType>
+      </School>
+    </K12School>
+    
+    <!-- Academic History -->
+    <AcademicRecord>
+      <AcademicSession>
+        <AcademicSessionDetail>
+          <SessionType>Year</SessionType>
+          <SessionName>2016-2017</SessionName>
+          <SessionBeginDate>2016-08-20</SessionBeginDate>
+          <SessionEndDate>2017-05-25</SessionEndDate>
+        </AcademicSessionDetail>
+      </AcademicSession>
+      
+      <AcademicSession>
+        <AcademicSessionDetail>
+          <SessionType>Year</SessionType>
+          <SessionName>2017-2018</SessionName>
+          <SessionBeginDate>2017-08-22</SessionBeginDate>
+          <SessionEndDate>2018-05-24</SessionEndDate>
+        </AcademicSessionDetail>
+      </AcademicSession>
+      
+      <AcademicSession>
+        <AcademicSessionDetail>
+          <SessionType>Year</SessionType>
+          <SessionName>2018-2019</SessionName>
+          <SessionBeginDate>2018-08-21</SessionBeginDate>
+          <SessionEndDate>2019-05-23</SessionEndDate>
+        </AcademicSessionDetail>
+      </AcademicSession>
+      
+      <AcademicSession>
+        <AcademicSessionDetail>
+          <SessionType>Year</SessionType>
+          <SessionName>2019-2020</SessionName>
+          <SessionBeginDate>2019-08-20</SessionBeginDate>
+          <SessionEndDate>2020-05-30</SessionEndDate>
+        </AcademicSessionDetail>
+      </AcademicSession>
+      
+      <!-- Graduation Information -->
+      <AcademicAward>
+        <AcademicAwardTitle>High School Diploma</AcademicAwardTitle>
+        <AcademicAwardDate>2020-05-30</AcademicAwardDate>
+        <AcademicAwardLevel>Secondary</AcademicAwardLevel>
+      </AcademicAward>
+    </AcademicRecord>
+  </Student>
+  
+  <!-- Request Information -->
+  <RequestInformation>
+    <RequestTrackingID>MFC_REQ_20231105_001</RequestTrackingID>
+    <RequestedDocument>
+      <DocumentType>Transcript</DocumentType>
+      <DocumentTypeCode>TRAN</DocumentTypeCode>
+      <DocumentFormat>Electronic</DocumentFormat>
+      <DocumentPurpose>Admission</DocumentPurpose>
+    </RequestedDocument>
+    
+    <!-- Destination Institution -->
+    <Recipient>
+      <Receiver>
+        <Organization>
+          <OrganizationName>University of Illinois at Urbana-Champaign</OrganizationName>
+          <CEEB>001775</CEEB>
+          <Contacts>
+            <Address>
+              <AddressLine>506 S Wright St</AddressLine>
+              <City>Urbana</City>
+              <StateProvinceCode>IL</StateProvinceCode>
+              <PostalCode>61801</PostalCode>
+              <CountryCode>US</CountryCode>
+            </Address>
+            <Phone>
+              <PhoneNumber>217-333-0302</PhoneNumber>
+            </Phone>
+            <Email>
+              <EmailAddress>admissions@illinois.edu</EmailAddress>
+            </Email>
+          </Contacts>
+        </Organization>
+      </Receiver>
+    </Recipient>
+    
+    <!-- Processing Instructions -->
+    <ProcessingInstructions>
+      <ProcessingInstructionText>Standard transcript request for university admission purposes. Please process and deliver electronically via Parchment network.</ProcessingInstructionText>
+    </ProcessingInstructions>
+  </RequestInformation>
+  
+  <!-- Release Authorization -->
+  <ReleaseAuthorization>
+    <ReleaseAuthorizedIndicator>true</ReleaseAuthorizedIndicator>
+    <ReleaseAuthorizedMethod>ElectronicSignature</ReleaseAuthorizedMethod>
+    <ConsentIndicator>true</ConsentIndicator>
+    <ConsentDate>2023-11-05T14:30:22.000Z</ConsentDate>
+    <FERPADisclosureIndicator>true</FERPADisclosureIndicator>
+    
+    <!-- Authorization Details -->
+    <AuthorizationStatement>
+      I hereby authorize the release of my educational records as specified in this request. 
+      I understand my rights under FERPA and consent to the electronic processing and 
+      delivery of my transcript through the Parchment network.
+    </AuthorizationStatement>
+    
+    <AuthorizedBy>
+      <Person>
+        <Name>
+          <FirstName>John</FirstName>
+          <MiddleName>Michael</MiddleName>
+          <LastName>Doe</LastName>
+        </Name>
+        <Email>
+          <EmailAddress>john.doe@email.com</EmailAddress>
+        </Email>
+      </Person>
+      <AuthorizationDate>2023-11-05T14:30:22.000Z</AuthorizationDate>
+      <AuthorizationMethod>ElectronicSignature</AuthorizationMethod>
+    </AuthorizedBy>
+  </ReleaseAuthorization>
+  
+  <!-- User-Defined Extensions -->
+  <UserDefinedExtensions>
+    <UserDefinedExtension>
+      <ExtensionName>MyFutureCapacityRequestID</ExtensionName>
+      <ExtensionValue>MFC_USER_12345_REQ_001</ExtensionValue>
+    </UserDefinedExtension>
+    <UserDefinedExtension>
+      <ExtensionName>ProcessingPriority</ExtensionName>
+      <ExtensionValue>Standard</ExtensionValue>
+    </UserDefinedExtension>
+    <UserDefinedExtension>
+      <ExtensionName>DeliveryMethod</ExtensionName>
+      <ExtensionValue>Electronic</ExtensionValue>
+    </UserDefinedExtension>
+  </UserDefinedExtensions>
+  
+</TranscriptRequest>
