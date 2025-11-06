@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { parchmentSFTP } from '@/lib/sftp-client';
-import { db } from '@/db';
+import { parchmentSFTP } from '../../../lib/sftp-client';
+import { db } from '../../../db';
 
 export const runtime = 'nodejs';
 
