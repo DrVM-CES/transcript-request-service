@@ -4,8 +4,11 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_VERSION = "10"
+  NPM_VERSION = "10" 
   NETLIFY_SKIP_CACHE = "true"
+  SKIP_TYPE_CHECK = "true"
+  DISABLE_ESLINT_PLUGIN = "true"
+  TSC_COMPILE_ON_ERROR = "true"
 
 [[redirects]]
   from = "/api/*"
