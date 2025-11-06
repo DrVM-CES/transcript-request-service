@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -41,87 +41,146 @@ a {
   outline-offset: 2px;
 }
 
-/* Custom form styles */
+/* Custom form styles - basic implementation without TailwindCSS */
 .form-input {
-  @apply w-full px-4 py-3 border border-neutral-200 rounded-md focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-colors;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
   background-color: #ffffff;
 }
 
+.form-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
 .form-input:disabled {
-  @apply bg-neutral-100 text-neutral-400 cursor-not-allowed;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
 }
 
 .form-label {
-  @apply block text-sm font-medium text-neutral-900 mb-2;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 8px;
 }
 
 .form-error {
-  @apply text-sm text-error-600 mt-1;
+  font-size: 14px;
+  color: #dc2626;
+  margin-top: 4px;
 }
 
 .btn {
-  @apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .btn-primary {
-  @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-600;
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
 }
 
 .btn-secondary {
-  @apply bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 focus:ring-neutral-500;
+  background-color: white;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background-color: #f9fafb;
 }
 
 .btn:disabled {
-  @apply opacity-50 cursor-not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Alert styles */
 .alert {
-  @apply p-4 rounded-md border-l-4;
+  padding: 16px;
+  border-radius: 6px;
+  border-left: 4px solid;
 }
 
 .alert-error {
-  @apply bg-red-50 border-red-400 text-red-800;
+  background-color: #fef2f2;
+  border-color: #f87171;
+  color: #991b1b;
 }
 
 .alert-success {
-  @apply bg-green-50 border-green-400 text-green-800;
+  background-color: #f0fdf4;
+  border-color: #4ade80;
+  color: #166534;
 }
 
 .alert-warning {
-  @apply bg-yellow-50 border-yellow-400 text-yellow-800;
+  background-color: #fffbeb;
+  border-color: #fbbf24;
+  color: #92400e;
 }
 
 .alert-info {
-  @apply bg-blue-50 border-blue-400 text-blue-800;
+  background-color: #eff6ff;
+  border-color: #60a5fa;
+  color: #1e40af;
 }
 
 /* Card styles */
 .card {
-  @apply bg-white rounded-lg shadow-sm border border-neutral-200 p-6;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 24px;
 }
 
-/* Progress indicator */
-.progress-step {
-  @apply flex items-center;
+/* Grid utilities */
+.grid {
+  display: grid;
 }
 
-.progress-step.active .step-number {
-  @apply bg-primary-600 text-white;
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
-.progress-step.completed .step-number {
-  @apply bg-success-600 text-white;
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.progress-step .step-number {
-  @apply w-8 h-8 rounded-full bg-neutral-200 text-neutral-600 flex items-center justify-center text-sm font-semibold;
+.gap-4 {
+  gap: 16px;
 }
 
-.progress-connector {
-  @apply flex-1 h-px bg-neutral-200;
+.space-y-8 > * + * {
+  margin-top: 32px;
 }
 
-.progress-connector.completed {
-  @apply bg-success-600;
-}
+.space-y-4 > * + * {
+  margin-top: 16px;
