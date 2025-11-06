@@ -9,7 +9,11 @@
     "lint": "next lint",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "setup:production": "powershell -ExecutionPolicy Bypass -File ./setup-production.ps1",
+    "migrate:production": "node migrate-production-db.js",
+    "test:production": "node test-production-setup.js",
+    "deploy": "npm run build && netlify deploy --prod"
   },
   "dependencies": {
     "@libsql/client": "^0.5.6",
@@ -17,9 +21,11 @@
     "better-auth": "^1.0.1",
     "drizzle-orm": "^0.33.0",
     "next": "14.2.5",
+    "postcss": "^8",
     "react": "^18",
     "react-dom": "^18",
     "ssh2-sftp-client": "^10.0.3",
+    "tailwindcss": "^3.4.1",
     "uuid": "^9.0.1",
     "zod": "^3.23.8"
   },
@@ -33,5 +39,4 @@
     "eslint-config-next": "14.2.5",
     "typescript": "^5"
   }
-
 }
