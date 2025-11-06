@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/db';
-import { transcriptRequests } from '@/db/schema';
+import { db } from '../../../../../db';
+import { transcriptRequests } from '../../../../../db/schema';
 import { eq } from 'drizzle-orm';
 
 export const runtime = 'nodejs';
@@ -14,42 +14,59 @@ export async function GET(
   { params }: { params: { requestId: string } }
 ) {
   try {
-    // Validate API key
-    const apiKey = request.headers.get('x-api-key');
+    // Authenticate API request
+    const providedApiKey = request.headers.get('x-api-key');
     const expectedApiKey = process.env.MFC_API_KEY;
     
-    if (!expectedApiKey || apiKey !== expectedApiKey) {
+    if (!expectedApiKey) {
       return NextResponse.json(
-        { error: 'Invalid API key' },
+        { 
+          success: false, 
+          error: 'Service configuration error',
+          code: 'CONFIG_ERROR'
+        },
+        { status: 500 }
+      );
+    }
+
+    if (!providedApiKey || providedApiKey !== expectedApiKey) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Invalid API key',
+          code: 'INVALID_API_KEY'
+        },
         { status: 401 }
       );
     }
 
-    const requestId = params.requestId;
-    
+    const { requestId } = params;
+
     if (!requestId) {
       return NextResponse.json(
-        { error: 'Request ID required' },
+        {
+          success: false,
+          error: 'Request ID is required',
+          code: 'MISSING_REQUEST_ID'
+        },
         { status: 400 }
       );
     }
 
-    // Get request from database
+    // Fetch request from database
     const request_data = await db
       .select({
         id: transcriptRequests.id,
         status: transcriptRequests.status,
         statusMessage: transcriptRequests.statusMessage,
-        parchmentDocumentId: transcriptRequests.parchmentDocumentId,
-        requestTrackingId: transcriptRequests.requestTrackingId,
         studentFirstName: transcriptRequests.studentFirstName,
         studentLastName: transcriptRequests.studentLastName,
-        studentEmail: transcriptRequests.studentEmail,
         destinationSchool: transcriptRequests.destinationSchool,
-        destinationCeeb: transcriptRequests.destinationCeeb,
         documentType: transcriptRequests.documentType,
         createdAt: transcriptRequests.createdAt,
         updatedAt: transcriptRequests.updatedAt,
+        requestTrackingId: transcriptRequests.requestTrackingId,
+        parchmentDocumentId: transcriptRequests.parchmentDocumentId,
       })
       .from(transcriptRequests)
       .where(eq(transcriptRequests.id, requestId))
@@ -57,53 +74,44 @@ export async function GET(
 
     if (request_data.length === 0) {
       return NextResponse.json(
-        { error: 'Request not found' },
+        {
+          success: false,
+          error: 'Transcript request not found',
+          code: 'REQUEST_NOT_FOUND'
+        },
         { status: 404 }
       );
     }
 
-    const request = request_data[0];
+    const record = request_data[0];
 
     return NextResponse.json({
-      requestId: request.id,
-      status: request.status,
-      statusMessage: request.statusMessage,
-      student: {
-        firstName: request.studentFirstName,
-        lastName: request.studentLastName,
-        email: request.studentEmail,
-      },
-      destination: {
-        school: request.destinationSchool,
-        ceeb: request.destinationCeeb,
-      },
-      document: {
-        type: request.documentType,
-        parchmentId: request.parchmentDocumentId,
-      },
-      tracking: {
-        mfcRequestId: request.requestTrackingId,
-        createdAt: request.createdAt,
-        updatedAt: request.updatedAt,
-      },
-      statusHistory: [
-        {
-          status: 'submitted',
-          timestamp: request.createdAt,
-          message: 'Request received and validated'
+      success: true,
+      request: {
+        id: record.id,
+        trackingId: record.requestTrackingId,
+        status: record.status,
+        statusMessage: record.statusMessage || null,
+        student: {
+          firstName: record.studentFirstName,
+          lastName: record.studentLastName,
         },
-        {
-          status: request.status,
-          timestamp: request.updatedAt,
-          message: request.statusMessage || `Request is ${request.status}`
-        }
-      ]
+        destinationSchool: record.destinationSchool,
+        documentType: record.documentType,
+        submittedAt: new Date(record.createdAt * 1000).toISOString(),
+        lastUpdated: new Date(record.updatedAt * 1000).toISOString(),
+        parchmentDocumentId: record.parchmentDocumentId || null,
+      }
     });
 
   } catch (error) {
     console.error('Status check error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        success: false,
+        error: 'Internal server error',
+        code: 'INTERNAL_ERROR'
+      },
       { status: 500 }
     );
   }
