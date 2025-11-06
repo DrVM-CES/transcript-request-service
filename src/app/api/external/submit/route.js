@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { generateTranscriptRequestXML } from '../../../../lib/pesc-xml-generator';
@@ -55,9 +55,8 @@ const externalSubmissionSchema = z.object({
 
 /**
  * Submit transcript request from external application (My Future Capacity)
- * This endpoint receives pre-populated student data and processes the request
  */
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     // Get client info for audit trail
     const clientIp = request.headers.get('x-forwarded-for') || 
