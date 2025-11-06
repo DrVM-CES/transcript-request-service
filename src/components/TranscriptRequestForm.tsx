@@ -1,227 +1,310 @@
 'use client';
 
 import { useState } from 'react';
-import { transcriptRequestSchema, type TranscriptRequestFormData } from '@/lib/validation';
-import { StudentInfoStep } from './form-steps/StudentInfoStep';
-import { SchoolInfoStep } from './form-steps/SchoolInfoStep';
-import { DestinationInfoStep } from './form-steps/DestinationInfoStep';
-import { ConsentStep } from './form-steps/ConsentStep';
-import { ProgressIndicator } from './ProgressIndicator';
+import { transcriptRequestSchema, type TranscriptRequestFormData } from '../lib/validation';
 
-type FormStep = 'student' | 'school' | 'destination' | 'consent' | 'submitted';
+interface TranscriptRequestFormProps {
+  onSubmit?: (data: TranscriptRequestFormData) => void;
+}
 
-interface FormState extends Partial<TranscriptRequestFormData> {}
-
-export function TranscriptRequestForm() {
-  const [currentStep, setCurrentStep] = useState<FormStep>('student');
-  const [formData, setFormData] = useState<FormState>({
+export function TranscriptRequestForm({ onSubmit }: TranscriptRequestFormProps) {
+  const [formData, setFormData] = useState<Partial<TranscriptRequestFormData>>({
+    documentType: 'Transcript - Final',
     currentEnrollment: true,
-    documentType: 'Transcript - Final'
+    consentGiven: false,
+    ferpaDisclosureShown: false,
   });
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const steps: { id: FormStep; title: string; description: string }[] = [
-    { id: 'student', title: 'Student Info', description: 'Personal information' },
-    { id: 'school', title: 'Current School', description: 'School details' },
-    { id: 'destination', title: 'Destination', description: 'Where to send' },
-    { id: 'consent', title: 'Consent', description: 'FERPA & permissions' },
-  ];
-
-  const updateFormData = (updates: Partial<FormState>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
-    // Clear errors for updated fields
-    const updatedFields = Object.keys(updates);
-    setErrors(prev => {
-      const newErrors = { ...prev };
-      updatedFields.forEach(field => delete newErrors[field]);
-      return newErrors;
-    });
-  };
-
-  const validateStep = (step: FormStep): boolean => {
-    try {
-      switch (step) {
-        case 'student':
-          transcriptRequestSchema.pick({
-            studentFirstName: true,
-            studentLastName: true,
-            studentEmail: true,
-            studentDob: true,
-          }).parse(formData);
-          break;
-        case 'school':
-          transcriptRequestSchema.pick({
-            schoolName: true,
-          }).parse(formData);
-          break;
-        case 'destination':
-          transcriptRequestSchema.pick({
-            destinationSchool: true,
-            destinationCeeb: true,
-          }).parse(formData);
-          break;
-        case 'consent':
-          transcriptRequestSchema.pick({
-            ferpaDisclosureRead: true,
-            consentGiven: true,
-            certifyInformation: true,
-          }).parse(formData);
-          break;
-      }
-      setErrors({});
-      return true;
-    } catch (error: any) {
-      if (error.errors) {
-        const newErrors: Record<string, string> = {};
-        error.errors.forEach((err: any) => {
-          newErrors[err.path[0]] = err.message;
-        });
-        setErrors(newErrors);
-      }
-      return false;
-    }
-  };
-
-  const goToNextStep = () => {
-    if (!validateStep(currentStep)) return;
-
-    const stepOrder: FormStep[] = ['student', 'school', 'destination', 'consent'];
-    const currentIndex = stepOrder.indexOf(currentStep);
-    if (currentIndex < stepOrder.length - 1) {
-      setCurrentStep(stepOrder[currentIndex + 1]);
-    } else if (currentStep === 'consent') {
-      handleSubmit();
-    }
-  };
-
-  const goToPreviousStep = () => {
-    const stepOrder: FormStep[] = ['student', 'school', 'destination', 'consent'];
-    const currentIndex = stepOrder.indexOf(currentStep);
-    if (currentIndex > 0) {
-      setCurrentStep(stepOrder[currentIndex - 1]);
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!validateStep('consent')) return;
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
-    try {
-      // Final validation
-      const validatedData = transcriptRequestSchema.parse(formData);
-      
-      const response = await fetch('/api/submit-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(validatedData),
-      });
+    setErrors({});
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to submit request');
+    try {
+      const validationResult = transcriptRequestSchema.safeParse(formData);
+      
+      if (!validationResult.success) {
+        const fieldErrors = validationResult.error.flatten().fieldErrors;
+        const errorMap: Record<string, string> = {};
+        
+        Object.entries(fieldErrors).forEach(([field, messages]) => {
+          errorMap[field] = messages?.[0] || 'Invalid value';
+        });
+        
+        setErrors(errorMap);
+        return;
       }
 
-      const result = await response.json();
-      setCurrentStep('submitted');
-    } catch (error: any) {
-      console.error('Submission error:', error);
-      setErrors({ submit: error.message || 'Failed to submit request. Please try again.' });
+      if (onSubmit) {
+        onSubmit(validationResult.data);
+      } else {
+        // Default submission to our API
+        const response = await fetch('/api/submit-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(validationResult.data),
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert(`Transcript request submitted successfully! Tracking ID: ${result.trackingId}`);
+          // Reset form
+          setFormData({
+            documentType: 'Transcript - Final',
+            currentEnrollment: true,
+            consentGiven: false,
+            ferpaDisclosureShown: false,
+          });
+        } else {
+          alert(`Error: ${result.error}`);
+        }
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('An error occurred while submitting the request.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (currentStep === 'submitted') {
-    return (
-      <div className="card text-center">
-        <div className="w-16 h-16 bg-success-600 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-4">
-          Request Submitted Successfully!
-        </h2>
-        <p className="text-neutral-600 mb-6">
-          Your transcript request has been submitted and will be processed within 1-3 business days. 
-          The receiving institution will be notified once your transcript has been delivered.
-        </p>
-        <div className="bg-neutral-50 rounded-lg p-4 mb-6">
-          <p className="text-sm text-neutral-600">
-            <strong>Next Steps:</strong>
-          </p>
-          <ul className="text-sm text-neutral-600 mt-2 space-y-1">
-            <li>• Your high school will verify and process your request</li>
-            <li>• The official transcript will be sent electronically</li>
-            <li>• The receiving institution will confirm receipt</li>
-            <li>• Processing typically takes 1-3 business days</li>
-          </ul>
-        </div>
-        <button
-          onClick={() => window.location.href = '/'}
-          className="btn btn-primary"
-        >
-          Submit Another Request
-        </button>
-      </div>
-    );
-  }
+  const updateField = (field: keyof TranscriptRequestFormData, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      <ProgressIndicator 
-        steps={steps} 
-        currentStep={currentStep} 
-      />
-
-      <div className="card">
-        {errors.submit && (
-          <div className="alert alert-error mb-6">
-            {errors.submit}
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Student Information */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Student Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="form-label">First Name *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.studentFirstName || ''}
+              onChange={(e) => updateField('studentFirstName', e.target.value)}
+            />
+            {errors.studentFirstName && (
+              <div className="form-error">{errors.studentFirstName}</div>
+            )}
           </div>
-        )}
+          
+          <div>
+            <label className="form-label">Last Name *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.studentLastName || ''}
+              onChange={(e) => updateField('studentLastName', e.target.value)}
+            />
+            {errors.studentLastName && (
+              <div className="form-error">{errors.studentLastName}</div>
+            )}
+          </div>
 
-        {currentStep === 'student' && (
-          <StudentInfoStep
-            data={formData}
-            errors={errors}
-            onChange={updateFormData}
-            onNext={goToNextStep}
-          />
-        )}
+          <div>
+            <label className="form-label">Middle Name</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.studentMiddleName || ''}
+              onChange={(e) => updateField('studentMiddleName', e.target.value)}
+            />
+          </div>
 
-        {currentStep === 'school' && (
-          <SchoolInfoStep
-            data={formData}
-            errors={errors}
-            onChange={updateFormData}
-            onNext={goToNextStep}
-            onPrevious={goToPreviousStep}
-          />
-        )}
+          <div>
+            <label className="form-label">Email *</label>
+            <input
+              type="email"
+              className="form-input"
+              value={formData.studentEmail || ''}
+              onChange={(e) => updateField('studentEmail', e.target.value)}
+            />
+            {errors.studentEmail && (
+              <div className="form-error">{errors.studentEmail}</div>
+            )}
+          </div>
 
-        {currentStep === 'destination' && (
-          <DestinationInfoStep
-            data={formData}
-            errors={errors}
-            onChange={updateFormData}
-            onNext={goToNextStep}
-            onPrevious={goToPreviousStep}
-          />
-        )}
+          <div>
+            <label className="form-label">Date of Birth *</label>
+            <input
+              type="date"
+              className="form-input"
+              value={formData.studentDob || ''}
+              onChange={(e) => updateField('studentDob', e.target.value)}
+            />
+            {errors.studentDob && (
+              <div className="form-error">{errors.studentDob}</div>
+            )}
+          </div>
 
-        {currentStep === 'consent' && (
-          <ConsentStep
-            data={formData}
-            errors={errors}
-            onChange={updateFormData}
-            onSubmit={handleSubmit}
-            onPrevious={goToPreviousStep}
-            isSubmitting={isSubmitting}
-          />
-        )}
+          <div>
+            <label className="form-label">Last 4 digits of SSN</label>
+            <input
+              type="text"
+              className="form-input"
+              maxLength={4}
+              value={formData.studentPartialSsn || ''}
+              onChange={(e) => updateField('studentPartialSsn', e.target.value)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* School Information */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Current School Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="md:col-span-2">
+            <label className="form-label">School Name *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.schoolName || ''}
+              onChange={(e) => updateField('schoolName', e.target.value)}
+            />
+            {errors.schoolName && (
+              <div className="form-error">{errors.schoolName}</div>
+            )}
+          </div>
+
+          <div>
+            <label className="form-label">CEEB Code</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.schoolCeeb || ''}
+              onChange={(e) => updateField('schoolCeeb', e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="form-label">School Email</label>
+            <input
+              type="email"
+              className="form-input"
+              value={formData.schoolEmail || ''}
+              onChange={(e) => updateField('schoolEmail', e.target.value)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Destination School */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Destination School</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="form-label">School Name *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.destinationSchool || ''}
+              onChange={(e) => updateField('destinationSchool', e.target.value)}
+            />
+            {errors.destinationSchool && (
+              <div className="form-error">{errors.destinationSchool}</div>
+            )}
+          </div>
+
+          <div>
+            <label className="form-label">CEEB Code *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={formData.destinationCeeb || ''}
+              onChange={(e) => updateField('destinationCeeb', e.target.value)}
+            />
+            {errors.destinationCeeb && (
+              <div className="form-error">{errors.destinationCeeb}</div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Document Type */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4">Document Information</h2>
+        <div>
+          <label className="form-label">Document Type</label>
+          <select
+            className="form-input"
+            value={formData.documentType || ''}
+            onChange={(e) => updateField('documentType', e.target.value)}
+          >
+            <option value="Transcript - Final">Final Transcript</option>
+            <option value="Transcript - Partial">Partial Transcript</option>
+            <option value="Transcript - Unofficial">Unofficial Transcript</option>
+          </select>
+        </div>
+      </section>
+
+      {/* FERPA Consent */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4">FERPA Consent & Authorization</h2>
+        
+        <div className="alert alert-info mb-4">
+          <h3 className="font-semibold">Family Educational Rights and Privacy Act (FERPA) Notice</h3>
+          <p className="mt-2 text-sm">
+            By requesting this transcript, you are authorizing the release of your educational records 
+            to the specified institution. Under FERPA, you have the right to inspect and review your 
+            educational records, request amendments to records you believe are inaccurate, and file 
+            complaints with the U.S. Department of Education concerning alleged failures to comply with FERPA.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={formData.ferpaDisclosureShown || false}
+              onChange={(e) => updateField('ferpaDisclosureShown', e.target.checked)}
+            />
+            <span className="text-sm">
+              I have read and understand the FERPA disclosure above *
+            </span>
+          </label>
+          {errors.ferpaDisclosureShown && (
+            <div className="form-error">{errors.ferpaDisclosureShown}</div>
+          )}
+
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={formData.consentGiven || false}
+              onChange={(e) => updateField('consentGiven', e.target.checked)}
+            />
+            <span className="text-sm">
+              I consent to the release of my educational records to the specified institution *
+            </span>
+          </label>
+          {errors.consentGiven && (
+            <div className="form-error">{errors.consentGiven}</div>
+          )}
+        </div>
+      </section>
+
+      {/* Submit Button */}
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn-primary px-8 py-3 text-lg"
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit Transcript Request'}
+        </button>
       </div>
-    </div>
+    </form>
   );
 }
