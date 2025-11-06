@@ -1,10 +1,11 @@
 [build]
-  command = "npm install --save-dev typescript && npm run build"
+  command = "npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
   NPM_VERSION = "10"
+  NETLIFY_SKIP_CACHE = "true"
 
 [[redirects]]
   from = "/api/*"
