@@ -14,104 +14,96 @@ export async function GET(
   { params }: { params: { requestId: string } }
 ) {
   try {
-    // Authenticate API request
-    const providedApiKey = request.headers.get('x-api-key');
+    // Validate API key
+    const apiKey = request.headers.get('x-api-key');
     const expectedApiKey = process.env.MFC_API_KEY;
     
-    if (!expectedApiKey) {
+    if (!expectedApiKey || apiKey !== expectedApiKey) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Service configuration error',
-          code: 'CONFIG_ERROR'
-        },
-        { status: 500 }
-      );
-    }
-
-    if (!providedApiKey || providedApiKey !== expectedApiKey) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Invalid API key',
-          code: 'INVALID_API_KEY'
-        },
+        { error: 'Invalid API key' },
         { status: 401 }
       );
     }
 
-    const { requestId } = params;
-
+    const requestId = params.requestId;
+    
     if (!requestId) {
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Request ID is required',
-          code: 'MISSING_REQUEST_ID'
-        },
+        { error: 'Request ID required' },
         { status: 400 }
       );
     }
 
-    // Fetch request from database
-    const request_data = await db
+    // Get request from database
+    const requestData = await db
       .select({
         id: transcriptRequests.id,
         status: transcriptRequests.status,
         statusMessage: transcriptRequests.statusMessage,
+        parchmentDocumentId: transcriptRequests.parchmentDocumentId,
+        requestTrackingId: transcriptRequests.requestTrackingId,
         studentFirstName: transcriptRequests.studentFirstName,
         studentLastName: transcriptRequests.studentLastName,
+        studentEmail: transcriptRequests.studentEmail,
         destinationSchool: transcriptRequests.destinationSchool,
+        destinationCeeb: transcriptRequests.destinationCeeb,
         documentType: transcriptRequests.documentType,
         createdAt: transcriptRequests.createdAt,
         updatedAt: transcriptRequests.updatedAt,
-        requestTrackingId: transcriptRequests.requestTrackingId,
-        parchmentDocumentId: transcriptRequests.parchmentDocumentId,
       })
       .from(transcriptRequests)
       .where(eq(transcriptRequests.id, requestId))
       .limit(1);
 
-    if (request_data.length === 0) {
+    if (requestData.length === 0) {
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Transcript request not found',
-          code: 'REQUEST_NOT_FOUND'
-        },
+        { error: 'Request not found' },
         { status: 404 }
       );
     }
 
-    const record = request_data[0];
+    const requestRecord = requestData[0];
 
     return NextResponse.json({
-      success: true,
-      request: {
-        id: record.id,
-        trackingId: record.requestTrackingId,
-        status: record.status,
-        statusMessage: record.statusMessage || null,
-        student: {
-          firstName: record.studentFirstName,
-          lastName: record.studentLastName,
+      requestId: requestRecord.id,
+      status: requestRecord.status,
+      statusMessage: requestRecord.statusMessage,
+      student: {
+        firstName: requestRecord.studentFirstName,
+        lastName: requestRecord.studentLastName,
+        email: requestRecord.studentEmail,
+      },
+      destination: {
+        school: requestRecord.destinationSchool,
+        ceeb: requestRecord.destinationCeeb,
+      },
+      document: {
+        type: requestRecord.documentType,
+        parchmentId: requestRecord.parchmentDocumentId,
+      },
+      tracking: {
+        mfcRequestId: requestRecord.requestTrackingId,
+        createdAt: requestRecord.createdAt,
+        updatedAt: requestRecord.updatedAt,
+      },
+      statusHistory: [
+        {
+          status: 'submitted',
+          timestamp: requestRecord.createdAt,
+          message: 'Request received and validated'
         },
-        destinationSchool: record.destinationSchool,
-        documentType: record.documentType,
-        submittedAt: new Date(record.createdAt * 1000).toISOString(),
-        lastUpdated: new Date(record.updatedAt * 1000).toISOString(),
-        parchmentDocumentId: record.parchmentDocumentId || null,
-      }
+        {
+          status: requestRecord.status,
+          timestamp: requestRecord.updatedAt,
+          message: requestRecord.statusMessage || `Request is ${requestRecord.status}`
+        }
+      ]
     });
 
   } catch (error) {
     console.error('Status check error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Internal server error',
-        code: 'INTERNAL_ERROR'
-      },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

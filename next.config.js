@@ -3,9 +3,18 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@libsql/client', 'ssh2-sftp-client']
   },
+  
+  // Ensure TypeScript builds properly
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  
   // Production optimizations
   compress: true,
   poweredByHeader: false,
+  
+  // Output configuration for Netlify
+  output: 'standalone',
   
   // Security headers
   async headers() {

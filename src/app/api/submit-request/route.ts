@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
+import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
 import { uploadTranscriptXML } from '../../../lib/sftp-client';
@@ -10,172 +11,138 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    // Get client info for audit trail
-    const clientIp = request.headers.get('x-forwarded-for') || 
-                     request.headers.get('x-real-ip') || 
-                     'unknown';
-    const userAgent = request.headers.get('user-agent') || 'unknown';
-
-    // Parse and validate request body
     const body = await request.json();
     
-    const validationResult = transcriptRequestSchema.safeParse(body);
-    if (!validationResult.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Invalid request data',
-          details: validationResult.error.flatten().fieldErrors
-        },
-        { status: 400 }
-      );
-    }
-
-    const data = validationResult.data;
-    const requestId = uuidv4();
-    const timestamp = new Date();
-
-    // Generate PESC-compliant XML
-    const xmlContent = generateTranscriptRequestXML({
-      requestId,
-      student: {
-        firstName: data.studentFirstName,
-        lastName: data.studentLastName,
-        middleName: data.studentMiddleName,
-        email: data.studentEmail,
-        dateOfBirth: data.studentDob,
-        partialSSN: data.studentPartialSsn,
-      },
-      sourceInstitution: {
-        name: data.schoolName,
-        ceebCode: data.schoolCeeb,
-        address: data.schoolAddress,
-        city: data.schoolCity,
-        state: data.schoolState,
-        zip: data.schoolZip,
-        phone: data.schoolPhone,
-        email: data.schoolEmail,
-      },
-      destinationInstitution: {
-        name: data.destinationSchool,
-        ceebCode: data.destinationCeeb,
-        address: data.destinationAddress,
-        city: data.destinationCity,
-        state: data.destinationState,
-        zip: data.destinationZip,
-      },
-      studentAttendance: {
-        enrollDate: data.enrollDate,
-        exitDate: data.exitDate,
-        currentEnrollment: data.currentEnrollment,
-        graduationDate: data.graduationDate,
-      },
-      documentType: data.documentType,
-      requestDate: timestamp.toISOString(),
+    // Validate the request data
+    const validatedData = transcriptRequestSchema.parse(body);
+    
+    // Generate the PESC XML
+    const { xml, documentId, fileName } = generateTranscriptRequestXML({
+      studentFirstName: validatedData.studentFirstName,
+      studentLastName: validatedData.studentLastName,
+      studentMiddleName: validatedData.studentMiddleName,
+      studentEmail: validatedData.studentEmail,
+      studentDob: validatedData.studentDob,
+      studentPartialSsn: validatedData.studentPartialSsn,
+      schoolName: validatedData.schoolName,
+      schoolCeeb: validatedData.schoolCeeb,
+      schoolAddress: validatedData.schoolAddress,
+      schoolCity: validatedData.schoolCity,
+      schoolState: validatedData.schoolState,
+      schoolZip: validatedData.schoolZip,
+      schoolPhone: validatedData.schoolPhone,
+      schoolEmail: validatedData.schoolEmail,
+      enrollDate: validatedData.enrollDate,
+      exitDate: validatedData.exitDate,
+      currentEnrollment: validatedData.currentEnrollment,
+      graduationDate: validatedData.graduationDate,
+      destinationSchool: validatedData.destinationSchool,
+      destinationCeeb: validatedData.destinationCeeb,
+      destinationAddress: validatedData.destinationAddress,
+      destinationCity: validatedData.destinationCity,
+      destinationState: validatedData.destinationState,
+      destinationZip: validatedData.destinationZip,
+      documentType: validatedData.documentType,
     });
 
-    // Store request in database
-    const dbRecord = {
+    // Get client IP and user agent for audit trail
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+
+    const requestId = uuidv4();
+    const now = new Date();
+
+    // Store the request in the database
+    await db.insert(transcriptRequests).values({
       id: requestId,
-      studentFirstName: data.studentFirstName,
-      studentLastName: data.studentLastName,
-      studentMiddleName: data.studentMiddleName,
-      studentEmail: data.studentEmail,
-      studentDob: data.studentDob,
-      studentPartialSsn: data.studentPartialSsn,
-      
-      schoolName: data.schoolName,
-      schoolCeeb: data.schoolCeeb,
-      schoolAddress: data.schoolAddress,
-      schoolCity: data.schoolCity,
-      schoolState: data.schoolState,
-      schoolZip: data.schoolZip,
-      schoolPhone: data.schoolPhone,
-      schoolEmail: data.schoolEmail,
-      
-      enrollDate: data.enrollDate,
-      exitDate: data.exitDate,
-      currentEnrollment: data.currentEnrollment,
-      graduationDate: data.graduationDate,
-      
-      destinationSchool: data.destinationSchool,
-      destinationCeeb: data.destinationCeeb,
-      destinationAddress: data.destinationAddress,
-      destinationCity: data.destinationCity,
-      destinationState: data.destinationState,
-      destinationZip: data.destinationZip,
-      
-      documentType: data.documentType,
-      requestTrackingId: requestId,
-      
-      consentGiven: data.consentGiven,
-      consentTimestamp: Math.floor(timestamp.getTime() / 1000),
-      ferpaDisclosureShown: data.ferpaDisclosureShown,
-      releaseAuthorizedMethod: 'ElectronicSignature',
-      
-      requestXml: xmlContent,
+      studentFirstName: validatedData.studentFirstName,
+      studentLastName: validatedData.studentLastName,
+      studentMiddleName: validatedData.studentMiddleName,
+      studentEmail: validatedData.studentEmail,
+      studentDob: validatedData.studentDob,
+      studentPartialSsn: validatedData.studentPartialSsn,
+      schoolName: validatedData.schoolName,
+      schoolCeeb: validatedData.schoolCeeb,
+      schoolAddress: validatedData.schoolAddress,
+      schoolCity: validatedData.schoolCity,
+      schoolState: validatedData.schoolState,
+      schoolZip: validatedData.schoolZip,
+      schoolPhone: validatedData.schoolPhone,
+      schoolEmail: validatedData.schoolEmail,
+      enrollDate: validatedData.enrollDate,
+      exitDate: validatedData.exitDate,
+      currentEnrollment: validatedData.currentEnrollment,
+      graduationDate: validatedData.graduationDate,
+      destinationSchool: validatedData.destinationSchool,
+      destinationCeeb: validatedData.destinationCeeb,
+      destinationAddress: validatedData.destinationAddress,
+      destinationCity: validatedData.destinationCity,
+      destinationState: validatedData.destinationState,
+      destinationZip: validatedData.destinationZip,
+      documentType: validatedData.documentType,
+      consentGiven: validatedData.consentGiven,
+      consentTimestamp: now,
+      ferpaDisclosureShown: validatedData.ferpaDisclosureRead,
+      requestXml: xml,
+      parchmentDocumentId: documentId,
       status: 'submitted',
-      
-      createdAt: Math.floor(timestamp.getTime() / 1000),
-      updatedAt: Math.floor(timestamp.getTime() / 1000),
-      ipAddress: clientIp,
+      createdAt: now,
+      updatedAt: now,
+      ipAddress: clientIP,
       userAgent: userAgent,
-    };
+    });
 
-    await db.insert(transcriptRequests).values(dbRecord);
-
-    // Upload to Parchment SFTP
-    const filename = `PESC${timestamp.toISOString().replace(/[-:T]/g, '').substring(0, 8)}_${timestamp.toISOString().replace(/[-:T.]/g, '').substring(8, 14)}_${data.studentFirstName}_${data.studentLastName}`;
+    // Upload XML to Parchment SFTP
+    const uploadResult = await uploadTranscriptXML(xml, fileName);
     
-    const uploadResult = await uploadTranscriptXML(xmlContent, filename);
-    
-    if (!uploadResult.success) {
+    if (uploadResult.success) {
+      console.log('Successfully uploaded XML to SFTP:', uploadResult.path);
+      
+      // Update status to processing
+      await db.update(transcriptRequests)
+        .set({ 
+          status: 'processing',
+          statusMessage: `XML uploaded to ${uploadResult.path}`,
+          updatedAt: new Date()
+        })
+        .where(eq(transcriptRequests.id, requestId));
+    } else {
+      console.error('SFTP upload failed:', uploadResult.error);
+      
       // Update status to failed
       await db.update(transcriptRequests)
         .set({ 
           status: 'failed',
-          statusMessage: `Upload failed: ${uploadResult.error}`,
-          updatedAt: Math.floor(Date.now() / 1000)
+          statusMessage: `SFTP upload failed: ${uploadResult.error}`,
+          updatedAt: new Date()
         })
-        .where({ id: requestId });
-
+        .where(eq(transcriptRequests.id, requestId));
+        
       return NextResponse.json(
-        {
-          success: false,
-          error: 'Failed to submit transcript request',
-          requestId,
-          details: uploadResult.error
-        },
+        { error: 'Failed to upload transcript request to processing system' },
         { status: 500 }
       );
     }
 
-    // Update status to processing
-    await db.update(transcriptRequests)
-      .set({ 
-        status: 'processing',
-        parchmentDocumentId: uploadResult.path,
-        updatedAt: Math.floor(Date.now() / 1000)
-      })
-      .where({ id: requestId });
-
-    // Success response
     return NextResponse.json({
       success: true,
       requestId,
-      status: 'processing',
-      message: 'Transcript request submitted successfully',
-      submittedAt: timestamp.toISOString(),
-      trackingId: requestId
+      documentId,
+      message: 'Transcript request submitted successfully'
     });
 
   } catch (error) {
-    console.error('Transcript request error:', error);
+    console.error('Submit request error:', error);
+    
+    if (error instanceof Error && error.name === 'ZodError') {
+      return NextResponse.json(
+        { error: 'Invalid request data', details: error.message },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Internal server error'
-      },
+      { error: 'Failed to submit transcript request' },
       { status: 500 }
     );
   }

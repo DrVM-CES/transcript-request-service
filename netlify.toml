@@ -1,24 +1,13 @@
 [build]
-  command = "npm run build"
+  command = "npm install --save-dev typescript @types/node @types/react @types/react-dom && npm run build"
   publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_VERSION = "10" 
-  NETLIFY_SKIP_CACHE = "true"
-  SKIP_TYPE_CHECK = "true"
-  DISABLE_ESLINT_PLUGIN = "true"
-  TSC_COMPILE_ON_ERROR = "true"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/*"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  NPM_VERSION = "10"
 
 [functions]
   node_bundler = "esbuild"
@@ -32,9 +21,3 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-# HTTPS redirect (Netlify automatically provides SSL)
-[[redirects]]
-  from = "http://your-domain.com/*"
-  to = "https://your-domain.com/:splat"
-  status = 301
-  force = true

@@ -16,6 +16,7 @@ interface UploadResult {
 
 export class ParchmentSFTPClient {
   private config: SFTPConfig;
+  private isProduction: boolean;
 
   constructor() {
     this.config = {
@@ -26,9 +27,13 @@ export class ParchmentSFTPClient {
       path: process.env.PARCHMENT_SFTP_PATH || '/incoming'
     };
 
-    // Validate required configuration
-    if (!this.config.host || !this.config.username || !this.config.password) {
-      throw new Error('SFTP configuration is incomplete. Check environment variables.');
+    // Determine if we're in production mode
+    this.isProduction = !!(this.config.host && this.config.username && this.config.password);
+    
+    if (this.isProduction) {
+      console.log('🚀 SFTP Client initialized in production mode');
+    } else {
+      console.log('🔧 SFTP Client initialized in development mode (will simulate uploads)');
     }
   }
 
@@ -124,7 +129,21 @@ export class ParchmentSFTPClient {
    * Check if we're in production mode with valid SFTP config
    */
   isProductionMode(): boolean {
-    return !!(this.config.host && this.config.username && this.config.password);
+    return this.isProduction;
+  }
+
+  /**
+   * Get configuration summary for health checks
+   */
+  getConfigSummary() {
+    return {
+      host: this.config.host ? '***configured***' : 'not set',
+      username: this.config.username ? '***configured***' : 'not set', 
+      password: this.config.password ? '***configured***' : 'not set',
+      port: this.config.port,
+      path: this.config.path,
+      mode: this.isProduction ? 'production' : 'development'
+    };
   }
 }
 

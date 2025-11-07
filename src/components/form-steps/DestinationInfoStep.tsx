@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { lookupSchoolByCeeb, determineProcessingMethod, getProcessingInstructions, type SchoolInfo } from '@/lib/school-lookup';
+import { lookupSchoolByCeeb, determineProcessingMethod, getProcessingInstructions, type SchoolInfo } from '../../lib/school-lookup';
 
 interface DestinationInfoStepProps {
   data: any;

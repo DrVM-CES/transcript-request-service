@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   return NextResponse.json({ 
-    message: 'API is working!', 
-    timestamp: new Date().toISOString() 
+    message: 'LATEST CODE DEPLOYED - Nov 5 2024 - Import fixes applied', 
+    timestamp: new Date().toISOString(),
+    version: 'post-import-fixes'
   });
 }
 
