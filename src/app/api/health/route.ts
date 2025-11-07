@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sql } from 'drizzle-orm';
 import { parchmentSFTP } from '../../../lib/sftp-client';
 import { db } from '../../../db';
+import { transcriptRequests } from '../../../db/schema';
 
 export const runtime = 'nodejs';
 
@@ -15,8 +16,8 @@ export async function GET(request: NextRequest) {
   let overallHealth = true;
 
   try {
-    // Test database connection with a simple query
-    await db.run(sql`SELECT 1`);
+    // Test database connection with a simple count query
+    await db.select().from(transcriptRequests).limit(1);
     checks.database = true;
   } catch (error) {
     console.error('Database health check failed:', error);
