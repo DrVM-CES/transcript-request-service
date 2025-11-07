@@ -9,29 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Minimalist B2B Professional theme colors
-        neutral: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          900: '#0f172a',
-        },
-        primary: {
-          600: '#2563eb',
-          700: '#1d4ed8',
-        },
-        success: {
-          600: '#059669',
-        },
-        warning: {
-          600: '#d97706',
-        },
-        error: {
-          600: '#dc2626',
+        // My Future Capacity brand colors
+        mfc: {
+          purple: {
+            50: '#FAF5FF',
+            100: '#F3E8FF',
+            500: '#A855F7',
+            600: '#8B5CF6',
+            700: '#9333EA',
+            900: '#581C87',
+          },
+          orange: {
+            100: '#FFEDD5',
+            500: '#FB923C',
+            600: '#F97316',
+            700: '#EA580C',
+          },
+          blue: {
+            100: '#DBEAFE',
+            500: '#0EA5E9',
+            600: '#3B82F6',
+            700: '#06B6D4',
+          },
+          green: {
+            100: '#DCFCE7',
+            500: '#22C55E',
+            600: '#16A34A',
+          },
         },
       },
       fontFamily: {
