@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Pathways to Success curved text -->
+  <defs>
+    <path id="topCurve" d="M 80,80 Q 250,40 420,80" fill="none"/>
+  </defs>
+  <text fill="#8B5CF6" font-family="Arial, sans-serif" font-size="28" font-weight="bold" letter-spacing="3">
+    <textPath href="#topCurve" startOffset="50%" text-anchor="middle">
+      PATHWAYS TO SUCCESS
+    </textPath>
+  </text>
+  
+  <!-- Decorative circles -->
+  <circle cx="120" cy="120" r="18" fill="#3B82F6"/>
+  <circle cx="160" cy="100" r="12" fill="#F97316"/>
+  <circle cx="200" cy="95" r="8" fill="#8B5CF6"/>
+  <circle cx="240" cy="90" r="10" fill="#0EA5E9"/>
+  <circle cx="280" cy="95" r="8" fill="#F97316"/>
+  <circle cx="320" cy="100" r="12" fill="#8B5CF6"/>
+  <circle cx="360" cy="120" r="18" fill="#0EA5E9"/>
+  
+  <!-- Main circle container -->
+  <circle cx="250" cy="220" r="140" fill="none" stroke="#E5E7EB" stroke-width="3"/>
+  
+  <!-- Inner decorative circles -->
+  <circle cx="200" cy="150" r="16" fill="#F97316"/>
+  <circle cx="300" cy="160" r="14" fill="#8B5CF6"/>
+  <circle cx="180" cy="190" r="12" fill="#0EA5E9"/>
+  <circle cx="320" cy="200" r="18" fill="#F97316"/>
+  <circle cx="280" cy="250" r="10" fill="#8B5CF6"/>
+  <circle cx="220" cy="280" r="12" fill="#22C55E"/>
+  
+  <!-- Orange figure (left) -->
+  <g transform="translate(150, 220)">
+    <circle cx="0" cy="-25" r="15" fill="#F97316"/>
+    <ellipse cx="0" cy="5" rx="20" ry="35" fill="#F97316"/>
+    <path d="M-15,-5 Q-25,5 -30,20" stroke="#F97316" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="-25" cy="10" r="6" fill="#F97316"/>
+    <path d="M15,-5 Q25,5 30,20" stroke="#F97316" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="25" cy="10" r="6" fill="#F97316"/>
+    <path d="M-12,35 L-20,60" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
+    <path d="M12,35 L20,60" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Green tree/figure (center) -->
+  <g transform="translate(250, 240)">
+    <rect x="-6" y="5" width="12" height="35" fill="#16A34A" rx="3"/>
+    <path d="M-25,-10 Q-15,-25 0,-20 Q15,-25 25,-10" stroke="#22C55E" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M-20,5 Q-10,-5 0,0 Q10,-5 20,5" stroke="#22C55E" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="-18" cy="-5" r="8" fill="#22C55E"/>
+    <circle cx="18" cy="-5" r="8" fill="#22C55E"/>
+    <circle cx="0" cy="-22" r="10" fill="#16A34A"/>
+    <circle cx="-8" cy="-12" r="6" fill="#22C55E"/>
+    <circle cx="8" cy="-12" r="6" fill="#22C55E"/>
+  </g>
+  
+  <!-- Cyan/Blue figure (right) -->
+  <g transform="translate(350, 220)">
+    <circle cx="0" cy="-25" r="15" fill="#0EA5E9"/>
+    <ellipse cx="0" cy="5" rx="20" ry="35" fill="#0EA5E9"/>
+    <path d="M-15,-5 Q-25,5 -30,20" stroke="#0EA5E9" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="-25" cy="10" r="6" fill="#0EA5E9"/>
+    <path d="M15,-5 Q25,5 30,20" stroke="#0EA5E9" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="25" cy="10" r="6" fill="#0EA5E9"/>
+    <path d="M-12,35 L-20,60" stroke="#0EA5E9" stroke-width="5" stroke-linecap="round"/>
+    <path d="M12,35 L20,60" stroke="#0EA5E9" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Purple figure (center-front) -->
+  <g transform="translate(280, 260)">
+    <circle cx="0" cy="-20" r="12" fill="#8B5CF6"/>
+    <ellipse cx="0" cy="0" rx="16" ry="28" fill="#8B5CF6"/>
+    <path d="M-12,-8 Q-18,0 -22,12" stroke="#8B5CF6" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M12,-8 Q18,0 22,12" stroke="#8B5CF6" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-10,25 L-16,45" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M10,25 L16,45" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  
+  <!-- MY FUTURE CAPACITY text -->
+  <text x="250" y="420" text-anchor="middle" fill="#16A34A" font-family="Arial, sans-serif" font-size="52" font-weight="bold" letter-spacing="1">
+    MY FUTURE CAPACITY
+  </text>
+</svg>

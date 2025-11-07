@@ -24,9 +24,9 @@ export default function RootLayout({
               <div className="flex justify-between items-center h-24">
                 <div className="flex items-center gap-4">
                   <img 
-                    src="/logo.svg" 
-                    alt="My Future Capacity" 
-                    className="h-16 w-16"
+                    src="/mfc-logo.svg" 
+                    alt="My Future Capacity - Pathways to Success" 
+                    className="h-20 w-20"
                   />
                   <div>
                     <h1 className="text-2xl font-bold text-mfc-green-600">
@@ -62,9 +62,9 @@ export default function RootLayout({
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center gap-3">
                   <img 
-                    src="/logo.svg" 
-                    alt="My Future Capacity" 
-                    className="h-10 w-10"
+                    src="/mfc-logo.svg" 
+                    alt="My Future Capacity - Pathways to Success" 
+                    className="h-12 w-12"
                   />
                   <p className="text-slate-600">
                     © 2025 My Future Capacity • FERPA Compliant • Powered by Parchment
