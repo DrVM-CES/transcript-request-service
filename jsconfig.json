@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/db": ["src/db/index"],
+      "@/db/schema": ["src/db/schema"],
+      "@/lib/*": ["src/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", ".next"]
+}
