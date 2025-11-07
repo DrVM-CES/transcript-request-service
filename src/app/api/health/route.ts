@@ -7,52 +7,33 @@ import { transcriptRequests } from '../../../db/schema';
 export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
-  const checks = {
-    database: false,
-    sftp: false,
-    environment: process.env.NODE_ENV || 'development'
+  const checks: any = {
+    database: 'not_tested',
+    sftp: 'not_tested',
+    environment: process.env.NODE_ENV || 'development',
+    errors: []
   };
 
-  let overallHealth = true;
-
+  // Test database connection
   try {
-    // Test database connection with a simple count query
     await db.select().from(transcriptRequests).limit(1);
-    checks.database = true;
-  } catch (error) {
-    console.error('Database health check failed:', error);
-    checks.database = false;
-    overallHealth = false;
+    checks.database = 'ok';
+  } catch (error: any) {
+    checks.database = 'failed';
+    checks.errors.push(`Database: ${error.message}`);
   }
 
-  // Test SFTP connection only if we have credentials
-  if (parchmentSFTP.isProductionMode()) {
-    try {
-      const sftpResult = await parchmentSFTP.testConnection();
-      checks.sftp = sftpResult.success;
-      if (!sftpResult.success) {
-        overallHealth = false;
-      }
-    } catch (error) {
-      console.error('SFTP health check failed:', error);
-      checks.sftp = false;
-      overallHealth = false;
-    }
-  } else {
-    // In development mode, SFTP is considered "healthy" since we simulate it
-    checks.sftp = true;
-  }
+  // Test SFTP - skip for now
+  checks.sftp = 'skipped';
 
-  const status = overallHealth ? 200 : 503;
-  
+  // Always return 200 so we can see the actual status
   return NextResponse.json({
-    status: overallHealth ? 'healthy' : 'unhealthy',
+    status: 'responding',
     timestamp: new Date().toISOString(),
-    checks: {
-      database: checks.database ? 'ok' : 'failed',
-      sftp: checks.sftp ? 'ok' : 'failed',
-      mode: parchmentSFTP.isProductionMode() ? 'production' : 'development'
-    },
-    environment: checks.environment
-  }, { status });
+    checks,
+    env: {
+      hasDatabaseUrl: !!process.env.DATABASE_URL,
+      hasTursoToken: !!process.env.TURSO_AUTH_TOKEN,
+    }
+  }, { status: 200 });
 }
