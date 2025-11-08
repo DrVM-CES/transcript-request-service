@@ -1,4 +1,5 @@
 import { FormButtons } from '../FormButtons';
+import { DatePicker } from '../DatePicker';
 
 interface StudentInfoStepProps {
   data: any;
@@ -72,20 +73,18 @@ export function StudentInfoStep({ data, errors, onChange, onNext }: StudentInfoS
           )}
         </div>
 
-        <div>
-          <label className="form-label">
-            Date of Birth <span className="text-error-600">*</span>
-          </label>
-          <input
-            type="date"
-            className="form-input"
-            value={data.studentDob || ''}
-            onChange={(e) => handleInputChange('studentDob', e.target.value)}
-          />
-          {errors.studentDob && (
-            <p className="form-error">{errors.studentDob}</p>
-          )}
-        </div>
+        <DatePicker
+          id="studentDob"
+          name="studentDob"
+          value={data.studentDob || ''}
+          onChange={(value) => handleInputChange('studentDob', value)}
+          label="Date of Birth"
+          required
+          error={errors.studentDob}
+          minAge={14}
+          maxAge={100}
+          placeholder="MM/DD/YYYY"
+        />
 
         <div className="md:col-span-2">
           <label className="form-label">

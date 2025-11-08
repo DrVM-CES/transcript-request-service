@@ -1,4 +1,5 @@
 import { FormButtons } from '../FormButtons';
+import { DatePicker } from '../DatePicker';
 
 interface SchoolInfoStepProps {
   data: any;
@@ -236,35 +237,25 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
           </h3>
           
           <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="form-label">
-                Enrollment Date
-              </label>
-              <input
-                type="date"
-                className="form-input"
-                value={data.enrollDate || ''}
-                onChange={(e) => handleInputChange('enrollDate', e.target.value)}
-              />
-              {errors.enrollDate && (
-                <p className="form-error">{errors.enrollDate}</p>
-              )}
-            </div>
+            <DatePicker
+              id="enrollDate"
+              name="enrollDate"
+              value={data.enrollDate || ''}
+              onChange={(value) => handleInputChange('enrollDate', value)}
+              label="Enrollment Date"
+              error={errors.enrollDate}
+              placeholder="MM/DD/YYYY"
+            />
 
-            <div>
-              <label className="form-label">
-                Expected Graduation Date
-              </label>
-              <input
-                type="date"
-                className="form-input"
-                value={data.graduationDate || ''}
-                onChange={(e) => handleInputChange('graduationDate', e.target.value)}
-              />
-              {errors.graduationDate && (
-                <p className="form-error">{errors.graduationDate}</p>
-              )}
-            </div>
+            <DatePicker
+              id="graduationDate"
+              name="graduationDate"
+              value={data.graduationDate || ''}
+              onChange={(value) => handleInputChange('graduationDate', value)}
+              label="Expected Graduation Date"
+              error={errors.graduationDate}
+              placeholder="MM/DD/YYYY"
+            />
           </div>
 
           <div className="mt-4">
@@ -283,18 +274,15 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
 
           {!data.currentEnrollment && (
             <div className="mt-4">
-              <label className="form-label">
-                Exit Date
-              </label>
-              <input
-                type="date"
-                className="form-input"
+              <DatePicker
+                id="exitDate"
+                name="exitDate"
                 value={data.exitDate || ''}
-                onChange={(e) => handleInputChange('exitDate', e.target.value)}
+                onChange={(value) => handleInputChange('exitDate', value)}
+                label="Exit Date"
+                error={errors.exitDate}
+                placeholder="MM/DD/YYYY"
               />
-              {errors.exitDate && (
-                <p className="form-error">{errors.exitDate}</p>
-              )}
             </div>
           )}
         </div>
