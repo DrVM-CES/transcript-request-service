@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { transcriptRequestSchema, type TranscriptRequestFormData } from '../lib/validation';
 import { StudentInfoStep } from './form-steps/StudentInfoStep';
 import { SchoolInfoStep } from './form-steps/SchoolInfoStep';
@@ -13,6 +14,7 @@ type FormStep = 'student' | 'school' | 'destination' | 'consent' | 'submitted';
 interface FormState extends Partial<TranscriptRequestFormData> {}
 
 export function TranscriptRequestForm() {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState<FormStep>('student');
   const [formData, setFormData] = useState<FormState>({
     currentEnrollment: true,
@@ -123,7 +125,8 @@ export function TranscriptRequestForm() {
       }
 
       const result = await response.json();
-      setCurrentStep('submitted');
+      // Redirect to success page
+      router.push('/success');
     } catch (error: any) {
       console.error('Submission error:', error);
       setErrors({ submit: error.message || 'Failed to submit request. Please try again.' });

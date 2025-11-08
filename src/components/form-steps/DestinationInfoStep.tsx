@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { lookupSchoolByCeeb, determineProcessingMethod, getProcessingInstructions, type SchoolInfo } from '../../lib/school-lookup';
+import { FormButtons } from '../FormButtons';
 
 interface DestinationInfoStepProps {
   data: any;
@@ -324,20 +325,11 @@ export function DestinationInfoStep({ data, errors, onChange, onNext, onPrevious
         </ul>
       </div>
 
-      <div className="flex justify-between">
-        <button 
-          onClick={onPrevious}
-          className="btn btn-secondary"
-        >
-          Previous
-        </button>
-        <button 
-          onClick={onNext}
-          className="btn btn-primary"
-        >
-          Continue to Consent
-        </button>
-      </div>
+      <FormButtons 
+        onPrevious={onPrevious}
+        onNext={onNext}
+        nextLabel="Continue to Consent"
+      />
     </div>
   );
 }

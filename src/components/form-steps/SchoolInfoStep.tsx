@@ -1,3 +1,5 @@
+import { FormButtons } from '../FormButtons';
+
 interface SchoolInfoStepProps {
   data: any;
   errors: Record<string, string>;
@@ -298,20 +300,11 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <button 
-          onClick={onPrevious}
-          className="btn btn-secondary"
-        >
-          Previous
-        </button>
-        <button 
-          onClick={onNext}
-          className="btn btn-primary"
-        >
-          Continue to Destination
-        </button>
-      </div>
+      <FormButtons 
+        onPrevious={onPrevious}
+        onNext={onNext}
+        nextLabel="Continue to Destination"
+      />
     </div>
   );
 }
