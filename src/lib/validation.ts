@@ -60,9 +60,10 @@ export const transcriptRequestSchema = z.object({
     .or(z.literal('')),
   
   schoolZip: z.string()
-    .regex(/^\d{5}(-\d{4})?$/, 'Please enter a valid ZIP code')
     .optional()
-    .or(z.literal('')),
+    .refine((val) => !val || /^\d{5}(-\d{4})?$/.test(val), {
+      message: 'Please enter a valid ZIP code'
+    }),
   
   schoolPhone: z.string()
     .regex(phoneRegex, 'Please enter phone in format (xxx) xxx-xxxx')
@@ -115,9 +116,10 @@ export const transcriptRequestSchema = z.object({
     .or(z.literal('')),
   
   destinationZip: z.string()
-    .regex(/^\d{5}(-\d{4})?$/, 'Please enter a valid ZIP code')
     .optional()
-    .or(z.literal('')),
+    .refine((val) => !val || /^\d{5}(-\d{4})?$/.test(val), {
+      message: 'Please enter a valid ZIP code'
+    }),
 
   // Document Type
   documentType: z.enum([
