@@ -5,9 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --foreground-rgb: 15, 23, 42; /* slate-900 */
-  --background-start-rgb: 248, 250, 252; /* slate-50 */
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 31, 41, 55; /* gray-800 */
+  --mfc-cream: 245, 245, 240; /* #F5F5F0 - MFC background */
 }
 
 * {
@@ -27,12 +26,8 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--mfc-cream));
+  min-height: 100vh;
 }
 
 a {

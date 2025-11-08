@@ -21,11 +21,11 @@ export default function SuccessPage() {
         </p>
 
         {/* What's Next */}
-        <div className="bg-mfc-purple-50 rounded-xl p-6 mb-8 text-left">
+        <div className="bg-mfc-primary-50 rounded-xl p-6 mb-8 text-left">
           <h2 className="text-xl font-bold text-slate-900 mb-4">What Happens Next?</h2>
           <ol className="space-y-3 text-slate-700">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 bg-mfc-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+              <span className="flex-shrink-0 w-6 h-6 bg-mfc-primary-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
               <span><strong>Processing:</strong> Your request is being verified and prepared for delivery</span>
             </li>
             <li className="flex items-start gap-3">
@@ -54,7 +54,7 @@ export default function SuccessPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
             href="/"
-            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-mfc-purple-600 rounded-lg hover:bg-mfc-purple-700 transition-all shadow-lg hover:shadow-xl"
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-mfc-primary-500 rounded-lg hover:bg-mfc-primary-600 transition-all shadow-lg hover:shadow-xl"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -66,7 +66,7 @@ export default function SuccessPage() {
             href="https://myfuturecapacity.org"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-mfc-purple-600 bg-white border-2 border-mfc-purple-600 rounded-lg hover:bg-mfc-purple-50 transition-all"
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-mfc-primary-500 bg-white border-2 border-mfc-primary-500 rounded-lg hover:bg-mfc-primary-50 transition-all"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -78,7 +78,7 @@ export default function SuccessPage() {
         {/* Help Text */}
         <p className="text-sm text-slate-500 mt-8">
           Questions? Contact your school's guidance office or{' '}
-          <Link href="/contact" className="text-mfc-purple-600 hover:underline font-medium">
+          <Link href="/contact" className="text-mfc-primary-500 hover:underline font-medium">
             contact support
           </Link>
         </p>

@@ -36,7 +36,7 @@ export function FormButtons({
         <button
           type="button"
           onClick={onNext}
-          className="inline-flex items-center px-8 py-3 text-base font-semibold text-white bg-mfc-purple-600 rounded-lg hover:bg-mfc-purple-700 transition-all shadow-lg hover:shadow-xl"
+          className="inline-flex items-center px-8 py-3 text-base font-semibold text-white bg-mfc-primary-500 rounded-lg hover:bg-mfc-primary-600 transition-all shadow-lg hover:shadow-xl"
         >
           {nextLabel}
           <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

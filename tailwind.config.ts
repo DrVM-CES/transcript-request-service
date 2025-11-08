@@ -9,16 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // My Future Capacity brand colors
+        // My Future Capacity brand colors (matched to MFC app)
         mfc: {
-          purple: {
-            50: '#FAF5FF',
-            100: '#F3E8FF',
-            500: '#A855F7',
-            600: '#8B5CF6',
-            700: '#9333EA',
-            900: '#581C87',
+          primary: {
+            50: '#EDEFFF',
+            100: '#DADEFF',
+            200: '#C5CAFF',
+            300: '#9BA3FF',
+            400: '#7178FF',
+            500: '#5B5FF5',  // Main MFC blue-purple
+            600: '#4B4FDB',
+            700: '#3B4BDB',  // Sidebar blue
+            800: '#2A35B8',
+            900: '#1A2594',
           },
+          cream: '#F5F5F0',  // MFC background color
           orange: {
             100: '#FFEDD5',
             500: '#FB923C',
