@@ -117,7 +117,8 @@ export const transcriptRequestSchema = z.object({
   
   destinationZip: z.string()
     .optional()
-    .refine((val) => !val || /^\d{5}(-\d{4})?$/.test(val), {
+    .transform(val => !val || val === '' ? undefined : val)
+    .refine((val) => val === undefined || /^\d{5}(-\d{4})?$/.test(val), {
       message: 'Please enter a valid ZIP code'
     }),
 
