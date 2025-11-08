@@ -1,0 +1,58 @@
+School Name,Type,City,State,Country,CEEB Code,Federal School Code,Website,Notes
+Abraham Lincoln High School,High School,San Francisco,CA,USA,380345,,,California High School
+Beverly Hills High School,High School,Beverly Hills,CA,USA,050360,,,California High School
+Birmingham High School,High School,Van Nuys,CA,USA,050375,,,California High School
+California Institute of Technology,University,Pasadena,CA,USA,001131,001131,https://caltech.edu,Major University
+Galileo Academy of Science and Technology,High School,San Francisco,CA,USA,051285,,,California High School
+George Washington High School,High School,San Francisco,CA,USA,053405,,,California High School
+Hollywood High School,High School,Los Angeles,CA,USA,051855,,,California High School
+John Marshall High School,High School,Los Angeles,CA,USA,052140,,,California High School
+La Jolla High School,High School,La Jolla,CA,USA,052165,,,California High School
+Los Angeles High School,High School,Los Angeles,CA,USA,052600,,,California High School
+Lowell High School,High School,San Francisco,CA,USA,052720,,,California High School
+Mission High School,High School,San Francisco,CA,USA,053785,,,California High School
+Palo Alto High School,High School,Palo Alto,CA,USA,052495,,,California High School
+San Diego High School,High School,San Diego,CA,USA,054715,,,California High School
+San Diego State University,University,San Diego,CA,USA,001305,,https://sdsu.edu,Major University
+Santa Monica High School,High School,Santa Monica,CA,USA,054855,,,California High School
+Stanford University,University,Stanford,CA,USA,001305,,https://stanford.edu,Major University
+Torrey Pines High School,High School,San Diego,CA,USA,056190,,,California High School
+University of California Berkeley,University,Berkeley,CA,USA,001312,,https://berkeley.edu,Major University
+University of California Davis,University,Davis,CA,USA,001313,,https://ucdavis.edu,Major University
+University of California Irvine,University,Irvine,CA,USA,001314,,https://uci.edu,Major University
+University of California Los Angeles,University,Los Angeles,CA,USA,001315,,https://ucla.edu,Major University
+University of California San Diego,University,La Jolla,CA,USA,001317,,https://ucsd.edu,Major University
+University of California Santa Barbara,University,Santa Barbara,CA,USA,001320,,https://ucsb.edu,Major University
+University of Southern California,University,Los Angeles,CA,USA,001328,,https://usc.edu,Major University
+Duke University,University,Durham,NC,USA,002920,,https://duke.edu,Major University
+University of North Carolina at Chapel Hill,University,Chapel Hill,NC,USA,002974,,https://unc.edu,Major University
+Florida State University,University,Tallahassee,FL,USA,001489,,https://fsu.edu,Major University
+University of Central Florida,University,Orlando,FL,USA,003954,,https://ucf.edu,Major University
+University of Florida,University,Gainesville,FL,USA,001535,,https://ufl.edu,Major University
+University of Miami,University,Coral Gables,FL,USA,001536,,https://miami.edu,Major University
+Emory University,University,Atlanta,GA,USA,001564,,https://emory.edu,Major University
+Georgia Institute of Technology,University,Atlanta,GA,USA,001569,,https://gatech.edu,Major University
+Northwestern University,University,Evanston,IL,USA,001739,,https://northwestern.edu,Major University
+University of Chicago,University,Chicago,IL,USA,001774,,https://uchicago.edu,Major University
+University of Illinois Urbana-Champaign,University,Urbana,IL,USA,001775,,https://illinois.edu,Major University
+Boston University,University,Boston,MA,USA,002130,,https://bu.edu,Major University
+Harvard University,University,Cambridge,MA,USA,002155,,https://harvard.edu,Major University
+Massachusetts Institute of Technology,University,Cambridge,MA,USA,002178,,https://mit.edu,Major University
+Northeastern University,University,Boston,MA,USA,002199,,https://northeastern.edu,Major University
+Tufts University,University,Medford,MA,USA,002219,,https://tufts.edu,Major University
+University of Michigan,University,Ann Arbor,MI,USA,002325,,https://umich.edu,Major University
+Washington University in St. Louis,University,St. Louis,MO,USA,002520,,https://wustl.edu,Major University
+Columbia University,University,New York,NY,USA,002707,,https://columbia.edu,Major University
+Cornell University,University,Ithaca,NY,USA,002711,,https://cornell.edu,Major University
+New York University,University,New York,NY,USA,002785,,https://nyu.edu,Major University
+Syracuse University,University,Syracuse,NY,USA,002882,,https://syracuse.edu,Major University
+University of Rochester,University,Rochester,NY,USA,002894,,https://rochester.edu,Major University
+Carnegie Mellon University,University,Pittsburgh,PA,USA,003242,,https://cmu.edu,Major University
+University of Pennsylvania,University,Philadelphia,PA,USA,003378,,https://upenn.edu,Major University
+Vanderbilt University,University,Nashville,TN,USA,003535,,https://vanderbilt.edu,Major University
+Rice University,University,Houston,TX,USA,003604,,https://rice.edu,Major University
+Southern Methodist University,University,Dallas,TX,USA,003613,,https://smu.edu,Major University
+Texas A&M University,University,College Station,TX,USA,003632,,https://tamu.edu,Major University
+University of Houston,University,Houston,TX,USA,003652,,https://uh.edu,Major University
+University of Texas at Austin,University,Austin,TX,USA,003658,,https://utexas.edu,Major University
+University of Washington,University,Seattle,WA,USA,003798,,https://washington.edu,Major University
