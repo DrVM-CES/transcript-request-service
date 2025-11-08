@@ -6,7 +6,6 @@
 
 :root {
   --foreground-rgb: 31, 41, 55; /* gray-800 */
-  --mfc-cream: 245, 245, 240; /* #F5F5F0 - MFC background */
 }
 
 * {
@@ -26,7 +25,7 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--mfc-cream));
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
 }
 
