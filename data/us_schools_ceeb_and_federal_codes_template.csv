@@ -1,58 +1,484 @@
 School Name,Type,City,State,Country,CEEB Code,Federal School Code,Website,Notes
+Abraham Lincoln High School,High School,Los Angeles,CA,USA,052460,,,California High School
 Abraham Lincoln High School,High School,San Francisco,CA,USA,380345,,,California High School
+Alexander Hamilton High School,High School,Los Angeles,CA,USA,050010,,,California High School
+American High School,High School,Fremont,CA,USA,050060,,,California High School
+Andrew Hill High School,High School,San Jose,CA,USA,050085,,,California High School
+Aragon High School,High School,San Mateo,CA,USA,050145,,,California High School
+Balboa High School,High School,San Francisco,CA,USA,050265,,,California High School
+Banning High School,High School,Los Angeles,CA,USA,050285,,,California High School
+Benjamin Franklin High School,High School,Los Angeles,CA,USA,051235,,,California High School
 Beverly Hills High School,High School,Beverly Hills,CA,USA,050360,,,California High School
 Birmingham High School,High School,Van Nuys,CA,USA,050375,,,California High School
-California Institute of Technology,University,Pasadena,CA,USA,001131,001131,https://caltech.edu,Major University
-Galileo Academy of Science and Technology,High School,San Francisco,CA,USA,051285,,,California High School
+Bonita Vista High School,High School,Chula Vista,CA,USA,050535,,,California High School
+Bullard High School,High School,Fresno,CA,USA,050770,,,California High School
+Burbank High School,High School,Sacramento,CA,USA,050795,,,California High School
+Burlingame High School,High School,Burlingame,CA,USA,050790,,,California High School
+Burton High School,High School,San Francisco,CA,USA,050805,,,California High School
+C.K. McClatchy High School,High School,Sacramento,CA,USA,050870,,,California High School
+Cabrillo High School,High School,Long Beach,CA,USA,050855,,,California High School
+California Institute of Technology,University,Pasadena,CA,USA,001131,001131,https://caltech.edu,California University
+"California State University, Fullerton",University,Fullerton,CA,USA,001137,001137,https://fullerton.edu,California University
+"California State University, Long Beach",University,Long Beach,CA,USA,001139,001139,https://csulb.edu,California University
+"California State University, Northridge",University,Northridge,CA,USA,001153,001153,https://csun.edu,California University
+"California State University, Sacramento",University,Sacramento,CA,USA,001233,001233,https://csus.edu,California University
+Canoga Park High School,High School,Canoga Park,CA,USA,050935,,,California High School
+Capuchino High School,High School,San Bruno,CA,USA,050945,,,California High School
+Carlmont High School,High School,Belmont,CA,USA,050950,,,California High School
+Castle Park High School,High School,Chula Vista,CA,USA,050975,,,California High School
+Castlemont High School,High School,Oakland,CA,USA,050980,,,California High School
+Chapman University,University,Orange,CA,USA,001164,001164,https://chapman.edu,California University
+Chatsworth High School,High School,Chatsworth,CA,USA,051010,,,California High School
+Chula Vista High School,High School,Chula Vista,CA,USA,051040,,,California High School
+Clairemont High School,High School,San Diego,CA,USA,051065,,,California High School
+Cleveland High School,High School,Reseda,CA,USA,051090,,,California High School
+Crawford High School,High School,San Diego,CA,USA,051380,,,California High School
+Crenshaw High School,High School,Los Angeles,CA,USA,051375,,,California High School
+Culver City High School,High School,Culver City,CA,USA,051400,,,California High School
+Del Campo High School,High School,Fair Oaks,CA,USA,051440,,,California High School
+Dorsey High School,High School,Los Angeles,CA,USA,051485,,,California High School
+Eagle Rock High School,High School,Los Angeles,CA,USA,051545,,,California High School
+Edison High School,High School,Fresno,CA,USA,051555,,,California High School
+El Cajon Valley High School,High School,El Cajon,CA,USA,051565,,,California High School
+El Camino High School,High School,Sacramento,CA,USA,051590,,,California High School
+El Camino Real High School,High School,Woodland Hills,CA,USA,051595,,,California High School
+Encina High School,High School,Sacramento,CA,USA,051620,,,California High School
+Evergreen Valley High School,High School,San Jose,CA,USA,051665,,,California High School
+Fairfax High School,High School,Los Angeles,CA,USA,051685,,,California High School
+Florin High School,High School,Sacramento,CA,USA,051225,,,California High School
+Fremont High School,High School,Los Angeles,CA,USA,051265,,,California High School
+Fremont High School,High School,Oakland,CA,USA,051270,,,California High School
+Fresno High School,High School,Fresno,CA,USA,051275,,,California High School
+Galileo Academy,High School,San Francisco,CA,USA,051285,,,California High School
+Garfield High School,High School,Los Angeles,CA,USA,051295,,,California High School
 George Washington High School,High School,San Francisco,CA,USA,053405,,,California High School
+Granada Hills High School,High School,Granada Hills,CA,USA,051415,,,California High School
+Granite Hills High School,High School,El Cajon,CA,USA,051420,,,California High School
+Grant High School,High School,Van Nuys,CA,USA,051425,,,California High School
+Grant High School,High School,Sacramento,CA,USA,051430,,,California High School
+Grossmont High School,High School,La Mesa,CA,USA,051445,,,California High School
+Gunderson High School,High School,San Jose,CA,USA,051450,,,California High School
+Half Moon Bay High School,High School,Half Moon Bay,CA,USA,051710,,,California High School
+Helix High School,High School,La Mesa,CA,USA,051760,,,California High School
+Henry High School,High School,San Diego,CA,USA,051765,,,California High School
+Hillsdale High School,High School,San Mateo,CA,USA,051820,,,California High School
+Hilltop High School,High School,Chula Vista,CA,USA,051825,,,California High School
+Hiram Johnson High School,High School,Sacramento,CA,USA,051830,,,California High School
 Hollywood High School,High School,Los Angeles,CA,USA,051855,,,California High School
+Hoover High School,High School,San Diego,CA,USA,051880,,,California High School
+Hoover High School,High School,Fresno,CA,USA,051885,,,California High School
+Independence High School,High School,San Jose,CA,USA,051945,,,California High School
+Irvington High School,High School,Fremont,CA,USA,052030,,,California High School
 John Marshall High School,High School,Los Angeles,CA,USA,052140,,,California High School
+John Muir High School,High School,Pasadena,CA,USA,052335,,,California High School
+Jordan High School,High School,Long Beach,CA,USA,052095,,,California High School
+Kearny High School,High School,San Diego,CA,USA,052200,,,California High School
+Kennedy High School,High School,Granada Hills,CA,USA,052215,,,California High School
+Kennedy High School,High School,Fremont,CA,USA,052220,,,California High School
+Kennedy High School,High School,Sacramento,CA,USA,052225,,,California High School
+King/Drew Medical Magnet High School,High School,Los Angeles,CA,USA,052240,,,California High School
 La Jolla High School,High School,La Jolla,CA,USA,052165,,,California High School
+Lakewood High School,High School,Lakewood,CA,USA,052315,,,California High School
+Leland High School,High School,San Jose,CA,USA,052400,,,California High School
+Lincoln High School,High School,Los Angeles,CA,USA,052460,,,California High School
+Lincoln High School,High School,San Diego,CA,USA,052465,,,California High School
+Lincoln High School,High School,San Jose,CA,USA,052470,,,California High School
+Long Beach Polytechnic High School,High School,Long Beach,CA,USA,052575,,,California High School
 Los Angeles High School,High School,Los Angeles,CA,USA,052600,,,California High School
 Lowell High School,High School,San Francisco,CA,USA,052720,,,California High School
+Loyola Marymount University,University,Los Angeles,CA,USA,001245,001245,https://lmu.edu,California University
+Luther Burbank High School,High School,Sacramento,CA,USA,052700,,,California High School
+Madison High School,High School,San Diego,CA,USA,052710,,,California High School
+Manual Arts High School,High School,Los Angeles,CA,USA,052725,,,California High School
+Mar Vista High School,High School,Imperial Beach,CA,USA,052735,,,California High School
+McClymonds High School,High School,Oakland,CA,USA,052790,,,California High School
+McLane High School,High School,Fresno,CA,USA,052795,,,California High School
+Menlo-Atherton High School,High School,Atherton,CA,USA,052830,,,California High School
+Millikan High School,High School,Long Beach,CA,USA,052855,,,California High School
+Mills High School,High School,Millbrae,CA,USA,052850,,,California High School
+Mira Loma High School,High School,Sacramento,CA,USA,052865,,,California High School
+Mission Bay High School,High School,San Diego,CA,USA,052860,,,California High School
 Mission High School,High School,San Francisco,CA,USA,053785,,,California High School
-Palo Alto High School,High School,Palo Alto,CA,USA,052495,,,California High School
+Mission San Jose High School,High School,Fremont,CA,USA,052870,,,California High School
+Monroe High School,High School,Sepulveda,CA,USA,052875,,,California High School
+Montgomery High School,High School,San Diego,CA,USA,052890,,,California High School
+Morse High School,High School,San Diego,CA,USA,052900,,,California High School
+Mount Miguel High School,High School,Spring Valley,CA,USA,052905,,,California High School
+Narbonne High School,High School,Harbor City,CA,USA,052915,,,California High School
+Newark Memorial High School,High School,Newark,CA,USA,052945,,,California High School
+North Hollywood High School,High School,North Hollywood,CA,USA,052995,,,California High School
+Oak Grove High School,High School,San Jose,CA,USA,053000,,,California High School
+Oakland High School,High School,Oakland,CA,USA,053005,,,California High School
+Oakland Technical High School,High School,Oakland,CA,USA,053010,,,California High School
+Otay Ranch High School,High School,Chula Vista,CA,USA,053015,,,California High School
+Palisades High School,High School,Pacific Palisades,CA,USA,053025,,,California High School
+Palo Alto High School,High School,Palo Alto,CA,USA,053030,,,California High School
+Pasadena High School,High School,Pasadena,CA,USA,053065,,,California High School
+Pepperdine University,University,Malibu,CA,USA,001264,001264,https://pepperdine.edu,California University
+Piedmont Hills High School,High School,San Jose,CA,USA,053235,,,California High School
+Pioneer High School,High School,San Jose,CA,USA,053250,,,California High School
+Point Loma High School,High School,San Diego,CA,USA,053265,,,California High School
+Polytechnic High School,High School,Sun Valley,CA,USA,053295,,,California High School
+Ramona High School,High School,Ramona,CA,USA,053575,,,California High School
+Reseda High School,High School,Reseda,CA,USA,053645,,,California High School
+Rio Americano High School,High School,Sacramento,CA,USA,053655,,,California High School
+Roosevelt High School,High School,Los Angeles,CA,USA,053685,,,California High School
+Roosevelt High School,High School,Fresno,CA,USA,053690,,,California High School
+Sacramento High School,High School,Sacramento,CA,USA,054665,,,California High School
+Sacred Heart Cathedral Prep,High School,San Francisco,CA,USA,054655,,,California High School
 San Diego High School,High School,San Diego,CA,USA,054715,,,California High School
-San Diego State University,University,San Diego,CA,USA,001305,,https://sdsu.edu,Major University
+San Diego State University,University,San Diego,CA,USA,001305,001305,https://sdsu.edu,California University
+San Fernando High School,High School,San Fernando,CA,USA,054755,,,California High School
+San Francisco State University,University,San Francisco,CA,USA,001154,001154,https://sfsu.edu,California University
+San Jose State University,University,San Jose,CA,USA,001155,001155,https://sjsu.edu,California University
+San Mateo High School,High School,San Mateo,CA,USA,054835,,,California High School
+San Pedro High School,High School,San Pedro,CA,USA,054885,,,California High School
+San Ysidro High School,High School,San Diego,CA,USA,054895,,,California High School
+Santa Clara University,University,Santa Clara,CA,USA,001326,001326,https://scu.edu,California University
 Santa Monica High School,High School,Santa Monica,CA,USA,054855,,,California High School
-Stanford University,University,Stanford,CA,USA,001305,,https://stanford.edu,Major University
+Santa Teresa High School,High School,San Jose,CA,USA,054875,,,California High School
+Santana High School,High School,Santee,CA,USA,054845,,,California High School
+Sequoia High School,High School,Redwood City,CA,USA,055010,,,California High School
+Serra High School,High School,San Diego,CA,USA,055015,,,California High School
+Silver Creek High School,High School,San Jose,CA,USA,055185,,,California High School
+Skyline High School,High School,Oakland,CA,USA,055215,,,California High School
+Stanford University,University,Stanford,CA,USA,001305,001305,https://stanford.edu,California University
+Sunnyside High School,High School,Fresno,CA,USA,055700,,,California High School
+Sweetwater High School,High School,National City,CA,USA,055715,,,California High School
+Sylmar High School,High School,Sylmar,CA,USA,055705,,,California High School
+Taft High School,High School,Woodland Hills,CA,USA,055745,,,California High School
 Torrey Pines High School,High School,San Diego,CA,USA,056190,,,California High School
-University of California Berkeley,University,Berkeley,CA,USA,001312,,https://berkeley.edu,Major University
-University of California Davis,University,Davis,CA,USA,001313,,https://ucdavis.edu,Major University
-University of California Irvine,University,Irvine,CA,USA,001314,,https://uci.edu,Major University
-University of California Los Angeles,University,Los Angeles,CA,USA,001315,,https://ucla.edu,Major University
-University of California San Diego,University,La Jolla,CA,USA,001317,,https://ucsd.edu,Major University
-University of California Santa Barbara,University,Santa Barbara,CA,USA,001320,,https://ucsb.edu,Major University
-University of Southern California,University,Los Angeles,CA,USA,001328,,https://usc.edu,Major University
-Duke University,University,Durham,NC,USA,002920,,https://duke.edu,Major University
-University of North Carolina at Chapel Hill,University,Chapel Hill,NC,USA,002974,,https://unc.edu,Major University
-Florida State University,University,Tallahassee,FL,USA,001489,,https://fsu.edu,Major University
-University of Central Florida,University,Orlando,FL,USA,003954,,https://ucf.edu,Major University
-University of Florida,University,Gainesville,FL,USA,001535,,https://ufl.edu,Major University
-University of Miami,University,Coral Gables,FL,USA,001536,,https://miami.edu,Major University
-Emory University,University,Atlanta,GA,USA,001564,,https://emory.edu,Major University
-Georgia Institute of Technology,University,Atlanta,GA,USA,001569,,https://gatech.edu,Major University
-Northwestern University,University,Evanston,IL,USA,001739,,https://northwestern.edu,Major University
-University of Chicago,University,Chicago,IL,USA,001774,,https://uchicago.edu,Major University
-University of Illinois Urbana-Champaign,University,Urbana,IL,USA,001775,,https://illinois.edu,Major University
-Boston University,University,Boston,MA,USA,002130,,https://bu.edu,Major University
-Harvard University,University,Cambridge,MA,USA,002155,,https://harvard.edu,Major University
-Massachusetts Institute of Technology,University,Cambridge,MA,USA,002178,,https://mit.edu,Major University
-Northeastern University,University,Boston,MA,USA,002199,,https://northeastern.edu,Major University
-Tufts University,University,Medford,MA,USA,002219,,https://tufts.edu,Major University
-University of Michigan,University,Ann Arbor,MI,USA,002325,,https://umich.edu,Major University
-Washington University in St. Louis,University,St. Louis,MO,USA,002520,,https://wustl.edu,Major University
-Columbia University,University,New York,NY,USA,002707,,https://columbia.edu,Major University
-Cornell University,University,Ithaca,NY,USA,002711,,https://cornell.edu,Major University
-New York University,University,New York,NY,USA,002785,,https://nyu.edu,Major University
-Syracuse University,University,Syracuse,NY,USA,002882,,https://syracuse.edu,Major University
-University of Rochester,University,Rochester,NY,USA,002894,,https://rochester.edu,Major University
-Carnegie Mellon University,University,Pittsburgh,PA,USA,003242,,https://cmu.edu,Major University
-University of Pennsylvania,University,Philadelphia,PA,USA,003378,,https://upenn.edu,Major University
-Vanderbilt University,University,Nashville,TN,USA,003535,,https://vanderbilt.edu,Major University
-Rice University,University,Houston,TX,USA,003604,,https://rice.edu,Major University
-Southern Methodist University,University,Dallas,TX,USA,003613,,https://smu.edu,Major University
-Texas A&M University,University,College Station,TX,USA,003632,,https://tamu.edu,Major University
-University of Houston,University,Houston,TX,USA,003652,,https://uh.edu,Major University
-University of Texas at Austin,University,Austin,TX,USA,003658,,https://utexas.edu,Major University
-University of Washington,University,Seattle,WA,USA,003798,,https://washington.edu,Major University
+University City High School,High School,San Diego,CA,USA,055970,,,California High School
+"University of California, Berkeley",University,Berkeley,CA,USA,001312,001312,https://berkeley.edu,California University
+"University of California, Davis",University,Davis,CA,USA,001313,001313,https://ucdavis.edu,California University
+"University of California, Irvine",University,Irvine,CA,USA,001314,001314,https://uci.edu,California University
+"University of California, Los Angeles",University,Los Angeles,CA,USA,001315,001315,https://ucla.edu,California University
+"University of California, Merced",University,Merced,CA,USA,041271,041271,https://ucmerced.edu,California University
+"University of California, Riverside",University,Riverside,CA,USA,001316,001316,https://ucr.edu,California University
+"University of California, San Diego",University,La Jolla,CA,USA,001317,001317,https://ucsd.edu,California University
+"University of California, Santa Barbara",University,Santa Barbara,CA,USA,001320,001320,https://ucsb.edu,California University
+"University of California, Santa Cruz",University,Santa Cruz,CA,USA,001321,001321,https://ucsc.edu,California University
+University of San Diego,University,San Diego,CA,USA,001395,001395,https://sandiego.edu,California University
+University of San Francisco,University,San Francisco,CA,USA,001325,001325,https://usfca.edu,California University
+University of Southern California,University,Los Angeles,CA,USA,001328,001328,https://usc.edu,California University
+Valhalla High School,High School,El Cajon,CA,USA,055985,,,California High School
+Valley High School,High School,Sacramento,CA,USA,056000,,,California High School
+Van Nuys High School,High School,Van Nuys,CA,USA,055995,,,California High School
+Venice High School,High School,Los Angeles,CA,USA,056040,,,California High School
+Washington High School,High School,Los Angeles,CA,USA,056205,,,California High School
+West Hills High School,High School,Santee,CA,USA,056340,,,California High School
+Westchester High School,High School,Los Angeles,CA,USA,056300,,,California High School
+Willow Glen High School,High School,San Jose,CA,USA,056455,,,California High School
+Wilson High School,High School,Los Angeles,CA,USA,056460,,,California High School
+Wilson High School,High School,Long Beach,CA,USA,056465,,,California High School
+Woodside High School,High School,Woodside,CA,USA,056515,,,California High School
+Yerba Buena High School,High School,San Jose,CA,USA,056545,,,California High School
+Blanche Ely High School,High School,Pompano Beach,FL,USA,090515,,,Florida High School
+Boone High School,High School,Orlando,FL,USA,090620,,,Florida High School
+Boyd H. Anderson High School,High School,Lauderdale Lakes,FL,USA,090645,,,Florida High School
+Coconut Creek High School,High School,Coconut Creek,FL,USA,091305,,,Florida High School
+Colonial High School,High School,Orlando,FL,USA,091325,,,Florida High School
+Cooper City High School,High School,Cooper City,FL,USA,091375,,,Florida High School
+Coral Gables Senior High,High School,Coral Gables,FL,USA,091380,,,Florida High School
+Coral Reef Senior High,High School,Miami,FL,USA,091385,,,Florida High School
+Coral Springs High School,High School,Coral Springs,FL,USA,091395,,,Florida High School
+Deerfield Beach High School,High School,Deerfield Beach,FL,USA,091465,,,Florida High School
+Dillard High School,High School,Fort Lauderdale,FL,USA,091500,,,Florida High School
+Douglas High School,High School,Parkland,FL,USA,091515,,,Florida High School
+Dr. Phillips High School,High School,Orlando,FL,USA,091520,,,Florida High School
+East River High School,High School,Orlando,FL,USA,091540,,,Florida High School
+Edgewater High School,High School,Orlando,FL,USA,091560,,,Florida High School
+Evans High School,High School,Orlando,FL,USA,091640,,,Florida High School
+Felix Varela Senior High,High School,Miami,FL,USA,091645,,,Florida High School
+Ferguson Senior High,High School,Miami,FL,USA,091650,,,Florida High School
+Flanagan High School,High School,Pembroke Pines,FL,USA,091655,,,Florida High School
+Florida Atlantic University,University,Boca Raton,FL,USA,001481,001481,https://fau.edu,Florida University
+Florida International University,University,Miami,FL,USA,009635,009635,https://fiu.edu,Florida University
+Florida State University,University,Tallahassee,FL,USA,001489,001489,https://fsu.edu,Florida University
+Fort Lauderdale High School,High School,Fort Lauderdale,FL,USA,091695,,,Florida High School
+Hallandale High School,High School,Hallandale,FL,USA,091735,,,Florida High School
+Hialeah High School,High School,Hialeah,FL,USA,091810,,,Florida High School
+Hialeah-Miami Lakes Senior High,High School,Hialeah,FL,USA,091815,,,Florida High School
+Hollywood Hills High School,High School,Hollywood,FL,USA,091850,,,Florida High School
+Homestead Senior High,High School,Homestead,FL,USA,091870,,,Florida High School
+John A. Ferguson Senior High,High School,Miami,FL,USA,092055,,,Florida High School
+Jones High School,High School,Orlando,FL,USA,092100,,,Florida High School
+Killian Senior High,High School,Miami,FL,USA,092235,,,Florida High School
+McArthur High School,High School,Hollywood,FL,USA,092785,,,Florida High School
+Miami Beach High School,High School,Miami Beach,FL,USA,090855,,,Florida High School
+Miami Carol City Senior High,High School,Miami Gardens,FL,USA,090805,,,Florida High School
+Miami Central Senior High,High School,Miami,FL,USA,090810,,,Florida High School
+Miami Edison Senior High,High School,Miami,FL,USA,090820,,,Florida High School
+Miami High School,High School,Miami,FL,USA,090860,,,Florida High School
+Miami Jackson Senior High,High School,Miami,FL,USA,090845,,,Florida High School
+Miami Norland Senior High,High School,Miami,FL,USA,090885,,,Florida High School
+Miami Palmetto Senior High,High School,Miami,FL,USA,090890,,,Florida High School
+Miami Springs Senior High,High School,Miami Springs,FL,USA,090900,,,Florida High School
+Miami Sunset Senior High,High School,Miami,FL,USA,090905,,,Florida High School
+Miramar High School,High School,Miramar,FL,USA,092915,,,Florida High School
+North Miami Beach Senior High,High School,North Miami Beach,FL,USA,090970,,,Florida High School
+North Miami Senior High,High School,North Miami,FL,USA,090975,,,Florida High School
+Northeast High School,High School,Oakland Park,FL,USA,090980,,,Florida High School
+Northwestern Senior High,High School,Miami,FL,USA,090995,,,Florida High School
+Nova High School,High School,Davie,FL,USA,091000,,,Florida High School
+Oak Ridge High School,High School,Orlando,FL,USA,093005,,,Florida High School
+Ocoee High School,High School,Ocoee,FL,USA,093015,,,Florida High School
+Olympia High School,High School,Orlando,FL,USA,093025,,,Florida High School
+Piper High School,High School,Sunrise,FL,USA,093255,,,Florida High School
+Plantation High School,High School,Plantation,FL,USA,093265,,,Florida High School
+Pompano Beach High School,High School,Pompano Beach,FL,USA,093275,,,Florida High School
+South Broward High School,High School,Hollywood,FL,USA,095360,,,Florida High School
+South Dade Senior High,High School,Homestead,FL,USA,095375,,,Florida High School
+South Miami Senior High,High School,Miami,FL,USA,095380,,,Florida High School
+South Plantation High School,High School,Plantation,FL,USA,095395,,,Florida High School
+Southwest Miami Senior High,High School,Miami,FL,USA,095405,,,Florida High School
+Stranahan High School,High School,Fort Lauderdale,FL,USA,095625,,,Florida High School
+Taravella High School,High School,Coral Springs,FL,USA,095760,,,Florida High School
+Timber Creek High School,High School,Orlando,FL,USA,095895,,,Florida High School
+University High School,High School,Orlando,FL,USA,095955,,,Florida High School
+University of Central Florida,University,Orlando,FL,USA,003954,003954,https://ucf.edu,Florida University
+University of Florida,University,Gainesville,FL,USA,001535,001535,https://ufl.edu,Florida University
+University of Miami,University,Coral Gables,FL,USA,001536,001536,https://miami.edu,Florida University
+University of North Florida,University,Jacksonville,FL,USA,009841,009841,https://unf.edu,Florida University
+University of South Florida,University,Tampa,FL,USA,001537,001537,https://usf.edu,Florida University
+West Orange High School,High School,Winter Garden,FL,USA,096320,,,Florida High School
+Western High School,High School,Davie,FL,USA,096290,,,Florida High School
+Winter Park High School,High School,Winter Park,FL,USA,096475,,,Florida High School
+Benjamin E. Mays High School,High School,Atlanta,GA,USA,110365,,,Georgia High School
+Booker T. Washington High School,High School,Atlanta,GA,USA,110610,,,Georgia High School
+Carver High School,High School,Atlanta,GA,USA,110970,,,Georgia High School
+Douglass High School,High School,Atlanta,GA,USA,111510,,,Georgia High School
+Emory University,University,Atlanta,GA,USA,001564,001564,https://emory.edu,Georgia University
+Georgia Institute of Technology,University,Atlanta,GA,USA,001569,001569,https://gatech.edu,Georgia University
+Georgia State University,University,Atlanta,GA,USA,001574,001574,https://gsu.edu,Georgia University
+Grady High School,High School,Atlanta,GA,USA,111415,,,Georgia High School
+Maynard Jackson High School,High School,Atlanta,GA,USA,112785,,,Georgia High School
+North Atlanta High School,High School,Atlanta,GA,USA,112960,,,Georgia High School
+South Atlanta High School,High School,Atlanta,GA,USA,115355,,,Georgia High School
+Therrell High School,High School,Atlanta,GA,USA,115850,,,Georgia High School
+University of Georgia,University,Athens,GA,USA,001598,001598,https://uga.edu,Georgia University
+Westlake High School,High School,Atlanta,GA,USA,116315,,,Georgia High School
+Amundsen High School,High School,Chicago,IL,USA,140070,,,Illinois High School
+Bogan High School,High School,Chicago,IL,USA,140575,,,Illinois High School
+Bowen High School,High School,Chicago,IL,USA,140635,,,Illinois High School
+Clemente High School,High School,Chicago,IL,USA,141090,,,Illinois High School
+Curie High School,High School,Chicago,IL,USA,141395,,,Illinois High School
+DePaul University,University,Chicago,IL,USA,001671,001671,https://depaul.edu,Illinois University
+Farragut High School,High School,Chicago,IL,USA,141645,,,Illinois High School
+Fenger High School,High School,Chicago,IL,USA,141655,,,Illinois High School
+Gage Park High School,High School,Chicago,IL,USA,141275,,,Illinois High School
+Harper High School,High School,Chicago,IL,USA,141745,,,Illinois High School
+Hubbard High School,High School,Chicago,IL,USA,141920,,,Illinois High School
+Illinois Institute of Technology,University,Chicago,IL,USA,001691,001691,https://iit.edu,Illinois University
+Julian High School,High School,Chicago,IL,USA,142115,,,Illinois High School
+Kelly High School,High School,Chicago,IL,USA,142210,,,Illinois High School
+Kenwood Academy,High School,Chicago,IL,USA,142230,,,Illinois High School
+Lake View High School,High School,Chicago,IL,USA,142340,,,Illinois High School
+Lane Tech High School,High School,Chicago,IL,USA,142345,,,Illinois High School
+Lincoln Park High School,High School,Chicago,IL,USA,142470,,,Illinois High School
+Loyola University Chicago,University,Chicago,IL,USA,001710,001710,https://luc.edu,Illinois University
+Mather High School,High School,Chicago,IL,USA,142775,,,Illinois High School
+Morgan Park High School,High School,Chicago,IL,USA,142895,,,Illinois High School
+Northside College Prep,High School,Chicago,IL,USA,142990,,,Illinois High School
+Northwestern University,University,Evanston,IL,USA,001739,001739,https://northwestern.edu,Illinois University
+Prosser High School,High School,Chicago,IL,USA,143350,,,Illinois High School
+Senn High School,High School,Chicago,IL,USA,145005,,,Illinois High School
+Simeon High School,High School,Chicago,IL,USA,145195,,,Illinois High School
+Steinmetz High School,High School,Chicago,IL,USA,145545,,,Illinois High School
+Taft High School,High School,Chicago,IL,USA,145745,,,Illinois High School
+University of Chicago,University,Chicago,IL,USA,001774,001774,https://uchicago.edu,Illinois University
+University of Illinois Chicago,University,Chicago,IL,USA,001776,001776,https://uic.edu,Illinois University
+University of Illinois Urbana-Champaign,University,Urbana,IL,USA,001775,001775,https://illinois.edu,Illinois University
+Von Steuben High School,High School,Chicago,IL,USA,146085,,,Illinois High School
+Walter Payton College Prep,High School,Chicago,IL,USA,146145,,,Illinois High School
+Wells High School,High School,Chicago,IL,USA,146260,,,Illinois High School
+Whitney Young High School,High School,Chicago,IL,USA,146420,,,Illinois High School
+Cass Technical High School,High School,Detroit,MI,USA,230975,,,Michigan High School
+Communication Media Arts High School,High School,Detroit,MI,USA,231330,,,Michigan High School
+Crockett Technical High School,High School,Detroit,MI,USA,231385,,,Michigan High School
+Denby High School,High School,Detroit,MI,USA,231470,,,Michigan High School
+East English Village Prep,High School,Detroit,MI,USA,231530,,,Michigan High School
+Martin Luther King High School,High School,Detroit,MI,USA,232765,,,Michigan High School
+Michigan State University,University,East Lansing,MI,USA,002290,002290,https://msu.edu,Michigan University
+Mumford High School,High School,Detroit,MI,USA,232920,,,Michigan High School
+Osborn High School,High School,Detroit,MI,USA,233040,,,Michigan High School
+Renaissance High School,High School,Detroit,MI,USA,233615,,,Michigan High School
+Southeastern High School,High School,Detroit,MI,USA,235395,,,Michigan High School
+University of Michigan,University,Ann Arbor,MI,USA,002325,002325,https://umich.edu,Michigan University
+Wayne State University,University,Detroit,MI,USA,002329,002329,https://wayne.edu,Michigan University
+Western International High School,High School,Detroit,MI,USA,236335,,,Michigan High School
+Duke University,University,Durham,NC,USA,002920,002920,https://duke.edu,North Carolina University
+East Mecklenburg High School,High School,Charlotte,NC,USA,341545,,,North Carolina High School
+Garinger High School,High School,Charlotte,NC,USA,341295,,,North Carolina High School
+Harding University High School,High School,Charlotte,NC,USA,341745,,,North Carolina High School
+Independence High School,High School,Charlotte,NC,USA,341955,,,North Carolina High School
+Myers Park High School,High School,Charlotte,NC,USA,342925,,,North Carolina High School
+North Carolina State University,University,Raleigh,NC,USA,002972,002972,https://ncsu.edu,North Carolina University
+North Mecklenburg High School,High School,Huntersville,NC,USA,342980,,,North Carolina High School
+Olympic High School,High School,Charlotte,NC,USA,343030,,,North Carolina High School
+South Mecklenburg High School,High School,Charlotte,NC,USA,345390,,,North Carolina High School
+University of North Carolina at Chapel Hill,University,Chapel Hill,NC,USA,002974,002974,https://unc.edu,North Carolina University
+Vance High School,High School,Charlotte,NC,USA,346010,,,North Carolina High School
+Wake Forest University,University,Winston-Salem,NC,USA,002978,002978,https://wfu.edu,North Carolina University
+West Charlotte High School,High School,Charlotte,NC,USA,346260,,,North Carolina High School
+West Mecklenburg High School,High School,Charlotte,NC,USA,346285,,,North Carolina High School
+Bard High School Early College,High School,New York,NY,USA,334520,,,New York High School
+Baruch College Campus High School,High School,New York,NY,USA,334540,,,New York High School
+Beacon High School,High School,New York,NY,USA,334560,,,New York High School
+Benjamin N. Cardozo High School,High School,Bayside,NY,USA,334950,,,New York High School
+Bennett High School,High School,Buffalo,NY,USA,330360,,,New York High School
+Bronx High School of Science,High School,Bronx,NY,USA,334755,,,New York High School
+Brooklyn Technical High School,High School,Brooklyn,NY,USA,334840,,,New York High School
+Burgard Vocational High School,High School,Buffalo,NY,USA,330790,,,New York High School
+Central Park East High School,High School,New York,NY,USA,335000,,,New York High School
+City Honors School,High School,Buffalo,NY,USA,331070,,,New York High School
+Columbia University,University,New York,NY,USA,002707,002707,https://columbia.edu,New York University
+Cornell University,University,Ithaca,NY,USA,002711,002711,https://cornell.edu,New York University
+DeWitt Clinton High School,High School,Bronx,NY,USA,331450,,,New York High School
+East High School,High School,Buffalo,NY,USA,331535,,,New York High School
+East High School,High School,Rochester,NY,USA,331540,,,New York High School
+Edison Career & Technology High School,High School,Rochester,NY,USA,331555,,,New York High School
+Eleanor Roosevelt High School,High School,New York,NY,USA,331560,,,New York High School
+Fashion Industries High School,High School,New York,NY,USA,331645,,,New York High School
+Fiorello H. LaGuardia High School,High School,New York,NY,USA,332380,,,New York High School
+Fordham University,University,Bronx,NY,USA,002722,002722,https://fordham.edu,New York University
+Forest Hills High School,High School,Forest Hills,NY,USA,331690,,,New York High School
+Frank Sinatra School of the Arts,High School,Queens,NY,USA,331695,,,New York High School
+Franklin High School,High School,Rochester,NY,USA,331725,,,New York High School
+George Washington High School,High School,New York,NY,USA,333405,,,New York High School
+High School for Math Science and Engineering,High School,New York,NY,USA,331805,,,New York High School
+Hunter College High School,High School,New York,NY,USA,331935,,,New York High School
+Hutchinson Central Technical High School,High School,Buffalo,NY,USA,331940,,,New York High School
+John Bowne High School,High School,Queens,NY,USA,332055,,,New York High School
+Leadership Academy,High School,Rochester,NY,USA,332380,,,New York High School
+McKinley High School,High School,Buffalo,NY,USA,332805,,,New York High School
+Midwood High School,High School,Brooklyn,NY,USA,332845,,,New York High School
+Monroe High School,High School,Rochester,NY,USA,332875,,,New York High School
+Murrow High School,High School,Brooklyn,NY,USA,332905,,,New York High School
+New York University,University,New York,NY,USA,002785,002785,https://nyu.edu,New York University
+Rensselaer Polytechnic Institute,University,Troy,NY,USA,002803,002803,https://rpi.edu,New York University
+Riverside High School,High School,Buffalo,NY,USA,333655,,,New York High School
+South Park High School,High School,Buffalo,NY,USA,335390,,,New York High School
+Stony Brook University,University,Stony Brook,NY,USA,002838,002838,https://stonybrook.edu,New York University
+Stuyvesant High School,High School,New York,NY,USA,335655,,,New York High School
+Syracuse University,University,Syracuse,NY,USA,002882,002882,https://syracuse.edu,New York University
+Townsend Harris High School,High School,Queens,NY,USA,335900,,,New York High School
+University at Buffalo,University,Buffalo,NY,USA,002837,002837,https://buffalo.edu,New York University
+University of Rochester,University,Rochester,NY,USA,002894,002894,https://rochester.edu,New York University
+Wilson Magnet High School,High School,Rochester,NY,USA,336465,,,New York High School
+Beechcroft High School,High School,Columbus,OH,USA,360350,,,Ohio High School
+Briggs High School,High School,Columbus,OH,USA,360730,,,Ohio High School
+Brookhaven High School,High School,Columbus,OH,USA,360750,,,Ohio High School
+Case Western Reserve University,University,Cleveland,OH,USA,003024,003024,https://case.edu,Ohio University
+Centennial High School,High School,Columbus,OH,USA,360995,,,Ohio High School
+Collinwood High School,High School,Cleveland,OH,USA,361315,,,Ohio High School
+East High School,High School,Columbus,OH,USA,361535,,,Ohio High School
+Glenville High School,High School,Cleveland,OH,USA,361355,,,Ohio High School
+Independence High School,High School,Columbus,OH,USA,361950,,,Ohio High School
+John Hay High School,High School,Cleveland,OH,USA,362070,,,Ohio High School
+John Marshall High School,High School,Cleveland,OH,USA,362145,,,Ohio High School
+Lincoln-West High School,High School,Cleveland,OH,USA,362485,,,Ohio High School
+Linden-McKinley High School,High School,Columbus,OH,USA,362490,,,Ohio High School
+Marion-Franklin High School,High School,Columbus,OH,USA,362745,,,Ohio High School
+Max S. Hayes High School,High School,Cleveland,OH,USA,362780,,,Ohio High School
+Miami University,University,Oxford,OH,USA,003077,003077,https://miamioh.edu,Ohio University
+Mifflin High School,High School,Columbus,OH,USA,362845,,,Ohio High School
+Northland High School,High School,Columbus,OH,USA,362995,,,Ohio High School
+Ohio State University,University,Columbus,OH,USA,001592,001592,https://osu.edu,Ohio University
+Ohio University,University,Athens,OH,USA,003100,003100,https://ohio.edu,Ohio University
+Rhodes High School,High School,Cleveland,OH,USA,363625,,,Ohio High School
+South High School,High School,Columbus,OH,USA,365385,,,Ohio High School
+University of Cincinnati,University,Cincinnati,OH,USA,003125,003125,https://uc.edu,Ohio University
+Walnut Ridge High School,High School,Columbus,OH,USA,366140,,,Ohio High School
+Whetstone High School,High School,Columbus,OH,USA,366400,,,Ohio High School
+Allderdice High School,High School,Pittsburgh,PA,USA,390055,,,Pennsylvania High School
+Brashear High School,High School,Pittsburgh,PA,USA,390685,,,Pennsylvania High School
+Carnegie Mellon University,University,Pittsburgh,PA,USA,003242,003242,https://cmu.edu,Pennsylvania University
+Carrick High School,High School,Pittsburgh,PA,USA,390955,,,Pennsylvania High School
+Central High School,High School,Philadelphia,PA,USA,391000,,,Pennsylvania High School
+Drexel University,University,Philadelphia,PA,USA,003256,003256,https://drexel.edu,Pennsylvania University
+George Washington High School,High School,Philadelphia,PA,USA,393405,,,Pennsylvania High School
+Lehigh University,University,Bethlehem,PA,USA,003289,003289,https://lehigh.edu,Pennsylvania University
+Masterman High School,High School,Philadelphia,PA,USA,392770,,,Pennsylvania High School
+Northeast High School,High School,Philadelphia,PA,USA,392985,,,Pennsylvania High School
+Obama Academy,High School,Pittsburgh,PA,USA,393010,,,Pennsylvania High School
+Olney High School,High School,Philadelphia,PA,USA,393030,,,Pennsylvania High School
+Overbrook High School,High School,Philadelphia,PA,USA,393050,,,Pennsylvania High School
+Pennsylvania State University,University,University Park,PA,USA,003329,003329,https://psu.edu,Pennsylvania University
+Perry High School,High School,Pittsburgh,PA,USA,393195,,,Pennsylvania High School
+South Philadelphia High School,High School,Philadelphia,PA,USA,395395,,,Pennsylvania High School
+Temple University,University,Philadelphia,PA,USA,003371,003371,https://temple.edu,Pennsylvania University
+University of Pennsylvania,University,Philadelphia,PA,USA,002926,002926,https://upenn.edu,Pennsylvania University
+University of Pittsburgh,University,Pittsburgh,PA,USA,003379,003379,https://pitt.edu,Pennsylvania University
+Villanova University,University,Villanova,PA,USA,003388,003388,https://villanova.edu,Pennsylvania University
+West Philadelphia High School,High School,Philadelphia,PA,USA,396310,,,Pennsylvania High School
+Westinghouse High School,High School,Pittsburgh,PA,USA,396330,,,Pennsylvania High School
+Adams High School,High School,Dallas,TX,USA,440005,,,Texas High School
+Adamson High School,High School,Dallas,TX,USA,440010,,,Texas High School
+Baylor University,University,Waco,TX,USA,003545,003545,https://baylor.edu,Texas University
+Bellaire High School,High School,Houston,TX,USA,440360,,,Texas High School
+Brackenridge High School,High School,San Antonio,TX,USA,440655,,,Texas High School
+Bryan Adams High School,High School,Dallas,TX,USA,440755,,,Texas High School
+Burbank High School,High School,San Antonio,TX,USA,440790,,,Texas High School
+Carnegie Vanguard High School,High School,Houston,TX,USA,440935,,,Texas High School
+Carter High School,High School,Dallas,TX,USA,440965,,,Texas High School
+Challenge Early College High School,High School,Houston,TX,USA,441005,,,Texas High School
+Chavez High School,High School,Houston,TX,USA,441010,,,Texas High School
+Churchill High School,High School,San Antonio,TX,USA,441045,,,Texas High School
+Conrad High School,High School,Dallas,TX,USA,441330,,,Texas High School
+Davis High School,High School,Houston,TX,USA,441420,,,Texas High School
+DeBakey High School,High School,Houston,TX,USA,441435,,,Texas High School
+Eastwood Academy,High School,Houston,TX,USA,441545,,,Texas High School
+Edison High School,High School,San Antonio,TX,USA,441550,,,Texas High School
+Fox Tech High School,High School,San Antonio,TX,USA,441245,,,Texas High School
+Furr High School,High School,Houston,TX,USA,441275,,,Texas High School
+Heights High School,High School,Houston,TX,USA,441760,,,Texas High School
+Hillcrest High School,High School,Dallas,TX,USA,441810,,,Texas High School
+Holmes High School,High School,San Antonio,TX,USA,441860,,,Texas High School
+Jefferson High School,High School,Dallas,TX,USA,442055,,,Texas High School
+Jefferson High School,High School,San Antonio,TX,USA,442060,,,Texas High School
+Jones High School,High School,Houston,TX,USA,442095,,,Texas High School
+Kashmere High School,High School,Houston,TX,USA,442195,,,Texas High School
+Kimball High School,High School,Dallas,TX,USA,442240,,,Texas High School
+Lamar High School,High School,Houston,TX,USA,442315,,,Texas High School
+Lanier High School,High School,San Antonio,TX,USA,442350,,,Texas High School
+Lee High School,High School,San Antonio,TX,USA,442380,,,Texas High School
+Lincoln High School,High School,Dallas,TX,USA,442460,,,Texas High School
+MacArthur High School,High School,San Antonio,TX,USA,442680,,,Texas High School
+Madison High School,High School,Houston,TX,USA,442710,,,Texas High School
+Madison High School,High School,Dallas,TX,USA,442705,,,Texas High School
+Madison High School,High School,San Antonio,TX,USA,442715,,,Texas High School
+Marshall High School,High School,San Antonio,TX,USA,442750,,,Texas High School
+Milby High School,High School,Houston,TX,USA,442845,,,Texas High School
+North Dallas High School,High School,Dallas,TX,USA,442985,,,Texas High School
+Pinkston High School,High School,Dallas,TX,USA,443250,,,Texas High School
+Reagan High School,High School,Houston,TX,USA,443605,,,Texas High School
+Rice University,University,Houston,TX,USA,003604,003604,https://rice.edu,Texas University
+Roosevelt High School,High School,Dallas,TX,USA,443680,,,Texas High School
+Roosevelt High School,High School,San Antonio,TX,USA,443685,,,Texas High School
+Samuell High School,High School,Dallas,TX,USA,444775,,,Texas High School
+Scarborough High School,High School,Houston,TX,USA,444945,,,Texas High School
+Sharpstown High School,High School,Houston,TX,USA,445055,,,Texas High School
+Skyline High School,High School,Dallas,TX,USA,445210,,,Texas High School
+South Oak Cliff High School,High School,Dallas,TX,USA,445385,,,Texas High School
+Southern Methodist University,University,Dallas,TX,USA,003613,003613,https://smu.edu,Texas University
+Spruce High School,High School,Dallas,TX,USA,445485,,,Texas High School
+Sterling High School,High School,Houston,TX,USA,445545,,,Texas High School
+Sunset High School,High School,Dallas,TX,USA,445690,,,Texas High School
+Texas A&M University,University,College Station,TX,USA,003632,003632,https://tamu.edu,Texas University
+Texas Christian University,University,Fort Worth,TX,USA,003636,003636,https://tcu.edu,Texas University
+Texas Tech University,University,Lubbock,TX,USA,003644,003644,https://ttu.edu,Texas University
+University of Houston,University,Houston,TX,USA,003652,003652,https://uh.edu,Texas University
+University of North Texas,University,Denton,TX,USA,003594,003594,https://unt.edu,Texas University
+University of Texas at Austin,University,Austin,TX,USA,003658,003658,https://utexas.edu,Texas University
+University of Texas at Dallas,University,Richardson,TX,USA,009741,009741,https://utdallas.edu,Texas University
+University of Texas at San Antonio,University,San Antonio,TX,USA,010115,010115,https://utsa.edu,Texas University
+W.T. White High School,High School,Dallas,TX,USA,446160,,,Texas High School
+Waltrip High School,High School,Houston,TX,USA,446185,,,Texas High School
+Washington High School,High School,Houston,TX,USA,446205,,,Texas High School
+Westbury High School,High School,Houston,TX,USA,446300,,,Texas High School
+Westside High School,High School,Houston,TX,USA,446335,,,Texas High School
+Wheatley High School,High School,Houston,TX,USA,446365,,,Texas High School
+Wisdom High School,High School,Houston,TX,USA,446480,,,Texas High School
+Woodrow Wilson High School,High School,Dallas,TX,USA,446505,,,Texas High School
+Yates High School,High School,Houston,TX,USA,446545,,,Texas High School
