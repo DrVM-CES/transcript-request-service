@@ -1,6 +1,9 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only if API key is available (prevents build errors)
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 interface TranscriptRequestEmailData {
   studentName: string;
@@ -30,6 +33,12 @@ export async function sendTranscriptRequestConfirmation(
   pdfBuffer: Buffer
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    // Check if Resend is configured
+    if (!resend) {
+      console.warn('RESEND_API_KEY not configured - skipping email');
+      return { success: false, error: 'Email service not configured' };
+    }
+
     const html = generateConfirmationEmailHTML(data);
 
     const result = await resend.emails.send({
@@ -66,6 +75,12 @@ export async function sendSchoolNotification(
   data: TranscriptRequestEmailData
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    // Check if Resend is configured
+    if (!resend) {
+      console.warn('RESEND_API_KEY not configured - skipping school notification');
+      return { success: false, error: 'Email service not configured' };
+    }
+
     const html = generateSchoolNotificationHTML(data);
 
     const result = await resend.emails.send({
