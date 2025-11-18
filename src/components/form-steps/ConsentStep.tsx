@@ -142,7 +142,7 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
           )}
         </div>
 
-        <div className="border border-amber-200 rounded-lg p-4 bg-amber-50">
+        <div className="border-2 border-amber-300 rounded-lg p-4 bg-amber-50">
           <label className="flex items-start space-x-3">
             <input
               type="checkbox"
@@ -154,7 +154,7 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
               <span className="text-sm font-medium text-neutral-900">
                 I have read, understand, and agree to the My Future Capacity Liability Release <span className="text-error-600">*</span>
               </span>
-              <p className="text-xs text-neutral-600 mt-1">
+              <p className="text-xs text-amber-800 mt-1">
                 This release explains My Future Capacity's role as a facilitator and limits of liability.
               </p>
             </div>

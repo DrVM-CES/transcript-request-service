@@ -41,7 +41,7 @@ export function DatePicker({
 
   // Calculate date range based on min/max age
   const today = new Date();
-  const fromDate = maxAge ? new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate()) : undefined;
+  const fromDate = maxAge ? new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate()) : new Date(1900, 0, 1);
   const toDate = minAge ? new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate()) : today;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,8 +154,10 @@ export function DatePicker({
             toDate={toDate}
             captionLayout="dropdown-buttons"
             defaultMonth={selectedDate || defaultMonth}
-            fromYear={fromDate?.getFullYear()}
-            toYear={toDate?.getFullYear()}
+            fromYear={fromDate.getFullYear()}
+            toYear={toDate.getFullYear()}
+            startMonth={fromDate}
+            endMonth={toDate}
           />
         </div>
       )}

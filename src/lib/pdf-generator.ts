@@ -53,23 +53,34 @@ export function generateTranscriptRequestPDF(data: TranscriptRequestData): jsPDF
   
   // MFC Brand Colors
   const primaryColor = [91, 95, 245]; // #5B5FF5
+  const gradientBlue = [102, 126, 234]; // #667eea
+  const gradientPurple = [118, 75, 162]; // #764ba2
   const darkGray = [50, 50, 50];
   const lightGray = [128, 128, 128];
   
   let yPosition = 20;
   
-  // Header with MFC branding
-  doc.setFillColor(...primaryColor);
-  doc.rect(0, 0, 210, 30, 'F');
+  // Header with MFC gradient branding
+  // Create gradient effect with rectangles
+  for (let i = 0; i < 30; i++) {
+    const ratio = i / 30;
+    const r = Math.round(gradientBlue[0] + (gradientPurple[0] - gradientBlue[0]) * ratio);
+    const g = Math.round(gradientBlue[1] + (gradientPurple[1] - gradientBlue[1]) * ratio);
+    const b = Math.round(gradientBlue[2] + (gradientPurple[2] - gradientBlue[2]) * ratio);
+    doc.setFillColor(r, g, b);
+    doc.rect(0, i, 210, 1, 'F');
+  }
   
+  // MFC Logo Text (stylized)
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
+  doc.setFontSize(28);
   doc.setFont('helvetica', 'bold');
-  doc.text('Transcript Request', 105, 18, { align: 'center' });
+  doc.text('MY FUTURE CAPACITY', 105, 13, { align: 'center' });
   
-  doc.setFontSize(10);
+  // Subtitle
+  doc.setFontSize(16);
   doc.setFont('helvetica', 'normal');
-  doc.text('My Future Capacity', 105, 25, { align: 'center' });
+  doc.text('Official Transcript Request', 105, 22, { align: 'center' });
   
   yPosition = 40;
   
@@ -235,13 +246,26 @@ export function generateTranscriptRequestPDF(data: TranscriptRequestData): jsPDF
   
   checkPageBreak();
   
-  // Footer with timestamp
+  // Footer with MFC branding
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
+    
+    // Footer line
+    doc.setDrawColor(...primaryColor);
+    doc.setLineWidth(0.5);
+    doc.line(20, 280, 190, 280);
+    
+    // MFC branding in footer
+    doc.setTextColor(...primaryColor);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.text('MY FUTURE CAPACITY', 105, 286, { align: 'center' });
+    
     doc.setTextColor(...lightGray);
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
+    doc.text('Empowering Students to Achieve Their Educational Goals', 105, 290, { align: 'center' });
     
     const timestamp = new Date().toLocaleString('en-US', {
       year: 'numeric',
@@ -252,8 +276,9 @@ export function generateTranscriptRequestPDF(data: TranscriptRequestData): jsPDF
       timeZoneName: 'short'
     });
     
-    doc.text(`Generated: ${timestamp}`, 105, 285, { align: 'center' });
-    doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+    doc.setFontSize(7);
+    doc.text(`Generated: ${timestamp}`, 20, 294);
+    doc.text(`Page ${i} of ${pageCount}`, 190, 294, { align: 'right' });
   }
   
   return doc;
