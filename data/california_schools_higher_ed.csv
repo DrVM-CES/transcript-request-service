@@ -1,0 +1,73 @@
+School Name,Type,City,State,Country,Address,ZIP,Phone,CEEB Code,Federal School Code,Website,Notes
+"University of California, Berkeley",University,Berkeley,CA,USA,200 California Hall,94720,(510) 642-6000,001312,001312,https://berkeley.edu,California University
+"University of California, Los Angeles",University,Los Angeles,CA,USA,405 Hilgard Avenue,90095,(310) 825-4321,001315,001315,https://ucla.edu,California University
+"University of California, San Diego",University,La Jolla,CA,USA,9500 Gilman Drive,92093,(858) 534-2230,001317,001317,https://ucsd.edu,California University
+"University of California, Davis",University,Davis,CA,USA,One Shields Avenue,95616,(530) 752-1011,001313,001313,https://ucdavis.edu,California University
+"University of California, Irvine",University,Irvine,CA,USA,Campus Drive,92697,(949) 824-5011,001314,001314,https://uci.edu,California University
+"University of California, Santa Barbara",University,Santa Barbara,CA,USA,Santa Barbara,93106,(805) 893-8000,001320,001320,https://ucsb.edu,California University
+"University of California, Santa Cruz",University,Santa Cruz,CA,USA,1156 High Street,95064,(831) 459-0111,001321,001321,https://ucsc.edu,California University
+"University of California, Riverside",University,Riverside,CA,USA,900 University Avenue,92521,(951) 827-1012,001316,001316,https://ucr.edu,California University
+"University of California, Merced",University,Merced,CA,USA,5200 North Lake Road,95343,(209) 228-4400,001348,001348,https://ucmerced.edu,California University
+"University of California, San Francisco",University,San Francisco,CA,USA,505 Parnassus Avenue,94143,(415) 476-9000,001319,001319,https://ucsf.edu,California University
+"California State University, Fullerton",University,Fullerton,CA,USA,800 N State College Blvd,92831,(657) 278-2011,001137,001137,,California University
+"California State University, Long Beach",University,Long Beach,CA,USA,1250 Bellflower Blvd,90840,(562) 985-4111,001139,001139,,California University
+"California State University, Los Angeles",University,Los Angeles,CA,USA,5151 State University Dr,90032,(323) 343-3000,001140,001140,,California University
+"California State University, Northridge",University,Northridge,CA,USA,18111 Nordhoff St,91330,(818) 677-1200,001153,001153,,California University
+"California State University, Sacramento",University,Sacramento,CA,USA,6000 J Street,95819,(916) 278-6011,001233,001233,,California University
+San Diego State University,University,San Diego,CA,USA,5500 Campanile Dr,92182,(619) 594-5200,001302,001302,,California University
+San Francisco State University,University,San Francisco,CA,USA,1600 Holloway Ave,94132,(415) 338-1111,001304,001304,,California University
+San Jose State University,University,San Jose,CA,USA,One Washington Square,95192,(408) 924-1000,001155,001155,,California University
+"California Polytechnic State University, San Luis Obispo",University,San Luis Obispo,CA,USA,1 Grand Ave,93407,(805) 756-1111,001143,001143,,California University
+"California State Polytechnic University, Pomona",University,Pomona,CA,USA,3801 W Temple Ave,91768,(909) 869-7659,001144,001144,,California University
+"California State University, Bakersfield",University,Bakersfield,CA,USA,9001 Stockdale Hwy,93311,(661) 654-2782,001118,001118,,California University
+"California State University, Channel Islands",University,Camarillo,CA,USA,One University Dr,93012,(805) 437-8400,039803,039803,,California University
+"California State University, Chico",University,Chico,CA,USA,400 W First St,95929,(530) 898-6116,001146,001146,,California University
+"California State University, Dominguez Hills",University,Carson,CA,USA,1000 E Victoria St,90747,(310) 243-3696,001141,001141,,California University
+"California State University, East Bay",University,Hayward,CA,USA,25800 Carlos Bee Blvd,94542,(510) 885-3000,001138,001138,,California University
+"California State University, Fresno",University,Fresno,CA,USA,5241 N Maple Ave,93740,(559) 278-4240,001147,001147,,California University
+"California State University, Monterey Bay",University,Seaside,CA,USA,100 Campus Center,93955,(831) 582-3000,032603,032603,,California University
+"California State University, San Bernardino",University,San Bernardino,CA,USA,5500 University Pkwy,92407,(909) 537-5000,001142,001142,,California University
+"California State University, San Marcos",University,San Marcos,CA,USA,333 S Twin Oaks Valley Rd,92096,(760) 750-4000,033224,033224,,California University
+"California State University, Stanislaus",University,Turlock,CA,USA,One University Circle,95382,(209) 667-3122,001157,001157,,California University
+California Maritime Academy,University,Vallejo,CA,USA,200 Maritime Academy Dr,94590,(707) 654-1000,001134,001134,,California University
+Humboldt State University,University,Arcata,CA,USA,1 Harpst St,95521,(707) 826-3011,001149,001149,,California University
+Sonoma State University,University,Rohnert Park,CA,USA,1801 E Cotati Ave,94928,(707) 664-2880,001156,001156,,California University
+Stanford University,University,Stanford,CA,USA,450 Serra Mall,94305,(650) 723-2300,001305,001305,,California University
+University of Southern California,University,Los Angeles,CA,USA,University Park,90089,(213) 740-2311,001328,001328,,California University
+California Institute of Technology,University,Pasadena,CA,USA,1200 E California Blvd,91125,(626) 395-6811,001131,001131,,California University
+Pepperdine University,University,Malibu,CA,USA,24255 Pacific Coast Hwy,90263,(310) 506-4000,001264,001264,,California University
+University of San Diego,University,San Diego,CA,USA,5998 Alcala Park,92110,(619) 260-4600,001395,001395,,California University
+University of San Francisco,University,San Francisco,CA,USA,2130 Fulton St,94117,(415) 422-5555,001325,001325,,California University
+Santa Clara University,University,Santa Clara,CA,USA,500 El Camino Real,95053,(408) 554-4000,001326,001326,,California University
+Loyola Marymount University,University,Los Angeles,CA,USA,1 LMU Dr,90045,(310) 338-2700,001184,001184,,California University
+Chapman University,University,Orange,CA,USA,One University Dr,92866,(714) 997-6815,001164,001164,,California University
+University of the Pacific,University,Stockton,CA,USA,3601 Pacific Ave,95211,(209) 946-2344,001329,001329,,California University
+Occidental College,University,Los Angeles,CA,USA,1600 Campus Rd,90041,(323) 259-2500,001249,001249,,California University
+Claremont McKenna College,University,Claremont,CA,USA,888 Columbia Ave,91711,(909) 621-8000,001170,001170,,California University
+Pomona College,University,Claremont,CA,USA,333 N College Way,91711,(909) 621-8000,001173,001173,,California University
+Harvey Mudd College,University,Claremont,CA,USA,301 Platt Blvd,91711,(909) 621-8000,001171,001171,,California University
+Pitzer College,University,Claremont,CA,USA,1050 N Mills Ave,91711,(909) 621-8000,001172,001172,,California University
+Scripps College,University,Claremont,CA,USA,1030 Columbia Ave,91711,(909) 621-8000,001174,001174,,California University
+Santa Monica College,Community College,Santa Monica,CA,USA,1900 Pico Blvd,90405,(310) 434-4000,001286,001286,,California Community College
+De Anza College,Community College,Cupertino,CA,USA,21250 Stevens Creek Blvd,95014,(408) 864-5678,001286,001286,,California Community College
+Diablo Valley College,Community College,Pleasant Hill,CA,USA,321 Golf Club Rd,94523,(925) 685-1230,001191,001191,,California Community College
+Pasadena City College,Community College,Pasadena,CA,USA,1570 E Colorado Blvd,91106,(626) 585-7123,001268,001268,,California Community College
+Orange Coast College,Community College,Costa Mesa,CA,USA,2701 Fairview Rd,92626,(714) 432-5072,001250,001250,,California Community College
+Foothill College,Community College,Los Altos Hills,CA,USA,12345 El Monte Rd,94022,(650) 949-7777,001199,001199,,California Community College
+City College of San Francisco,Community College,San Francisco,CA,USA,50 Frida Kahlo Way,94112,(415) 239-3000,001287,001287,,California Community College
+Mt. San Antonio College,Community College,Walnut,CA,USA,1100 N Grand Ave,91789,(909) 594-5611,001245,001245,,California Community College
+Saddleback College,Community College,Mission Viejo,CA,USA,28000 Marguerite Pkwy,92692,(949) 582-4500,008918,008918,,California Community College
+Santa Barbara City College,Community College,Santa Barbara,CA,USA,721 Cliff Dr,93109,(805) 965-0581,001285,001285,,California Community College
+American River College,Community College,Sacramento,CA,USA,4700 College Oak Dr,95841,(916) 484-8011,001232,001232,,California Community College
+Irvine Valley College,Community College,Irvine,CA,USA,5500 Irvine Center Dr,92618,(949) 451-5100,025395,025395,,California Community College
+Los Angeles City College,Community College,Los Angeles,CA,USA,855 N Vermont Ave,90029,(323) 953-4000,001222,001222,,California Community College
+San Diego Mesa College,Community College,San Diego,CA,USA,7250 Mesa College Dr,92111,(619) 388-2600,001275,001275,,California Community College
+Glendale Community College,Community College,Glendale,CA,USA,1500 N Verdugo Rd,91208,(818) 240-1000,001203,001203,,California Community College
+Universal Technical Institute,Trade School,Rancho Cucamonga,CA,USA,9494 Haven Ave,91730,(909) 484-1929,,,,California Trade School
+Paul Mitchell The School,Trade School,Costa Mesa,CA,USA,3333 Bristol St,92626,(714) 754-7277,,,,California Trade School
+Bellus Academy,Trade School,Poway,CA,USA,13266 Poway Rd,92064,(858) 748-1490,,,,California Trade School
+Marinello Schools of Beauty,Trade School,Los Angeles,CA,USA,Multiple Locations,90001,(877) 835-9998,,,,California Trade School
+WyoTech,Trade School,Long Beach,CA,USA,200 Whitney Pl,90802,(562) 624-9530,,,,California Trade School
+Platt College,Trade School,Ontario,CA,USA,3700 Inland Empire Blvd,91764,(909) 941-9410,,,,California Trade School
+California Culinary Academy,Trade School,San Francisco,CA,USA,350 Rhode Island St,94103,(415) 771-3500,,,,California Trade School
+Fashion Institute of Design & Merchandising,Trade School,Los Angeles,CA,USA,919 S Grand Ave,90015,(213) 624-1200,013112,013112,,California Trade School

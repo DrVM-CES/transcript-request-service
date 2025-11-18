@@ -1,5 +1,6 @@
 import { FormButtons } from '../FormButtons';
 import { DatePicker } from '../DatePicker';
+import { SchoolAutocomplete } from '../SchoolAutocomplete';
 
 interface SchoolInfoStepProps {
   data: any;
@@ -78,6 +79,19 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
     }
   };
 
+  const handleSchoolSelect = (school: any) => {
+    // Auto-fill school information when selected from autocomplete
+    onChange({
+      schoolName: school.schoolName,
+      schoolCeeb: school.ceebCode || '',
+      schoolAddress: school.address || '',
+      schoolCity: school.city,
+      schoolState: school.state,
+      schoolZip: school.zip || '',
+      schoolPhone: school.phone || '',
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -90,21 +104,18 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
       </div>
 
       <div className="space-y-6">
-        <div>
-          <label className="form-label">
-            School Name <span className="text-error-600">*</span>
-          </label>
-          <input
-            type="text"
-            className="form-input"
-            value={data.schoolName || ''}
-            onChange={(e) => handleInputChange('schoolName', e.target.value)}
-            placeholder="Enter your high school name"
-          />
-          {errors.schoolName && (
-            <p className="form-error">{errors.schoolName}</p>
-          )}
-        </div>
+        <SchoolAutocomplete
+          id="schoolName"
+          name="schoolName"
+          value={data.schoolName || ''}
+          onChange={(value) => handleInputChange('schoolName', value)}
+          onSchoolSelect={handleSchoolSelect}
+          label="School Name"
+          required
+          error={errors.schoolName}
+          placeholder="Start typing your high school name..."
+          schoolType="High School"
+        />
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>

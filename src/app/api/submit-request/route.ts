@@ -4,6 +4,8 @@ import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
 import { uploadTranscriptXML } from '../../../lib/sftp-client';
+import { generateTranscriptRequestPDF, getPDFBlob } from '../../../lib/pdf-generator';
+import { sendTranscriptRequestConfirmation, sendSchoolNotification } from '../../../lib/email-service';
 import { db } from '../../../db';
 import { transcriptRequests } from '../../../db/schema';
 
@@ -83,6 +85,9 @@ export async function POST(request: NextRequest) {
       consentGiven: validatedData.consentGiven,
       consentTimestamp: now,
       ferpaDisclosureShown: validatedData.ferpaDisclosureRead,
+      mfcLiabilityAgreed: validatedData.mfcLiabilityRead,
+      studentSignature: validatedData.studentSignature,
+      signatureDate: validatedData.signatureDate,
       requestXml: xml,
       parchmentDocumentId: documentId,
       status: 'submitted',
@@ -91,6 +96,55 @@ export async function POST(request: NextRequest) {
       ipAddress: clientIP,
       userAgent: userAgent,
     });
+
+    // Generate PDF for email attachment
+    let pdfBuffer: Buffer | null = null;
+    try {
+      const pdfData = {
+        ...validatedData,
+        requestTrackingId: requestId
+      };
+      const pdf = generateTranscriptRequestPDF(pdfData);
+      const blob = getPDFBlob(pdf);
+      pdfBuffer = Buffer.from(await blob.arrayBuffer());
+      console.log('PDF generated successfully for email');
+    } catch (pdfError) {
+      console.error('PDF generation failed:', pdfError);
+      // Continue without PDF - don't block submission
+    }
+
+    // Send confirmation email to student
+    if (pdfBuffer) {
+      const emailData = {
+        studentName: `${validatedData.studentFirstName} ${validatedData.studentLastName}`,
+        studentEmail: validatedData.studentEmail,
+        requestId: requestId,
+        schoolName: validatedData.schoolName,
+        destinationSchool: validatedData.destinationSchool,
+        documentType: validatedData.documentType,
+        submittedDate: new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      };
+
+      const emailResult = await sendTranscriptRequestConfirmation(emailData, pdfBuffer);
+      
+      if (emailResult.success) {
+        console.log('Confirmation email sent to:', validatedData.studentEmail);
+      } else {
+        console.error('Email send failed:', emailResult.error);
+        // Continue - don't block submission if email fails
+      }
+
+      // Optionally send notification to school registrar
+      if (validatedData.schoolEmail) {
+        await sendSchoolNotification(validatedData.schoolEmail, emailData);
+      }
+    }
 
     // Upload XML to Parchment SFTP
     const uploadResult = await uploadTranscriptXML(xml, fileName);
@@ -128,7 +182,7 @@ export async function POST(request: NextRequest) {
       success: true,
       requestId,
       documentId,
-      message: 'Transcript request submitted successfully'
+      message: 'Transcript request submitted successfully. Check your email for confirmation.'
     });
 
   } catch (error) {

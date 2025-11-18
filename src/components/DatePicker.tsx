@@ -66,6 +66,9 @@ export function DatePicker({
     }
   };
 
+  // Default to 18 years ago for better UX
+  const defaultMonth = minAge ? new Date(today.getFullYear() - minAge, today.getMonth()) : today;
+
   const handleInputBlur = () => {
     // Delay closing to allow calendar clicks
     setTimeout(() => {
@@ -150,7 +153,9 @@ export function DatePicker({
             fromDate={fromDate}
             toDate={toDate}
             captionLayout="dropdown-buttons"
-            defaultMonth={selectedDate || toDate}
+            defaultMonth={selectedDate || defaultMonth}
+            fromYear={fromDate?.getFullYear()}
+            toYear={toDate?.getFullYear()}
           />
         </div>
       )}

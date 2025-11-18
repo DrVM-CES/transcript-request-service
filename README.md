@@ -8,6 +8,7 @@ A secure, FERPA-compliant web application for high school students to request of
 
 ## ✨ Features
 
+### Core Functionality
 - ✅ **Free Service**: No fees or charges for transcript requests
 - ✅ **FERPA Compliant**: Full compliance with educational privacy requirements
 - ✅ **Secure Processing**: Encrypted data transmission and storage
@@ -15,7 +16,17 @@ A secure, FERPA-compliant web application for high school students to request of
 - ✅ **User-Friendly**: Step-by-step guided form with validation
 - ✅ **Mobile Responsive**: Works on all devices
 - ✅ **MFC Branding**: Integrated with My Future Capacity design system
+
+### New Features (November 2025)
+- ✅ **Digital Signature**: Canvas-based signature capture with mouse/touch support
+- ✅ **PDF Generation**: Automatic PDF receipt with embedded signature
+- ✅ **Email Delivery**: Beautiful HTML confirmation emails with PDF attachment
+- ✅ **Liability Protection**: MFC liability release and legal disclaimers
+- ✅ **School Database**: 646 schools with autocomplete (163 CA schools with full contact info)
+
+### In Progress
 - ⏳ **Parchment SFTP**: Ready for production credentials (currently simulated)
+- ⏳ **Email Service**: Requires Resend API key configuration
 
 ## 🛠️ Technology Stack
 

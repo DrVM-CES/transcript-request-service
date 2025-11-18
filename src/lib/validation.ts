@@ -135,11 +135,30 @@ export const transcriptRequestSchema = z.object({
   ferpaDisclosureRead: z.boolean()
     .refine(val => val === true, 'You must read and acknowledge the FERPA disclosure'),
   
+  mfcLiabilityRead: z.boolean()
+    .refine(val => val === true, 'You must read and agree to the My Future Capacity Liability Release'),
+  
   consentGiven: z.boolean()
     .refine(val => val === true, 'You must provide consent to release your transcript'),
   
   certifyInformation: z.boolean()
     .refine(val => val === true, 'You must certify that the information provided is accurate'),
+
+  // Digital Signature
+  studentSignature: z.string()
+    .min(1, 'Digital signature is required'),
+  
+  signatureDate: z.string()
+    .min(1, 'Signature date is required')
+    .refine(
+      (date) => {
+        const sigDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return sigDate <= today;
+      },
+      'Signature date cannot be in the future'
+    ),
 });
 
 export type TranscriptRequestFormData = z.infer<typeof transcriptRequestSchema>;
@@ -181,6 +200,9 @@ export const destinationInfoSchema = transcriptRequestSchema.pick({
 
 export const consentSchema = transcriptRequestSchema.pick({
   ferpaDisclosureRead: true,
+  mfcLiabilityRead: true,
   consentGiven: true,
   certifyInformation: true,
+  studentSignature: true,
+  signatureDate: true,
 });

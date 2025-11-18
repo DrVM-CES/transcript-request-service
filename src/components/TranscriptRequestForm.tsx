@@ -8,6 +8,7 @@ import { SchoolInfoStep } from './form-steps/SchoolInfoStep';
 import { DestinationInfoStep } from './form-steps/DestinationInfoStep';
 import { ConsentStep } from './form-steps/ConsentStep';
 import { ProgressIndicator } from './ProgressIndicator';
+import { generateTranscriptRequestPDF, downloadPDF } from '../lib/pdf-generator';
 
 type FormStep = 'student' | 'school' | 'destination' | 'consent' | 'submitted';
 
@@ -66,8 +67,11 @@ export function TranscriptRequestForm() {
         case 'consent':
           transcriptRequestSchema.pick({
             ferpaDisclosureRead: true,
+            mfcLiabilityRead: true,
             consentGiven: true,
             certifyInformation: true,
+            studentSignature: true,
+            signatureDate: true,
           }).parse(formData);
           break;
       }
@@ -125,6 +129,21 @@ export function TranscriptRequestForm() {
       }
 
       const result = await response.json();
+      
+      // Generate and download PDF with the request tracking ID
+      try {
+        const pdfData = {
+          ...validatedData,
+          requestTrackingId: result.requestId
+        };
+        const pdf = generateTranscriptRequestPDF(pdfData);
+        const fileName = `transcript-request-${result.requestId}.pdf`;
+        downloadPDF(pdf, fileName);
+      } catch (pdfError) {
+        console.error('PDF generation error:', pdfError);
+        // Don't block success flow if PDF fails
+      }
+      
       // Redirect to success page
       router.push('/success');
     } catch (error: any) {

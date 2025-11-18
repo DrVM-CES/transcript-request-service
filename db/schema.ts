@@ -43,7 +43,12 @@ export const transcriptRequests = sqliteTable('transcript_requests', {
   consentGiven: integer('consent_given', { mode: 'boolean' }).notNull(),
   consentTimestamp: integer('consent_timestamp', { mode: 'timestamp' }).notNull(),
   ferpaDisclosureShown: integer('ferpa_disclosure_shown', { mode: 'boolean' }).notNull(),
+  mfcLiabilityAgreed: integer('mfc_liability_agreed', { mode: 'boolean' }).notNull(),
   releaseAuthorizedMethod: text('release_authorized_method').notNull().default('ElectronicSignature'),
+  
+  // Digital Signature
+  studentSignature: text('student_signature').notNull(), // Base64 encoded PNG
+  signatureDate: text('signature_date').notNull(), // YYYY-MM-DD format
   
   // Processing Information
   requestXml: text('request_xml').notNull(),
@@ -59,3 +64,25 @@ export const transcriptRequests = sqliteTable('transcript_requests', {
 
 export type TranscriptRequest = typeof transcriptRequests.$inferSelect;
 export type NewTranscriptRequest = typeof transcriptRequests.$inferInsert;
+
+// Schools database for autocomplete
+export const schools = sqliteTable('schools', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  schoolName: text('school_name').notNull(),
+  schoolType: text('school_type').notNull(), // 'High School', 'University', 'Community College', 'Trade School'
+  city: text('city').notNull(),
+  state: text('state').notNull(),
+  country: text('country').notNull().default('USA'),
+  address: text('address'), // Street address
+  zip: text('zip'), // ZIP code
+  phone: text('phone'), // Phone number
+  ceebCode: text('ceeb_code'),
+  federalSchoolCode: text('federal_school_code'),
+  website: text('website'),
+  notes: text('notes'),
+  searchText: text('search_text').notNull(), // Lowercase text for searching
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
+});
+
+export type School = typeof schools.$inferSelect;
+export type NewSchool = typeof schools.$inferInsert;

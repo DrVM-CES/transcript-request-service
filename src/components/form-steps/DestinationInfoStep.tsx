@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { lookupSchoolByCeeb, determineProcessingMethod, getProcessingInstructions, type SchoolInfo } from '../../lib/school-lookup';
 import { FormButtons } from '../FormButtons';
+import { SchoolAutocomplete } from '../SchoolAutocomplete';
 
 interface DestinationInfoStepProps {
   data: any;
@@ -107,6 +108,18 @@ export function DestinationInfoStep({ data, errors, onChange, onNext, onPrevious
     }
   };
 
+  const handleDestinationSchoolSelect = (school: any) => {
+    // Auto-fill destination school information when selected from autocomplete
+    onChange({
+      destinationSchool: school.schoolName,
+      destinationCeeb: school.ceebCode || '',
+      destinationAddress: school.address || '',
+      destinationCity: school.city,
+      destinationState: school.state,
+      destinationZip: school.zip || '',
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -119,21 +132,18 @@ export function DestinationInfoStep({ data, errors, onChange, onNext, onPrevious
       </div>
 
       <div className="space-y-6">
-        <div>
-          <label className="form-label">
-            Institution Name <span className="text-error-600">*</span>
-          </label>
-          <input
-            type="text"
-            className="form-input"
-            value={data.destinationSchool || ''}
-            onChange={(e) => handleInputChange('destinationSchool', e.target.value)}
-            placeholder="University name or college name"
-          />
-          {errors.destinationSchool && (
-            <p className="form-error">{errors.destinationSchool}</p>
-          )}
-        </div>
+        <SchoolAutocomplete
+          id="destinationSchool"
+          name="destinationSchool"
+          value={data.destinationSchool || ''}
+          onChange={(value) => handleInputChange('destinationSchool', value)}
+          onSchoolSelect={handleDestinationSchoolSelect}
+          label="Institution Name"
+          required
+          error={errors.destinationSchool}
+          placeholder="Start typing university or college name..."
+          schoolType="University"
+        />
 
         <div>
           <label className="form-label">
