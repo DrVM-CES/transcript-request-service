@@ -20,11 +20,11 @@ export const transcriptRequestSchema = z.object({
   
   studentEmail: z.string()
     .min(1, 'Email is required')
+    .max(100, 'Email must be 100 characters or less')
     .email('Please enter a valid email address (must include @ and domain)')
     .refine((email) => email.includes('@') && email.includes('.'), {
       message: 'Email must contain @ symbol and a domain (e.g., user@example.com)'
-    })
-    .max(100, 'Email must be 100 characters or less'),
+    }),
   
   studentDob: z.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please enter date in YYYY-MM-DD format')
