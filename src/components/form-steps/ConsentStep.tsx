@@ -288,9 +288,10 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
 
       <FormButtons 
         onPrevious={onPrevious}
-        onSubmit={onSubmit}
+        onSubmit={allConsentGiven ? onSubmit : undefined}
         isSubmitting={isSubmitting}
         submitLabel="Submit Transcript Request"
+        submitDisabled={!allConsentGiven}
       />
 
       {errors.submit && (

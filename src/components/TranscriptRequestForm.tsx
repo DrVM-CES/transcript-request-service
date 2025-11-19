@@ -110,12 +110,18 @@ export function TranscriptRequestForm() {
   };
 
   const handleSubmit = async () => {
-    if (!validateStep('consent')) return;
+    console.log('Submit clicked - starting validation');
+    if (!validateStep('consent')) {
+      console.log('Consent validation failed');
+      return;
+    }
 
     setIsSubmitting(true);
     try {
       // Final validation
+      console.log('Parsing form data with Zod...');
       const validatedData = transcriptRequestSchema.parse(formData);
+      console.log('Validation passed, submitting to API...');
       
       const response = await fetch('/api/submit-request', {
         method: 'POST',
@@ -125,10 +131,12 @@ export function TranscriptRequestForm() {
 
       if (!response.ok) {
         const error = await response.json();
+        console.error('API error:', error);
         throw new Error(error.message || 'Failed to submit request');
       }
 
       const result = await response.json();
+      console.log('Submission successful, generating PDF...');
       
       // Generate and download PDF with the request tracking ID
       try {
@@ -139,12 +147,14 @@ export function TranscriptRequestForm() {
         const pdf = generateTranscriptRequestPDF(pdfData);
         const fileName = `transcript-request-${result.requestId}.pdf`;
         downloadPDF(pdf, fileName);
+        console.log('PDF downloaded successfully');
       } catch (pdfError) {
         console.error('PDF generation error:', pdfError);
         // Don't block success flow if PDF fails
       }
       
       // Redirect to success page
+      console.log('Redirecting to success page...');
       router.push('/success');
     } catch (error: any) {
       console.error('Submission error:', error);

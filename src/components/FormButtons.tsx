@@ -3,6 +3,7 @@ interface FormButtonsProps {
   onNext?: () => void;
   onSubmit?: () => void;
   isSubmitting?: boolean;
+  submitDisabled?: boolean;
   nextLabel?: string;
   submitLabel?: string;
 }
@@ -12,6 +13,7 @@ export function FormButtons({
   onNext,
   onSubmit,
   isSubmitting = false,
+  submitDisabled = false,
   nextLabel = "Continue",
   submitLabel = "Submit Request"
 }: FormButtonsProps) {
@@ -49,8 +51,10 @@ export function FormButtons({
         <button
           type="button"
           onClick={onSubmit}
-          disabled={isSubmitting}
-          className="inline-flex items-center px-8 py-3 text-base font-semibold text-white bg-mfc-green-600 rounded-lg hover:bg-mfc-green-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting || submitDisabled}
+          className={`inline-flex items-center px-8 py-3 text-base font-semibold text-white rounded-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed ${
+            submitDisabled ? 'bg-gray-400' : 'bg-mfc-green-600 hover:bg-mfc-green-700'
+          }`}
         >
           {isSubmitting ? (
             <>
