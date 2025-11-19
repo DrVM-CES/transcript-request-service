@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
 import { uploadTranscriptXML } from '../../../lib/sftp-client';
-import { generateTranscriptRequestPDF } from '../../../lib/pdf-generator';
+// import { generateTranscriptRequestPDF } from '../../../lib/pdf-generator';
 import { sendTranscriptRequestConfirmation, sendSchoolNotification } from '../../../lib/email-service';
 import { db } from '../../../db';
 import { transcriptRequests } from '../../../db/schema';
@@ -98,18 +98,20 @@ export async function POST(request: NextRequest) {
     });
 
     // Generate PDF for email attachment
+    // TEMPORARILY DISABLED - TODO: Fix PDF generation
     let pdfBuffer: Buffer | null = null;
-    try {
-      const pdfData = {
-        ...validatedData,
-        requestTrackingId: requestId
-      };
-      pdfBuffer = await generateTranscriptRequestPDF(pdfData);
-      console.log('PDF generated successfully for email');
-    } catch (pdfError) {
-      console.error('PDF generation failed:', pdfError);
-      // Continue without PDF - don't block submission
-    }
+    console.log('PDF generation temporarily disabled');
+    // try {
+    //   const pdfData = {
+    //     ...validatedData,
+    //     requestTrackingId: requestId
+    //   };
+    //   pdfBuffer = await generateTranscriptRequestPDF(pdfData);
+    //   console.log('PDF generated successfully for email');
+    // } catch (pdfError) {
+    //   console.error('PDF generation failed:', pdfError);
+    //   // Continue without PDF - don't block submission
+    // }
 
     // Send confirmation email to student
     if (pdfBuffer) {
