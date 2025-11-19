@@ -50,6 +50,8 @@ textarea {
   width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
+  font-weight: 500;
+  color: #111827; /* Nearly black text */
   border: 2px solid #E5E7EB;
   border-radius: 0.5rem;
   background-color: #ffffff;
@@ -79,8 +81,8 @@ textarea:disabled {
 label {
   display: block;
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
+  font-weight: 700;
+  color: #1F2937; /* Much darker gray */
   margin-bottom: 0.5rem;
 }
 
@@ -104,7 +106,40 @@ button:disabled {
 .error-message {
   color: #DC2626;
   font-size: 0.875rem;
+  font-weight: 600;
   margin-top: 0.25rem;
+}
+
+/* Darker text for better readability */
+h1, h2, h3, h4, h5, h6 {
+  color: #111827;
+  font-weight: 700;
+}
+
+p {
+  color: #1F2937;
+  font-weight: 500;
+}
+
+.text-neutral-600,
+.text-slate-600,
+.text-gray-600 {
+  color: #374151 !important;
+  font-weight: 500;
+}
+
+.text-neutral-700,
+.text-slate-700,
+.text-gray-700 {
+  color: #1F2937 !important;
+  font-weight: 600;
+}
+
+.text-neutral-900,
+.text-slate-900,
+.text-gray-900 {
+  color: #111827 !important;
+  font-weight: 700;
 }
 
 /* Custom form styles - temporarily disabled */
