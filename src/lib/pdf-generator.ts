@@ -1,4 +1,5 @@
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+// Dynamic import to avoid build-time issues
+// pdf-lib will only be imported at runtime when actually generating PDFs
 
 interface TranscriptRequestData {
   // Student Info
@@ -53,6 +54,9 @@ interface TranscriptRequestData {
  * Returns Promise<Buffer> for use in API routes
  */
 export async function generateTranscriptRequestPDF(data: TranscriptRequestData): Promise<Buffer> {
+  // Dynamically import pdf-lib at runtime only
+  const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+  
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
   
