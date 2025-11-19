@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
 import { uploadTranscriptXML } from '../../../lib/sftp-client';
-import { generateTranscriptRequestPDF, getPDFBlob } from '../../../lib/pdf-generator';
+import { generateTranscriptRequestPDF } from '../../../lib/pdf-generator';
 import { sendTranscriptRequestConfirmation, sendSchoolNotification } from '../../../lib/email-service';
 import { db } from '../../../db';
 import { transcriptRequests } from '../../../db/schema';
@@ -104,9 +104,7 @@ export async function POST(request: NextRequest) {
         ...validatedData,
         requestTrackingId: requestId
       };
-      const pdf = generateTranscriptRequestPDF(pdfData);
-      const blob = getPDFBlob(pdf);
-      pdfBuffer = Buffer.from(await blob.arrayBuffer());
+      pdfBuffer = await generateTranscriptRequestPDF(pdfData);
       console.log('PDF generated successfully for email');
     } catch (pdfError) {
       console.error('PDF generation failed:', pdfError);

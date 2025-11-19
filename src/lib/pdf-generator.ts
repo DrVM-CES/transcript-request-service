@@ -1,4 +1,4 @@
-import { jsPDF } from 'jspdf';
+import PDFDocument from 'pdfkit';
 
 interface TranscriptRequestData {
   // Student Info
@@ -48,240 +48,213 @@ interface TranscriptRequestData {
   requestTrackingId?: string;
 }
 
-export function generateTranscriptRequestPDF(data: TranscriptRequestData): jsPDF {
-  const doc = new jsPDF();
-  
-  // MFC Brand Colors
-  const primaryColor = [91, 95, 245]; // #5B5FF5
-  const gradientBlue = [102, 126, 234]; // #667eea
-  const gradientPurple = [118, 75, 162]; // #764ba2
-  const darkGray = [50, 50, 50];
-  const lightGray = [128, 128, 128];
-  
-  let yPosition = 20;
-  
-  // Header with MFC gradient branding
-  // Create gradient effect with rectangles
-  for (let i = 0; i < 30; i++) {
-    const ratio = i / 30;
-    const r = Math.round(gradientBlue[0] + (gradientPurple[0] - gradientBlue[0]) * ratio);
-    const g = Math.round(gradientBlue[1] + (gradientPurple[1] - gradientBlue[1]) * ratio);
-    const b = Math.round(gradientBlue[2] + (gradientPurple[2] - gradientBlue[2]) * ratio);
-    doc.setFillColor(r, g, b);
-    doc.rect(0, i, 210, 1, 'F');
-  }
-  
-  // MFC Logo Text (stylized)
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(28);
-  doc.setFont('helvetica', 'bold');
-  doc.text('MY FUTURE CAPACITY', 105, 13, { align: 'center' });
-  
-  // Subtitle
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'normal');
-  doc.text('Official Transcript Request', 105, 22, { align: 'center' });
-  
-  yPosition = 40;
-  
-  // Request ID if available
-  if (data.requestTrackingId) {
-    doc.setTextColor(...lightGray);
-    doc.setFontSize(9);
-    doc.text(`Request ID: ${data.requestTrackingId}`, 105, yPosition, { align: 'center' });
-    yPosition += 10;
-  }
-  
-  // Helper function to add section
-  const addSection = (title: string) => {
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text(title, 20, yPosition);
-    yPosition += 2;
-    
-    // Underline
-    doc.setDrawColor(...primaryColor);
-    doc.setLineWidth(0.5);
-    doc.line(20, yPosition, 190, yPosition);
-    yPosition += 8;
-  };
-  
-  // Helper function to add field
-  const addField = (label: string, value: string | undefined, indent: number = 20) => {
-    if (!value) return;
-    
-    doc.setTextColor(...darkGray);
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text(label + ':', indent, yPosition);
-    
-    doc.setFont('helvetica', 'normal');
-    const textWidth = doc.getTextWidth(label + ': ');
-    doc.text(value, indent + textWidth, yPosition);
-    yPosition += 6;
-  };
-  
-  // Check if we need a new page
-  const checkPageBreak = () => {
-    if (yPosition > 270) {
-      doc.addPage();
-      yPosition = 20;
-    }
-  };
-  
-  // Student Information Section
-  addSection('Student Information');
-  const fullName = [data.studentFirstName, data.studentMiddleName, data.studentLastName]
-    .filter(Boolean)
-    .join(' ');
-  addField('Name', fullName);
-  addField('Email', data.studentEmail);
-  addField('Date of Birth', formatDate(data.studentDob));
-  if (data.studentPartialSsn) {
-    addField('SSN (Last 4)', data.studentPartialSsn);
-  }
-  yPosition += 5;
-  
-  checkPageBreak();
-  
-  // Current School Section
-  addSection('Current School');
-  addField('School Name', data.schoolName);
-  addField('CEEB Code', data.schoolCeeb);
-  if (data.schoolAddress) {
-    addField('Address', data.schoolAddress);
-  }
-  const schoolLocation = [data.schoolCity, data.schoolState, data.schoolZip]
-    .filter(Boolean)
-    .join(', ');
-  if (schoolLocation) {
-    addField('Location', schoolLocation);
-  }
-  addField('Phone', data.schoolPhone);
-  addField('Email', data.schoolEmail);
-  addField('Enrollment Date', data.enrollDate ? formatDate(data.enrollDate) : undefined);
-  if (!data.currentEnrollment && data.exitDate) {
-    addField('Exit Date', formatDate(data.exitDate));
-  }
-  addField('Expected Graduation', data.graduationDate ? formatDate(data.graduationDate) : undefined);
-  addField('Current Enrollment', data.currentEnrollment ? 'Yes' : 'No');
-  yPosition += 5;
-  
-  checkPageBreak();
-  
-  // Destination Institution Section
-  addSection('Destination Institution');
-  addField('Institution Name', data.destinationSchool);
-  addField('CEEB Code', data.destinationCeeb);
-  if (data.destinationAddress) {
-    addField('Address', data.destinationAddress);
-  }
-  const destLocation = [data.destinationCity, data.destinationState, data.destinationZip]
-    .filter(Boolean)
-    .join(', ');
-  if (destLocation) {
-    addField('Location', destLocation);
-  }
-  yPosition += 5;
-  
-  checkPageBreak();
-  
-  // Document Type Section
-  addSection('Document Information');
-  addField('Document Type', data.documentType);
-  yPosition += 5;
-  
-  checkPageBreak();
-  
-  // Consent & Certification Section
-  addSection('Consent & Certification');
-  doc.setTextColor(...darkGray);
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  
-  const consentItems = [
-    '✓ I have read and understand the FERPA Privacy Rights Disclosure',
-    '✓ I have read and agree to the My Future Capacity Liability Release',
-    '✓ I consent to the release of my academic transcript',
-    '✓ I certify that all information provided is true and accurate',
-  ];
-  
-  consentItems.forEach(item => {
-    doc.text(item, 25, yPosition);
-    yPosition += 5;
-  });
-  yPosition += 5;
-  
-  checkPageBreak();
-  
-  // Signature Section
-  if (data.studentSignature) {
-    addSection('Digital Signature');
-    
+/**
+ * Generate PDF as Buffer (server-side compatible)
+ * Returns Promise<Buffer> for use in API routes
+ */
+export async function generateTranscriptRequestPDF(data: TranscriptRequestData): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
     try {
-      // Add signature image
-      doc.addImage(data.studentSignature, 'PNG', 20, yPosition, 80, 30);
-      yPosition += 35;
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margins: { top: 50, bottom: 50, left: 50, right: 50 }
+      });
       
-      // Signature line
-      doc.setDrawColor(...darkGray);
-      doc.setLineWidth(0.3);
-      doc.line(20, yPosition, 100, yPosition);
-      yPosition += 5;
+      const chunks: Buffer[] = [];
       
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Student Signature', 20, yPosition);
+      // Collect PDF chunks
+      doc.on('data', (chunk) => chunks.push(chunk));
+      doc.on('end', () => resolve(Buffer.concat(chunks)));
+      doc.on('error', reject);
       
-      if (data.signatureDate) {
-        doc.text(`Date: ${formatDate(data.signatureDate)}`, 120, yPosition);
+      // MFC Brand Colors
+      const primaryColor = '#5B5FF5';
+      const darkGray = '#323232';
+      const lightGray = '#808080';
+      
+      // Header with MFC branding
+      doc
+        .rect(0, 0, doc.page.width, 80)
+        .fill(primaryColor);
+      
+      doc
+        .fillColor('white')
+        .fontSize(28)
+        .font('Helvetica-Bold')
+        .text('MY FUTURE CAPACITY', 50, 20, { align: 'center' });
+      
+      doc
+        .fontSize(16)
+        .font('Helvetica')
+        .text('Official Transcript Request', 50, 50, { align: 'center' });
+      
+      // Reset y position after header
+      doc.y = 100;
+      
+      // Request ID
+      if (data.requestTrackingId) {
+        doc
+          .fillColor(lightGray)
+          .fontSize(9)
+          .font('Helvetica')
+          .text(`Request ID: ${data.requestTrackingId}`, { align: 'center' });
+        
+        doc.moveDown();
       }
-      yPosition += 10;
+      
+      // Helper function to add section
+      const addSection = (title: string) => {
+        doc.moveDown(0.5);
+        doc
+          .fillColor(primaryColor)
+          .fontSize(14)
+          .font('Helvetica-Bold')
+          .text(title);
+        
+        doc
+          .moveTo(doc.x, doc.y)
+          .lineTo(doc.page.width - 50, doc.y)
+          .stroke(primaryColor);
+        
+        doc.moveDown(0.5);
+      };
+      
+      // Helper function to add field
+      const addField = (label: string, value: string | boolean | undefined) => {
+        if (value === undefined || value === null) return;
+        
+        const displayValue = typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value);
+        
+        doc
+          .fillColor(darkGray)
+          .fontSize(10)
+          .font('Helvetica-Bold')
+          .text(`${label}: `, { continued: true })
+          .font('Helvetica')
+          .text(displayValue);
+      };
+      
+      // Student Information Section
+      addSection('Student Information');
+      addField('Name', `${data.studentFirstName}${data.studentMiddleName ? ' ' + data.studentMiddleName : ''} ${data.studentLastName}`);
+      addField('Email', data.studentEmail);
+      addField('Date of Birth', formatDate(data.studentDob));
+      if (data.studentPartialSsn) {
+        addField('Last 4 SSN', data.studentPartialSsn);
+      }
+      
+      // High School Information Section
+      addSection('High School Information');
+      addField('School Name', data.schoolName);
+      if (data.schoolCeeb) addField('CEEB Code', data.schoolCeeb);
+      if (data.schoolAddress) addField('Address', data.schoolAddress);
+      if (data.schoolCity && data.schoolState) {
+        addField('City, State', `${data.schoolCity}, ${data.schoolState} ${data.schoolZip || ''}`);
+      }
+      if (data.schoolPhone) addField('Phone', data.schoolPhone);
+      if (data.schoolEmail) addField('Email', data.schoolEmail);
+      if (data.enrollDate) addField('Enrollment Date', formatDate(data.enrollDate));
+      if (data.exitDate) addField('Exit Date', formatDate(data.exitDate));
+      addField('Currently Enrolled', data.currentEnrollment);
+      if (data.graduationDate) addField('Expected Graduation', formatDate(data.graduationDate));
+      
+      // Destination School Information Section
+      addSection('Destination School Information');
+      addField('School Name', data.destinationSchool);
+      addField('CEEB Code', data.destinationCeeb);
+      if (data.destinationAddress) addField('Address', data.destinationAddress);
+      if (data.destinationCity && data.destinationState) {
+        addField('City, State', `${data.destinationCity}, ${data.destinationState} ${data.destinationZip || ''}`);
+      }
+      
+      // Document Type Section
+      addSection('Request Details');
+      addField('Document Type', data.documentType);
+      
+      // Consent Section
+      addSection('Consent & Certification');
+      addField('FERPA Disclosure Read', data.ferpaDisclosureRead);
+      addField('MFC Liability Waiver Read', data.mfcLiabilityRead);
+      addField('Consent Given', data.consentGiven);
+      addField('Information Certified as Accurate', data.certifyInformation);
+      
+      // Signature Section
+      if (data.studentSignature || data.signatureDate) {
+        addSection('Digital Signature');
+        
+        // Add signature image if available
+        if (data.studentSignature) {
+          try {
+            // Remove data URL prefix if present
+            const base64Data = data.studentSignature.replace(/^data:image\/\w+;base64,/, '');
+            const buffer = Buffer.from(base64Data, 'base64');
+            
+            doc.image(buffer, doc.x, doc.y, {
+              width: 200,
+              height: 75
+            });
+            
+            doc.moveDown(5);
+          } catch (error) {
+            console.error('Error adding signature to PDF:', error);
+            doc.text('[Digital signature included]');
+          }
+        }
+        
+        if (data.signatureDate) {
+          addField('Signature Date', formatDate(data.signatureDate));
+        }
+      }
+      
+      // Footer
+      const pageCount = doc.bufferedPageRange().count;
+      for (let i = 0; i < pageCount; i++) {
+        doc.switchToPage(i);
+        
+        // Footer line
+        doc
+          .moveTo(50, doc.page.height - 80)
+          .lineTo(doc.page.width - 50, doc.page.height - 80)
+          .stroke(primaryColor);
+        
+        // MFC branding in footer
+        doc
+          .fillColor(primaryColor)
+          .fontSize(9)
+          .font('Helvetica-Bold')
+          .text('MY FUTURE CAPACITY', 50, doc.page.height - 70, { align: 'center' });
+        
+        doc
+          .fillColor(lightGray)
+          .fontSize(7)
+          .font('Helvetica')
+          .text('Empowering Students to Achieve Their Educational Goals', 50, doc.page.height - 60, { align: 'center' });
+        
+        // Timestamp and page number
+        const timestamp = new Date().toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short'
+        });
+        
+        doc
+          .fontSize(7)
+          .text(`Generated: ${timestamp}`, 50, doc.page.height - 45, { align: 'left' });
+        
+        doc
+          .text(`Page ${i + 1} of ${pageCount}`, 50, doc.page.height - 45, { align: 'right' });
+      }
+      
+      // Finalize PDF
+      doc.end();
+      
     } catch (error) {
-      console.error('Error adding signature to PDF:', error);
-      addField('Signature Date', data.signatureDate ? formatDate(data.signatureDate) : undefined);
+      reject(error);
     }
-  }
-  
-  checkPageBreak();
-  
-  // Footer with MFC branding
-  const pageCount = doc.getNumberOfPages();
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i);
-    
-    // Footer line
-    doc.setDrawColor(...primaryColor);
-    doc.setLineWidth(0.5);
-    doc.line(20, 280, 190, 280);
-    
-    // MFC branding in footer
-    doc.setTextColor(...primaryColor);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.text('MY FUTURE CAPACITY', 105, 286, { align: 'center' });
-    
-    doc.setTextColor(...lightGray);
-    doc.setFontSize(7);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Empowering Students to Achieve Their Educational Goals', 105, 290, { align: 'center' });
-    
-    const timestamp = new Date().toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZoneName: 'short'
-    });
-    
-    doc.setFontSize(7);
-    doc.text(`Generated: ${timestamp}`, 20, 294);
-    doc.text(`Page ${i} of ${pageCount}`, 190, 294, { align: 'right' });
-  }
-  
-  return doc;
+  });
 }
 
 function formatDate(dateString: string): string {
@@ -297,14 +270,16 @@ function formatDate(dateString: string): string {
   });
 }
 
-export function downloadPDF(doc: jsPDF, fileName: string = 'transcript-request.pdf') {
-  doc.save(fileName);
+/**
+ * Get PDF as Blob (for client-side download - not used in server routes)
+ */
+export function getPDFBlob(buffer: Buffer): Blob {
+  return new Blob([buffer], { type: 'application/pdf' });
 }
 
-export function getPDFBlob(doc: jsPDF): Blob {
-  return doc.output('blob');
-}
-
-export function getPDFBase64(doc: jsPDF): string {
-  return doc.output('datauristring');
+/**
+ * Get PDF as Base64 string
+ */
+export function getPDFBase64(buffer: Buffer): string {
+  return buffer.toString('base64');
 }

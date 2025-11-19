@@ -8,7 +8,7 @@ import { SchoolInfoStep } from './form-steps/SchoolInfoStep';
 import { DestinationInfoStep } from './form-steps/DestinationInfoStep';
 import { ConsentStep } from './form-steps/ConsentStep';
 import { ProgressIndicator } from './ProgressIndicator';
-import { generateTranscriptRequestPDF, downloadPDF } from '../lib/pdf-generator';
+// PDF generation now happens server-side only (via email)
 
 type FormStep = 'student' | 'school' | 'destination' | 'consent' | 'submitted';
 
@@ -137,21 +137,8 @@ export function TranscriptRequestForm() {
 
       const result = await response.json();
       console.log('Submission successful, generating PDF...');
-      
-      // Generate and download PDF with the request tracking ID
-      try {
-        const pdfData = {
-          ...validatedData,
-          requestTrackingId: result.requestId
-        };
-        const pdf = generateTranscriptRequestPDF(pdfData);
-        const fileName = `transcript-request-${result.requestId}.pdf`;
-        downloadPDF(pdf, fileName);
-        console.log('PDF downloaded successfully');
-      } catch (pdfError) {
-        console.error('PDF generation error:', pdfError);
-        // Don't block success flow if PDF fails
-      }
+      // PDF is generated server-side and sent via email
+      // (No client-side PDF download needed)
       
       // Redirect to success page
       console.log('Redirecting to success page...');
