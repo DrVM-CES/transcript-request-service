@@ -158,6 +158,7 @@ export function DatePicker({
             toYear={toDate.getFullYear()}
             startMonth={fromDate}
             endMonth={toDate}
+            showOutsideDays
           />
         </div>
       )}

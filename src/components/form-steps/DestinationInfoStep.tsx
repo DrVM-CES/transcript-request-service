@@ -118,6 +118,18 @@ export function DestinationInfoStep({ data, errors, onChange, onNext, onPrevious
       destinationState: school.state,
       destinationZip: school.zip || '',
     });
+    
+    // Set the destination school state to prevent "not found" warning
+    if (school.ceebCode) {
+      setDestinationSchool({
+        name: school.schoolName,
+        ceebCode: school.ceebCode,
+        city: school.city,
+        state: school.state,
+        address: school.address,
+        zip: school.zip
+      });
+    }
   };
 
   return (
