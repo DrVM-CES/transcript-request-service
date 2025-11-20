@@ -32,14 +32,25 @@ export async function sendTranscriptRequestConfirmation(
   data: TranscriptRequestEmailData,
   pdfBuffer: Buffer
 ): Promise<{ success: boolean; error?: string }> {
+  console.log('📧 Email service called with:', {
+    studentEmail: data.studentEmail,
+    requestId: data.requestId,
+    pdfSize: pdfBuffer?.length,
+    resendConfigured: !!resend,
+    apiKeyPresent: !!process.env.RESEND_API_KEY
+  });
+
   try {
     // Check if Resend is configured
     if (!resend) {
-      console.warn('RESEND_API_KEY not configured - skipping email');
+      console.warn('❌ RESEND_API_KEY not configured - skipping email');
       return { success: false, error: 'Email service not configured' };
     }
 
+    console.log('✅ Resend client initialized');
+
     const html = generateConfirmationEmailHTML(data);
+    console.log('✅ Email HTML generated');
 
     // Use Resend sandbox for testing until domain is verified
     // Set USE_SANDBOX_EMAIL=false in production env vars once domain is verified
@@ -47,6 +58,14 @@ export async function sendTranscriptRequestConfirmation(
     const fromEmail = useSandbox
       ? 'onboarding@resend.dev'
       : 'My Future Capacity <transcripts@myfuturecapacity.com>';
+
+    console.log('📤 Sending email via Resend:', {
+      from: fromEmail,
+      to: data.studentEmail,
+      subject: `Transcript Request Confirmation - ${data.requestId}`,
+      useSandbox,
+      attachmentSize: pdfBuffer.length
+    });
 
     const result = await resend.emails.send({
       from: fromEmail,
@@ -61,15 +80,17 @@ export async function sendTranscriptRequestConfirmation(
       ],
     });
 
+    console.log('📬 Resend API response:', result);
+
     if (result.error) {
-      console.error('Resend API error:', result.error);
+      console.error('❌ Resend API error:', result.error);
       return { success: false, error: result.error.message };
     }
 
-    console.log('Email sent successfully:', result.data?.id);
+    console.log('✅ Email sent successfully! ID:', result.data?.id);
     return { success: true };
   } catch (error: any) {
-    console.error('Email service error:', error);
+    console.error('❌ Email service error:', error);
     return { success: false, error: error.message };
   }
 }

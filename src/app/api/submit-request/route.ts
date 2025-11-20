@@ -98,6 +98,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Generate PDF for email attachment
+    console.log('Starting PDF generation...');
     let pdfBuffer: Buffer | null = null;
     try {
       const pdfData = {
@@ -105,14 +106,16 @@ export async function POST(request: NextRequest) {
         requestTrackingId: requestId
       };
       pdfBuffer = await generateTranscriptRequestPDF(pdfData);
-      console.log('PDF generated successfully for email');
+      console.log('✅ PDF generated successfully, size:', pdfBuffer.length, 'bytes');
     } catch (pdfError) {
-      console.error('PDF generation failed:', pdfError);
+      console.error('❌ PDF generation failed:', pdfError);
       // Continue without PDF - don't block submission
     }
 
     // Send confirmation email to student
+    console.log('Checking if we have PDF buffer:', pdfBuffer ? 'YES' : 'NO');
     if (pdfBuffer) {
+      console.log('Starting email sending process...');
       const emailData = {
         studentName: `${validatedData.studentFirstName} ${validatedData.studentLastName}`,
         studentEmail: validatedData.studentEmail,
@@ -129,19 +132,28 @@ export async function POST(request: NextRequest) {
         })
       };
 
+      console.log('Calling sendTranscriptRequestConfirmation with data:', {
+        studentEmail: emailData.studentEmail,
+        requestId: emailData.requestId,
+        pdfSize: pdfBuffer.length
+      });
       const emailResult = await sendTranscriptRequestConfirmation(emailData, pdfBuffer);
       
+      console.log('Email result:', emailResult);
       if (emailResult.success) {
-        console.log('Confirmation email sent to:', validatedData.studentEmail);
+        console.log('✅ Confirmation email sent to:', validatedData.studentEmail);
       } else {
-        console.error('Email send failed:', emailResult.error);
+        console.error('❌ Email send failed:', emailResult.error);
         // Continue - don't block submission if email fails
       }
 
       // Optionally send notification to school registrar
       if (validatedData.schoolEmail) {
+        console.log('Sending notification to school:', validatedData.schoolEmail);
         await sendSchoolNotification(validatedData.schoolEmail, emailData);
       }
+    } else {
+      console.warn('⚠️ No PDF buffer - skipping email sending');
     }
 
     // Upload XML to Parchment SFTP
