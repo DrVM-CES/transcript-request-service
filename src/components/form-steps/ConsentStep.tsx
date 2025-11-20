@@ -68,6 +68,15 @@ If you do not agree to these terms, please do not use this service. Contact your
 `;
 
 export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSubmitting }: ConsentStepProps) {
+  // Helper function to get local date in YYYY-MM-DD format (not UTC)
+  const getLocalDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const handleCheckboxChange = (field: string, checked: boolean) => {
     onChange({ [field]: checked });
   };
@@ -76,7 +85,7 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
     onChange({ 
       studentSignature: signature,
       // Auto-populate signature date when signature is provided
-      signatureDate: signature ? new Date().toISOString().split('T')[0] : ''
+      signatureDate: signature ? getLocalDate() : ''
     });
   };
 
@@ -244,7 +253,7 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
               type="date"
               value={data.signatureDate || ''}
               onChange={(e) => onChange({ signatureDate: e.target.value })}
-              max={new Date().toISOString().split('T')[0]}
+              max={getLocalDate()}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mfc-primary-500 focus:border-transparent"
               required
             />
