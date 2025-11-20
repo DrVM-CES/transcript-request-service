@@ -62,11 +62,19 @@ function formatDate(dateStr: string): string {
  * Generate ultra-compact single-page PDF
  */
 export async function generateTranscriptRequestPDF(data: TranscriptRequestData): Promise<Buffer> {
-  const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+  console.log('🎨 PDF Generator: Starting PDF creation...');
+  console.log('📄 PDF Generator: Student:', data.studentFirstName, data.studentLastName);
   
-  const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([612, 792]); // Letter size
-  const { width, height } = page.getSize();
+  try {
+    const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+    console.log('✅ PDF Generator: pdf-lib imported successfully');
+    
+    const pdfDoc = await PDFDocument.create();
+    console.log('✅ PDF Generator: PDF document created');
+    
+    const page = pdfDoc.addPage([612, 792]); // Letter size
+    const { width, height } = page.getSize();
+    console.log('✅ PDF Generator: Page added, size:', width, 'x', height);
   
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -274,6 +282,11 @@ export async function generateTranscriptRequestPDF(data: TranscriptRequestData):
     color: lightGray,
   });
   
-  const pdfBytes = await pdfDoc.save();
-  return Buffer.from(pdfBytes);
+    const pdfBytes = await pdfDoc.save();
+    console.log('✅ PDF Generator: PDF saved, size:', pdfBytes.length, 'bytes');
+    return Buffer.from(pdfBytes);
+  } catch (error) {
+    console.error('❌ PDF Generator: Fatal error:', error);
+    throw error;
+  }
 }
