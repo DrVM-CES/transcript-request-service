@@ -43,10 +43,11 @@ export default function SuccessPage() {
         <div className="bg-blue-50 border-l-4 border-mfc-blue-600 rounded-r-xl p-6 mb-8 text-left">
           <h3 className="font-bold text-slate-900 mb-2">Important Information</h3>
           <ul className="space-y-2 text-sm text-slate-700">
+            <li>• A confirmation email with your request details has been sent to your email</li>
             <li>• Processing typically takes 1-3 business days</li>
-            <li>• You will not receive a confirmation email, but the institution will be notified</li>
+            <li>• The receiving institution will be notified when your transcript is delivered</li>
             <li>• If you need to follow up, contact your school's registrar office</li>
-            <li>• Keep your request reference for your records</li>
+            <li>• Keep your confirmation email for your records</li>
           </ul>
         </div>
 

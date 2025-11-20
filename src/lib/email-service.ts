@@ -41,8 +41,15 @@ export async function sendTranscriptRequestConfirmation(
 
     const html = generateConfirmationEmailHTML(data);
 
+    // Use Resend sandbox for testing until domain is verified
+    // Set USE_SANDBOX_EMAIL=false in production env vars once domain is verified
+    const useSandbox = process.env.USE_SANDBOX_EMAIL !== 'false';
+    const fromEmail = useSandbox
+      ? 'onboarding@resend.dev'
+      : 'My Future Capacity <transcripts@myfuturecapacity.com>';
+
     const result = await resend.emails.send({
-      from: 'My Future Capacity <transcripts@myfuturecapacity.org>',
+      from: fromEmail,
       to: data.studentEmail,
       subject: `Transcript Request Confirmation - ${data.requestId}`,
       html: html,
@@ -83,8 +90,14 @@ export async function sendSchoolNotification(
 
     const html = generateSchoolNotificationHTML(data);
 
+    // Use Resend sandbox for testing until domain is verified
+    const useSandbox = process.env.USE_SANDBOX_EMAIL !== 'false';
+    const fromEmail = useSandbox
+      ? 'onboarding@resend.dev'
+      : 'My Future Capacity <transcripts@myfuturecapacity.com>';
+
     const result = await resend.emails.send({
-      from: 'My Future Capacity <transcripts@myfuturecapacity.org>',
+      from: fromEmail,
       to: schoolEmail,
       subject: `New Transcript Request - ${data.studentName}`,
       html: html,
