@@ -52,8 +52,10 @@ export function FormButtons({
           type="button"
           onClick={onSubmit}
           disabled={isSubmitting || submitDisabled}
-          className={`inline-flex items-center px-8 py-3 text-base font-semibold text-white rounded-lg transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed ${
-            submitDisabled ? 'bg-gray-400' : 'bg-mfc-green-600 hover:bg-mfc-green-700'
+          className={`inline-flex items-center px-8 py-3 text-base font-semibold text-white rounded-lg transition-all disabled:cursor-not-allowed ${
+            submitDisabled 
+              ? 'bg-gray-400 opacity-50 shadow-lg' 
+              : 'bg-mfc-green-600 hover:bg-mfc-green-700 shadow-lg hover:shadow-xl'
           }`}
         >
           {isSubmitting ? (

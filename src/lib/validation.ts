@@ -3,6 +3,7 @@ import { z } from 'zod';
 const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 const ceebCodeRegex = /^[A-Za-z0-9]{6}$/;
 const ssnLastFourRegex = /^\d{4}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const transcriptRequestSchema = z.object({
   // Student Information
@@ -21,9 +22,14 @@ export const transcriptRequestSchema = z.object({
   studentEmail: z.string()
     .min(1, 'Email is required')
     .max(100, 'Email must be 100 characters or less')
-    .email('Please enter a valid email address (must include @ and domain)')
-    .refine((email) => email.includes('@') && email.includes('.'), {
-      message: 'Email must contain @ symbol and a domain (e.g., user@example.com)'
+    .regex(emailRegex, 'Please enter a valid email address (format: name@domain.com)')
+    .refine((email) => {
+      const parts = email.split('@');
+      if (parts.length !== 2) return false;
+      const domain = parts[1];
+      return domain.includes('.') && domain.split('.').every(part => part.length > 0);
+    }, {
+      message: 'Email must contain @ and a valid domain (e.g., user@example.com)'
     }),
   
   studentDob: z.string()
@@ -75,9 +81,11 @@ export const transcriptRequestSchema = z.object({
     .or(z.literal('')),
   
   schoolEmail: z.string()
-    .email('Please enter a valid school email address')
     .optional()
-    .or(z.literal('')),
+    .transform(val => !val || val === '' ? undefined : val)
+    .refine((val) => val === undefined || emailRegex.test(val), {
+      message: 'Please enter a valid email address (format: name@domain.com)'
+    }),
 
   // Student Attendance Information
   enrollDate: z.string()

@@ -266,6 +266,7 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
               label="Expected Graduation Date"
               error={errors.graduationDate}
               placeholder="MM/DD/YYYY"
+              allowFuture={true}
             />
           </div>
 

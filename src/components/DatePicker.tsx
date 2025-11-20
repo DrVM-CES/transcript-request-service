@@ -11,6 +11,7 @@ interface DatePickerProps {
   minAge?: number; // Minimum age in years
   maxAge?: number; // Maximum age in years
   placeholder?: string;
+  allowFuture?: boolean; // Allow dates in the future (for graduation dates)
 }
 
 export function DatePicker({
@@ -24,15 +25,27 @@ export function DatePicker({
   minAge,
   maxAge,
   placeholder,
+  allowFuture = false,
 }: DatePickerProps) {
-  // Calculate date range based on min/max age
+  // Calculate date range based on min/max age or allowFuture
   const today = new Date();
-  const maxDate = minAge 
-    ? new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate()).toISOString().split('T')[0]
-    : today.toISOString().split('T')[0];
-  const minDate = maxAge 
-    ? new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate()).toISOString().split('T')[0]
-    : '1900-01-01';
+  
+  let maxDate: string;
+  let minDate: string;
+  
+  if (allowFuture) {
+    // For future dates (graduations, etc.) - allow any future date
+    maxDate = '2100-12-31'; // Distant future
+    minDate = '1900-01-01'; // Allow past dates too
+  } else {
+    // For past dates (DOB, enrollment, etc.)
+    maxDate = minAge 
+      ? new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+      : today.toISOString().split('T')[0];
+    minDate = maxAge 
+      ? new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate()).toISOString().split('T')[0]
+      : '1900-01-01';
+  }
 
   return (
     <div className="relative">
@@ -50,6 +63,7 @@ export function DatePicker({
         min={minDate}
         max={maxDate}
         autoComplete="off"
+        data-lpignore="true"
         data-form-type="other"
         className={`w-full px-4 py-3 text-base font-medium text-gray-900 border rounded-lg focus:ring-2 focus:ring-mfc-primary-500 focus:border-transparent transition-all ${
           error ? 'border-red-500' : 'border-gray-300'
