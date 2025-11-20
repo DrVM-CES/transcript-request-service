@@ -264,7 +264,7 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
                 name="graduationDate"
                 value={data.graduationDate || ''}
                 onChange={(value) => handleInputChange('graduationDate', value)}
-                label="Expected Graduation Date"
+                label={data.currentEnrollment ? "Expected Graduation Date" : "Finished Date"}
                 error={errors.graduationDate}
                 placeholder="MM/DD/YYYY"
                 allowFuture={true}
@@ -272,7 +272,7 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
               <p className="text-xs text-neutral-600 mt-1">
                 {data.currentEnrollment 
                   ? "When do you expect to graduate?" 
-                  : "When did you graduate (or when would you have graduated)?"}
+                  : "When did you finish/graduate from this school?"}
               </p>
             </div>
           </div>

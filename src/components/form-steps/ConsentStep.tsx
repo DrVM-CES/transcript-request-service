@@ -87,6 +87,12 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
                           data.studentSignature && 
                           data.signatureDate;
 
+  // Debug: Log when button should be clickable
+  if (allConsentGiven) {
+    console.log('All consent given - submit button should be active');
+    console.log('onSubmit function:', typeof onSubmit);
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -288,7 +294,10 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
 
       <FormButtons 
         onPrevious={onPrevious}
-        onSubmit={allConsentGiven ? onSubmit : undefined}
+        onSubmit={allConsentGiven ? () => {
+          console.log('Submit button clicked!');
+          onSubmit();
+        } : undefined}
         isSubmitting={isSubmitting}
         submitLabel="Submit Transcript Request"
         submitDisabled={!allConsentGiven}
