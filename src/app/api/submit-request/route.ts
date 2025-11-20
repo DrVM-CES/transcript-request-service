@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
 import { uploadTranscriptXML } from '../../../lib/sftp-client';
-import { generateTranscriptRequestPDF } from '../../../lib/pdf-generator-compact';
+import { generateTranscriptRequestPDF } from '../../../lib/pdf-generator-professional';
 import { sendTranscriptRequestConfirmation, sendSchoolNotification } from '../../../lib/email-service';
 import { db } from '../../../db';
 import { transcriptRequests } from '../../../db/schema';

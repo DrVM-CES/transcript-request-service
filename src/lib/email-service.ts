@@ -52,9 +52,8 @@ export async function sendTranscriptRequestConfirmation(
     const html = generateConfirmationEmailHTML(data);
     console.log('✅ Email HTML generated');
 
-    // Use Resend sandbox for testing until domain is verified
-    // Set USE_SANDBOX_EMAIL=false in production env vars once domain is verified
-    const useSandbox = process.env.USE_SANDBOX_EMAIL !== 'false';
+    // Use verified domain for production, sandbox for testing
+    const useSandbox = process.env.USE_SANDBOX_EMAIL === 'true';
     const fromEmail = useSandbox
       ? 'onboarding@resend.dev'
       : 'My Future Capacity <transcripts@myfuturecapacity.com>';
@@ -156,13 +155,21 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
           
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
-              <h1 style="margin: 0; color: white; font-size: 28px; font-weight: bold;">
-                ✓ Request Confirmed
-              </h1>
-              <p style="margin: 10px 0 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">
-                My Future Capacity
-              </p>
+            <td style="background: linear-gradient(135deg, #5B5FF5 0%, #764ba2 100%); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
+              <!-- Logo would go here -->
+              <div style="margin-bottom: 20px;">
+                <h1 style="margin: 0; color: white; font-size: 32px; font-weight: bold; letter-spacing: -0.5px;">
+                  MY FUTURE CAPACITY
+                </h1>
+                <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.95); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                  Pathways to Success
+                </p>
+              </div>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.3);">
+                <h2 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">
+                  ✓ Transcript Request Confirmed
+                </h2>
+              </div>
             </td>
           </tr>
 
