@@ -110,9 +110,13 @@ export function TranscriptRequestForm() {
   };
 
   const handleSubmit = async () => {
+    console.log('====== SUBMIT HANDLER CALLED ======');
+    console.log('Form data:', JSON.stringify(formData, null, 2));
+    console.log('isSubmitting:', isSubmitting);
     console.log('Submit clicked - starting validation');
     if (!validateStep('consent')) {
       console.log('Consent validation failed');
+      console.log('Validation errors:', errors);
       return;
     }
 

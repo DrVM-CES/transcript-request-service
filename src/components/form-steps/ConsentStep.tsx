@@ -87,6 +87,18 @@ export function ConsentStep({ data, errors, onChange, onSubmit, onPrevious, isSu
                           data.studentSignature && 
                           data.signatureDate;
 
+  console.log('==== CONSENT STEP DEBUG ====');
+  console.log('ferpaDisclosureRead:', data.ferpaDisclosureRead);
+  console.log('mfcLiabilityRead:', data.mfcLiabilityRead);
+  console.log('consentGiven:', data.consentGiven);
+  console.log('certifyInformation:', data.certifyInformation);
+  console.log('studentSignature:', data.studentSignature ? 'present (length: ' + data.studentSignature.length + ')' : 'missing');
+  console.log('signatureDate:', data.signatureDate);
+  console.log('allConsentGiven:', allConsentGiven);
+  console.log('submitDisabled:', !allConsentGiven);
+  console.log('onSubmit prop:', onSubmit ? 'defined' : 'undefined');
+  console.log('==========================');
+
   return (
     <div className="space-y-6">
       <div>
