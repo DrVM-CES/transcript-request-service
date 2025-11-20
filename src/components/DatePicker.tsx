@@ -54,6 +54,17 @@ export function DatePicker({
         {required && <span className="text-red-600 ml-1">*</span>}
       </label>
       
+      <style jsx>{`
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          position: relative;
+          z-index: 10;
+          cursor: pointer;
+        }
+        input[type="date"]:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 1000px white inset !important;
+        }
+      `}</style>
+      
       <input
         type="date"
         id={id}
