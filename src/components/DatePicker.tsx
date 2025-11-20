@@ -62,7 +62,7 @@ export function DatePicker({
         onChange={(e) => onChange(e.target.value)}
         min={minDate}
         max={maxDate}
-        autoComplete="bday"
+        autoComplete="off"
         data-lpignore="true"
         data-form-type="other"
         className={`w-full px-4 py-3 text-base font-medium text-gray-900 border rounded-lg focus:ring-2 focus:ring-mfc-primary-500 focus:border-transparent transition-all ${
