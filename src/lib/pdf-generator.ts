@@ -56,50 +56,63 @@ interface TranscriptRequestData {
 export async function generateTranscriptRequestPDF(data: TranscriptRequestData): Promise<Buffer> {
   // Dynamically import pdf-lib at runtime only
   const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+  const fs = await import('fs/promises');
+  const path = await import('path');
   
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
   
-  // Add a page
-  let page = pdfDoc.addPage([612, 792]); // Letter size
+  // Add a single page
+  const page = pdfDoc.addPage([612, 792]); // Letter size
   const { width, height } = page.getSize();
   
   // Embed fonts
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const smallFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   
   // MFC Brand Colors
   const primaryColor = rgb(91 / 255, 95 / 255, 245 / 255); // #5B5FF5
   const darkGray = rgb(50 / 255, 50 / 255, 50 / 255);
-  const lightGray = rgb(128 / 255, 128 / 255, 128 / 255);
+  const lightGray = rgb(100 / 255, 100 / 255, 100 / 255);
   const white = rgb(1, 1, 1);
   
-  // Header with MFC branding
+  // Try to load and embed logo
+  let logoImage;
+  try {
+    const logoPath = path.join(process.cwd(), 'public', 'mfc-logo.svg');
+    // For now, skip logo if SVG (pdf-lib doesn't support SVG directly)
+    // We'll use text-based header instead
+  } catch (error) {
+    console.log('Logo not available, using text header');
+  }
+  
+  // Compact Header with MFC branding
   page.drawRectangle({
     x: 0,
-    y: height - 80,
+    y: height - 60,
     width: width,
-    height: 80,
+    height: 60,
     color: primaryColor,
   });
   
   page.drawText('MY FUTURE CAPACITY', {
-    x: width / 2 - 160,
-    y: height - 35,
-    size: 28,
+    x: 50,
+    y: height - 30,
+    size: 20,
     font: boldFont,
     color: white,
   });
   
-  page.drawText('Official Transcript Request', {
-    x: width / 2 - 110,
-    y: height - 60,
-    size: 16,
+  page.drawText('Official Transcript Request Confirmation', {
+    x: 50,
+    y: height - 50,
+    size: 11,
     font: regularFont,
     color: white,
   });
   
-  let yPosition = height - 110;
+  let yPosition = height - 80;
   
   // Request ID
   if (data.requestTrackingId) {
