@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
     const uploadResult = await uploadTranscriptXML(xml, fileName);
     
     if (uploadResult.success) {
-      console.log('Successfully uploaded XML to SFTP:', uploadResult.path);
+      console.log('✅ Successfully uploaded XML to SFTP:', uploadResult.path);
       
       // Update status to processing
       await db.update(transcriptRequests)
@@ -175,21 +175,19 @@ export async function POST(request: NextRequest) {
         })
         .where(eq(transcriptRequests.id, requestId));
     } else {
-      console.error('SFTP upload failed:', uploadResult.error);
+      console.error('⚠️ SFTP upload failed (non-blocking):', uploadResult.error);
       
-      // Update status to failed
+      // Update status to pending - manual review needed
+      // Don't block submission - SFTP might be in simulation mode or temporarily down
       await db.update(transcriptRequests)
         .set({ 
-          status: 'failed',
-          statusMessage: `SFTP upload failed: ${uploadResult.error}`,
+          status: 'pending',
+          statusMessage: `Awaiting manual processing - SFTP: ${uploadResult.error}`,
           updatedAt: new Date()
         })
         .where(eq(transcriptRequests.id, requestId));
-        
-      return NextResponse.json(
-        { error: 'Failed to upload transcript request to processing system' },
-        { status: 500 }
-      );
+      
+      // Continue with success response - request is saved and can be processed manually
     }
 
     return NextResponse.json({
