@@ -78,9 +78,12 @@ export function TranscriptRequestForm() {
       setErrors({});
       return true;
     } catch (error: any) {
+      console.error('Validation error for step:', step);
+      console.error('Full error:', error);
       if (error.errors) {
         const newErrors: Record<string, string> = {};
         error.errors.forEach((err: any) => {
+          console.error('Field error:', err.path[0], err.message);
           newErrors[err.path[0]] = err.message;
         });
         setErrors(newErrors);
