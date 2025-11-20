@@ -111,8 +111,17 @@ export function TranscriptRequestForm() {
 
   const handleSubmit = async () => {
     console.log('Submit clicked - starting validation');
+    console.log('Form data for consent validation:', {
+      ferpaDisclosureRead: formData.ferpaDisclosureRead,
+      mfcLiabilityRead: formData.mfcLiabilityRead,
+      consentGiven: formData.consentGiven,
+      certifyInformation: formData.certifyInformation,
+      studentSignature: formData.studentSignature,
+      signatureDate: formData.signatureDate,
+    });
     if (!validateStep('consent')) {
       console.log('Consent validation failed');
+      console.log('Current errors:', errors);
       return;
     }
 

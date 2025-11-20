@@ -290,20 +290,6 @@ export function SchoolInfoStep({ data, errors, onChange, onNext, onPrevious }: S
               </span>
             </label>
           </div>
-
-          {!data.currentEnrollment && (
-            <div className="mt-4">
-              <DatePicker
-                id="exitDate"
-                name="exitDate"
-                value={data.exitDate || ''}
-                onChange={(value) => handleInputChange('exitDate', value)}
-                label="Exit Date"
-                error={errors.exitDate}
-                placeholder="MM/DD/YYYY"
-              />
-            </div>
-          )}
         </div>
       </div>
 
