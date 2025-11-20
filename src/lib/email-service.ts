@@ -156,8 +156,9 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #5B5FF5 0%, #764ba2 100%); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
-              <!-- Logo would go here -->
+              <!-- Logo -->
               <div style="margin-bottom: 20px;">
+                <img src="https://frolicking-horse-f44773.netlify.app/mfc-logo.png" alt="My Future Capacity" style="width: 200px; height: auto; margin: 0 auto 20px auto; display: block;">
                 <h1 style="margin: 0; color: white; font-size: 32px; font-weight: bold; letter-spacing: -0.5px;">
                   MY FUTURE CAPACITY
                 </h1>
@@ -255,7 +256,7 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
               <!-- Support -->
               <p style="margin: 30px 0 0 0; font-size: 14px; color: #666; line-height: 1.6; text-align: center; padding-top: 30px; border-top: 1px solid #eee;">
                 Questions? Contact your school's guidance office or visit 
-                <a href="https://myfuturecapacity.org" style="color: #5B5FF5; text-decoration: none; font-weight: 600;">My Future Capacity</a>
+                <a href="https://myfuturecapacity.com" style="color: #5B5FF5; text-decoration: none; font-weight: 600;">My Future Capacity</a>
               </p>
             </td>
           </tr>

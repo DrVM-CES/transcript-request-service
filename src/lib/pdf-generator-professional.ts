@@ -106,28 +106,66 @@ export async function generateTranscriptRequestPDF(data: TranscriptRequestData):
     // Blue header bar
     page.drawRectangle({
       x: 0,
-      y: height - 80,
+      y: height - 100,
       width: width,
-      height: 80,
+      height: 100,
       color: headerBlue,
     });
     
-    // Company name (logo placeholder)
-    page.drawText('MY FUTURE CAPACITY', {
-      x: 50,
-      y: height - 45,
-      size: 20,
-      font: titleFont,
-      color: white,
-    });
-    
-    page.drawText('Transcript Request Service', {
-      x: 50,
-      y: height - 65,
-      size: 11,
-      font: bodyFont,
-      color: white,
-    });
+    // Embed logo
+    try {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      const logoPath = path.join(process.cwd(), 'public', 'mfc-logo.png');
+      const logoBytes = await fs.readFile(logoPath);
+      const logoImage = await pdfDoc.embedPng(logoBytes);
+      
+      const logoScale = 60 / logoImage.height; // 60px height
+      const logoW = logoImage.width * logoScale;
+      const logoH = logoImage.height * logoScale;
+      
+      page.drawImage(logoImage, {
+        x: 50,
+        y: height - 50 - logoH,
+        width: logoW,
+        height: logoH,
+      });
+      
+      // Company name next to logo
+      page.drawText('MY FUTURE CAPACITY', {
+        x: 50 + logoW + 15,
+        y: height - 50,
+        size: 20,
+        font: titleFont,
+        color: white,
+      });
+      
+      page.drawText('Transcript Request Service', {
+        x: 50 + logoW + 15,
+        y: height - 70,
+        size: 11,
+        font: bodyFont,
+        color: white,
+      });
+    } catch (error) {
+      console.log('Logo not found, using text-only header');
+      // Fallback to text-only header
+      page.drawText('MY FUTURE CAPACITY', {
+        x: 50,
+        y: height - 50,
+        size: 20,
+        font: titleFont,
+        color: white,
+      });
+      
+      page.drawText('Transcript Request Service', {
+        x: 50,
+        y: height - 70,
+        size: 11,
+        font: bodyFont,
+        color: white,
+      });
+    }
     
     // Request ID
     if (data.requestTrackingId) {
@@ -135,14 +173,14 @@ export async function generateTranscriptRequestPDF(data: TranscriptRequestData):
       const idWidth = bodyFont.widthOfTextAtSize(idText, 9);
       page.drawText(idText, {
         x: width - idWidth - 50,
-        y: height - 50,
+        y: height - 55,
         size: 9,
         font: bodyFont,
         color: white,
       });
     }
     
-    y = height - 100;
+    y = height - 120;
     
     // ==================== DOCUMENT TITLE ====================
     y -= 30;
