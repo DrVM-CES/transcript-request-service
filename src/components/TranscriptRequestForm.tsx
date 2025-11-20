@@ -18,8 +18,26 @@ export function TranscriptRequestForm() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<FormStep>('student');
   const [formData, setFormData] = useState<FormState>({
+    // Initialize all required fields to prevent undefined errors
+    studentFirstName: '',
+    studentLastName: '',
+    studentMiddleName: '',
+    studentEmail: '',
+    studentDob: '',
+    studentPartialSsn: '',
+    schoolName: '',
+    schoolCity: '',
+    schoolState: '',
+    destinationSchool: '',
+    destinationCeeb: '',
+    destinationCity: '',
+    destinationState: '',
     currentEnrollment: true,
-    documentType: 'Transcript - Final'
+    documentType: 'Transcript - Final',
+    ferpaDisclosureRead: false,
+    mfcLiabilityRead: false,
+    consentGiven: false,
+    certifyInformation: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
