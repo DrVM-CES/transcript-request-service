@@ -200,10 +200,10 @@ export async function generateTranscriptRequestPDF(data: TranscriptRequestData):
   // Compact consent checkboxes
   const checkSize = 6;
   const checks = [
-    { label: '☑ FERPA Disclosure Read', checked: data.ferpaDisclosureRead },
-    { label: '☑ Liability Waiver Agreed', checked: data.mfcLiabilityRead },
-    { label: '☑ Consent Given', checked: data.consentGiven },
-    { label: '☑ Information Certified', checked: data.certifyInformation },
+    { label: '[X] FERPA Disclosure Read', checked: data.ferpaDisclosureRead },
+    { label: '[X] Liability Waiver Agreed', checked: data.mfcLiabilityRead },
+    { label: '[X] Consent Given', checked: data.consentGiven },
+    { label: '[X] Information Certified', checked: data.certifyInformation },
   ];
   
   checks.forEach(check => {
