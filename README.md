@@ -26,7 +26,9 @@ A secure, FERPA-compliant web application for high school students to request of
 
 ### In Progress
 - ⏳ **Parchment SFTP**: Ready for production credentials (currently simulated)
-- ⏳ **Email Service**: Requires Resend API key configuration
+- ⏳ **Email Service**: PDF generation and email delivery active
+
+<!-- Deploy trigger: 2025-11-20 -->
 
 ## 🛠️ Technology Stack
 
