@@ -12,11 +12,14 @@ import { transcriptRequests } from '../../../db/schema';
 export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
+  console.log('🚀 API ROUTE CALLED: /api/submit-request');
   try {
     const body = await request.json();
+    console.log('📥 Request body received');
     
     // Validate the request data
     const validatedData = transcriptRequestSchema.parse(body);
+    console.log('✅ Validation passed');
     
     // Generate the PESC XML
     const { xml, documentId, fileName } = generateTranscriptRequestXML({
@@ -53,6 +56,7 @@ export async function POST(request: NextRequest) {
 
     const requestId = uuidv4();
     const now = new Date();
+    console.log('💾 About to store in database, requestId:', requestId);
 
     // Store the request in the database
     await db.insert(transcriptRequests).values({
