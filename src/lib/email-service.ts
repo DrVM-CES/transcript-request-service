@@ -168,7 +168,7 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
               </div>
               <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.3);">
                 <h2 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">
-                  ✓ Transcript Request Confirmed
+                  ✓ Transcript Request Received
                 </h2>
               </div>
             </td>
@@ -182,7 +182,7 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
               </p>
 
               <p style="margin: 0 0 20px 0; font-size: 16px; color: #333; line-height: 1.6;">
-                Your transcript request has been successfully submitted and is being processed. Below are the details of your request:
+                Your transcript request has been saved and is awaiting processing. This receipt does not confirm submission to a transcript provider or transcript delivery. Below are the details of your request:
               </p>
 
               <!-- Request Details Box -->
@@ -224,9 +224,9 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
                   📋 What Happens Next?
                 </h3>
                 <ol style="margin: 0; padding-left: 20px; font-size: 14px; color: #666; line-height: 1.8;">
-                  <li><strong>Processing:</strong> Your request is being verified (1-3 business days)</li>
-                  <li><strong>Delivery:</strong> Transcript sent electronically via Parchment network</li>
-                  <li><strong>Confirmation:</strong> Receiving institution will be notified</li>
+                  <li><strong>Processing:</strong> Your request is awaiting processing; manual follow-up may be needed</li>
+                  <li><strong>Delivery:</strong> The delivery method and timing must be confirmed separately</li>
+                  <li><strong>Confirmation:</strong> Contact the receiving institution to confirm receipt</li>
                 </ol>
               </div>
 
@@ -246,8 +246,8 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
                   ⚠️ Important Information
                 </h3>
                 <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #666; line-height: 1.8;">
-                  <li>Processing typically takes 1-3 business days</li>
-                  <li>The receiving institution will be notified when your transcript arrives</li>
+                  <li>Processing time has not been confirmed</li>
+                  <li>This email confirms request receipt only, not transcript delivery</li>
                   <li>Contact your school's registrar if you need to follow up</li>
                   <li>Keep this email and the attached PDF for your records</li>
                 </ul>
@@ -352,7 +352,7 @@ function generateSchoolNotificationHTML(data: TranscriptRequestEmailData): strin
               </table>
 
               <p style="margin: 20px 0 0 0; font-size: 13px; color: #666;">
-                This request will be processed and transmitted electronically through the Parchment network.
+                This notification records a request only. Please verify authorization and processing requirements before taking action. It does not confirm transmission to a provider or transcript delivery.
               </p>
             </td>
           </tr>

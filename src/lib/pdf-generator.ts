@@ -63,7 +63,7 @@ export async function generateTranscriptRequestPDF(data: TranscriptRequestData):
   const pdfDoc = await PDFDocument.create();
   
   // Add a single page
-  const page = pdfDoc.addPage([612, 792]); // Letter size
+  let page = pdfDoc.addPage([612, 792]); // Letter size
   const { width, height } = page.getSize();
   
   // Embed fonts
@@ -365,7 +365,7 @@ function formatDate(dateString: string): string {
  * Get PDF as Blob (for client-side download - not used in server routes)
  */
 export function getPDFBlob(buffer: Buffer): Blob {
-  return new Blob([buffer], { type: 'application/pdf' });
+  return new Blob([new Uint8Array(buffer)], { type: 'application/pdf' });
 }
 
 /**

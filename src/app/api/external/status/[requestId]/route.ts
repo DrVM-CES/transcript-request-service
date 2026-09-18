@@ -11,7 +11,7 @@ export const runtime = 'nodejs';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { requestId: string } }
+  { params }: { params: Promise<{ requestId: string }> }
 ) {
   try {
     // Validate API key
@@ -25,7 +25,7 @@ export async function GET(
       );
     }
 
-    const requestId = params.requestId;
+    const { requestId } = await params;
     
     if (!requestId) {
       return NextResponse.json(

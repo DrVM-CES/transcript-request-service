@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
       console.error('⚠️ SFTP upload failed (non-blocking):', uploadResult.error);
       
       // Update status to pending - manual review needed
-      // Don't block submission - SFTP might be in simulation mode or temporarily down
+      // Preserve the saved request for manual processing; delivery has not occurred.
       await db.update(transcriptRequests)
         .set({ 
           status: 'pending',
@@ -194,7 +194,10 @@ export async function POST(request: NextRequest) {
       success: true,
       requestId,
       documentId,
-      message: 'Transcript request submitted successfully. Check your email for confirmation.'
+      status: uploadResult.success ? 'processing' : 'pending',
+      message: uploadResult.success
+        ? 'Transcript request submitted for processing.'
+        : 'Your request was saved and is awaiting processing. It has not been sent to the transcript provider.'
     });
 
   } catch (error) {

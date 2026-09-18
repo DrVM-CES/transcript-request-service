@@ -126,8 +126,8 @@ export function DestinationInfoStep({ data, errors, onChange, onNext, onPrevious
         ceebCode: school.ceebCode,
         city: school.city,
         state: school.state,
-        address: school.address,
-        zip: school.zip
+        // Autocomplete does not verify partner network membership.
+        inParchmentNetwork: false
       });
     }
   };

@@ -44,6 +44,10 @@ export const transcriptRequests = sqliteTable('transcript_requests', {
   consentTimestamp: integer('consent_timestamp', { mode: 'timestamp' }).notNull(),
   ferpaDisclosureShown: integer('ferpa_disclosure_shown', { mode: 'boolean' }).notNull(),
   releaseAuthorizedMethod: text('release_authorized_method').notNull().default('ElectronicSignature'),
+  // Match the existing add-signature-fields migration (nullable legacy rows).
+  mfcLiabilityAgreed: integer('mfc_liability_agreed', { mode: 'boolean' }).default(false),
+  studentSignature: text('student_signature'),
+  signatureDate: text('signature_date'),
   
   // Processing Information
   requestXml: text('request_xml').notNull(),
