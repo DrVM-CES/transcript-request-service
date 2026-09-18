@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { transcriptRequestSchema, type TranscriptRequestFormData } from '../lib/validation';
 import { StudentInfoStep } from './form-steps/StudentInfoStep';
 import { SchoolInfoStep } from './form-steps/SchoolInfoStep';
@@ -15,7 +14,7 @@ type FormStep = 'student' | 'school' | 'destination' | 'consent' | 'submitted';
 interface FormState extends Partial<TranscriptRequestFormData> {}
 
 export function TranscriptRequestForm() {
-  const router = useRouter();
+  const [receipt, setReceipt] = useState<{ requestId: string; pending: boolean } | null>(null);
   const [currentStep, setCurrentStep] = useState<FormStep>('student');
   const [formData, setFormData] = useState<FormState>({
     // Initialize all required fields to prevent undefined errors
@@ -162,17 +161,15 @@ export function TranscriptRequestForm() {
       if (!response.ok) {
         const error = await response.json();
         console.error('API error:', error);
-        throw new Error(error.message || 'Failed to submit request');
+        throw new Error(error.error || error.message || 'Failed to submit request');
       }
 
       const result = await response.json();
-      console.log('Submission successful, generating PDF...');
-      // PDF is generated server-side and sent via email
-      // (No client-side PDF download needed)
-      
-      // Redirect to success page
-      console.log('Redirecting to success page...');
-      router.push('/success');
+      if (result.success !== true || typeof result.requestId !== 'string') {
+        throw new Error('The server did not confirm receipt. Contact support before submitting again.');
+      }
+      setReceipt({ requestId: result.requestId, pending: result.status !== 'processing' });
+      setCurrentStep('submitted');
     } catch (error: any) {
       console.error('Submission error:', error);
       setErrors({ submit: error.message || 'Failed to submit request. Please try again.' });
@@ -190,21 +187,23 @@ export function TranscriptRequestForm() {
           </svg>
         </div>
         <h2 className="text-2xl font-bold text-neutral-900 mb-4">
-          Request Submitted Successfully!
+          Request Received
         </h2>
         <p className="text-neutral-600 mb-6">
-          Your transcript request has been submitted and will be processed within 1-3 business days. 
-          The receiving institution will be notified once your transcript has been delivered.
+          {receipt?.pending
+            ? 'Your request was saved and is awaiting processing. It has not been sent to the transcript provider.'
+            : 'Your request was submitted for processing. This does not confirm transcript delivery.'}
+          <span className="block mt-2">Request reference: {receipt?.requestId}</span>
         </p>
         <div className="bg-neutral-50 rounded-lg p-4 mb-6">
           <p className="text-sm text-neutral-600">
             <strong>Next Steps:</strong>
           </p>
           <ul className="text-sm text-neutral-600 mt-2 space-y-1">
-            <li>• Your high school will verify and process your request</li>
-            <li>• The official transcript will be sent electronically</li>
-            <li>• The receiving institution will confirm receipt</li>
-            <li>• Processing typically takes 1-3 business days</li>
+            <li>• Keep your request reference for follow-up</li>
+            <li>• Contact your school registrar to confirm processing and delivery</li>
+            <li>• An email receipt, if received, confirms the request only</li>
+            <li>• Processing time and delivery are not yet confirmed</li>
           </ul>
         </div>
         <button

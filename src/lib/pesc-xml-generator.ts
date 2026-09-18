@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'node:crypto';
 
 export interface TranscriptRequestData {
   // Student Information
@@ -44,8 +44,8 @@ export function generateTranscriptRequestXML(data: TranscriptRequestData): {
   fileName: string;
 } {
   // Generate unique identifiers
-  const documentId = uuidv4().replace(/-/g, '');
-  const requestTrackingId = data.requestTrackingId || uuidv4().replace(/-/g, '');
+  const documentId = randomUUID().replace(/-/g, '');
+  const requestTrackingId = data.requestTrackingId || randomUUID().replace(/-/g, '');
   const fileName = `transcript_request_${Date.now()}`;
   const currentDateTime = new Date().toISOString();
   

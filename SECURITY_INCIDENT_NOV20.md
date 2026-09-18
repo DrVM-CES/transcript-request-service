@@ -4,13 +4,13 @@
 
 **Detected:** November 20, 2025  
 **Severity:** HIGH  
-**Status:** RESOLVED
+**Status:** REVOCATION UNVERIFIED — provider administrator confirmation required
 
 ## What Happened
 
 GitGuardian detected a Resend API key exposed in the GitHub repository:
 - Repository: `DrVM-CES/transcript-request-service`
-- Exposed Key: `re_X17AcY4y_3JiAE2RKBzvDBjLdD1ZDyuAx`
+- Exposed Key: `[REDACTED_EXPOSED_KEY]`
 - Push Date: November 20, 2025, 10:50:09 UTC
 - Detection: GitGuardian automated scan
 
@@ -21,7 +21,7 @@ GitGuardian detected a Resend API key exposed in the GitHub repository:
 1. Go to: https://resend.com/api-keys
 2. Find key: "My Future Capacity Production" 
 3. Delete/Revoke it immediately
-4. The exposed key: re_X17AcY4y_3JiAE2RKBzvDBjLdD1ZDyuAx
+4. The exposed key: [REDACTED_EXPOSED_KEY]
 ```
 
 ### 2. Create New API Key

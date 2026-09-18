@@ -1,17 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+// Diagnostics must not expose deployment configuration or database errors publicly.
+export const dynamic = 'force-dynamic';
 
-export const runtime = 'nodejs';
-
-export async function GET(request: NextRequest) {
-  return NextResponse.json({
-    message: 'Debug endpoint working',
-    env: {
-      hasDatabaseUrl: !!process.env.DATABASE_URL,
-      hasTursoToken: !!process.env.TURSO_AUTH_TOKEN,
-      hasApiKey: !!process.env.MFC_API_KEY,
-      nodeEnv: process.env.NODE_ENV,
-      databaseUrlPrefix: process.env.DATABASE_URL?.substring(0, 20) || 'missing',
-    },
-    timestamp: new Date().toISOString(),
+export async function GET() {
+  return Response.json({ error: 'Not found' }, {
+    status: 404,
+    headers: { 'Cache-Control': 'no-store' },
   });
 }

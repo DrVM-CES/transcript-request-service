@@ -13,11 +13,11 @@ export default function SuccessPage() {
 
         {/* Success Message */}
         <h1 className="text-3xl font-bold text-slate-900 mb-4">
-          Transcript Request Submitted Successfully!
+          Transcript Request Information
         </h1>
         
         <p className="text-lg text-slate-600 mb-8">
-          Your official transcript request has been received and will be processed within 1-3 business days.
+          A saved request or email receipt does not confirm that a transcript has been sent or delivered. Use the reference shown after submission when following up with your school.
         </p>
 
         {/* What's Next */}
@@ -26,15 +26,15 @@ export default function SuccessPage() {
           <ol className="space-y-3 text-slate-700">
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 w-6 h-6 bg-mfc-primary-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-              <span><strong>Processing:</strong> Your request is being verified and prepared for delivery</span>
+              <span><strong>Processing:</strong> Your school or service team must confirm the request can be processed</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 w-6 h-6 bg-mfc-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-              <span><strong>Delivery:</strong> Your transcript will be sent electronically through the Parchment network</span>
+              <span><strong>Delivery:</strong> The delivery method and timing must be confirmed separately</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="flex-shrink-0 w-6 h-6 bg-mfc-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-              <span><strong>Confirmation:</strong> The receiving institution will be notified when your transcript arrives</span>
+              <span><strong>Confirmation:</strong> Ask the receiving institution to confirm receipt</span>
             </li>
           </ol>
         </div>
@@ -43,9 +43,9 @@ export default function SuccessPage() {
         <div className="bg-blue-50 border-l-4 border-mfc-blue-600 rounded-r-xl p-6 mb-8 text-left">
           <h3 className="font-bold text-slate-900 mb-2">Important Information</h3>
           <ul className="space-y-2 text-sm text-slate-700">
-            <li>• A confirmation email with your request details has been sent to your email</li>
-            <li>• Processing typically takes 1-3 business days</li>
-            <li>• The receiving institution will be notified when your transcript is delivered</li>
+            <li>• If you receive an email receipt, keep it for your records</li>
+            <li>• Processing times are not confirmed on this page</li>
+            <li>• This page does not verify request status or transcript delivery</li>
             <li>• If you need to follow up, contact your school's registrar office</li>
             <li>• Keep your confirmation email for your records</li>
           </ul>
