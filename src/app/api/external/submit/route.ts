@@ -1,7 +1,7 @@
 import { readBoundedJson, RequestBodyError } from '../../../../lib/request-body';
 import { getDeliveryPolicy, publicSubmissionsEnabled } from '../../../../lib/delivery-policy';
 import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { generateTranscriptRequestXML } from '../../../../lib/pesc-xml-generator';
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
       documentType: validatedData.documentType,
     });
 
-    const requestId = uuidv4();
+    const requestId = randomUUID();
     const now = new Date();
 
     // Get client information

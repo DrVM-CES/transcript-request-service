@@ -4,9 +4,10 @@ require('./register-typescript.cjs');
 let writes = 0;
 let providerFailure = false, databaseFailure = false;
 const sent = [];
+const insertedIds = [];
 function replace(path, exports) { const id = require.resolve(path); require.cache[id] = { id, filename: id, loaded: true, exports }; }
 replace('../src/db/index.ts', { db: {
-  insert: () => ({ values: async () => { if (databaseFailure) throw new Error('SENSITIVE_MARKER database details'); writes++; } }),
+  insert: () => ({ values: async row => { if (databaseFailure) throw new Error('SENSITIVE_MARKER database details'); writes++; insertedIds.push(row.id); } }),
   update: () => ({ set: () => ({ where: async () => { writes++; } }) }),
 } });
 replace('../src/lib/pdf-generator-professional.ts', { generateTranscriptRequestPDF: async () => Buffer.from('synthetic') });
@@ -63,4 +64,19 @@ test('actual submission and email failure paths never log sensitive input or pro
     Object.assign(console, original);
     providerFailure = false; databaseFailure = false;
   }
+});
+
+test('both submission handlers persist and return distinct UUID v4 request IDs', async () => {
+  Object.assign(process.env, { TRANSCRIPT_PUBLIC_SUBMISSIONS_ENABLED: 'true', TRANSCRIPT_ENVIRONMENT: 'staging', TRANSCRIPT_DELIVERY_MODE: 'staging', TRANSCRIPT_STAGING_EMAIL_SINK: 'sink@example.invalid' });
+  const ids = [];
+  for (const handler of [publicPost, externalPost]) {
+    const response = await handler(request({ ...valid, apiKey: 'test-service-key', ferpaDisclosureShown: true }));
+    // Staging cannot upload: external API reports failure, but keeps its request reference.
+    assert.equal(response.status, handler === publicPost ? 200 : 500);
+    const result = await response.json();
+    assert.match(result.requestId, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+    assert.equal(insertedIds.at(-1), result.requestId);
+    ids.push(result.requestId);
+  }
+  assert.notEqual(ids[0], ids[1]);
 });

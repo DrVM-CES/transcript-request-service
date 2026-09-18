@@ -1,7 +1,7 @@
 import { readBoundedJson, RequestBodyError } from '../../../lib/request-body';
 import { getDeliveryPolicy, publicSubmissionsEnabled } from '../../../lib/delivery-policy';
 import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 import { transcriptRequestSchema } from '../../../lib/validation';
 import { generateTranscriptRequestXML } from '../../../lib/pesc-xml-generator';
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
 
-    const requestId = uuidv4();
+    const requestId = randomUUID();
     const now = new Date();
 
 

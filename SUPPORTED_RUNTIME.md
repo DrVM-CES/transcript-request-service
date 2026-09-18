@@ -19,12 +19,16 @@ Acceptance requires the updated npm lockfile, a clean lockfile install, isolated
 
 ## Remaining security work
 
-After the targeted compatible dependency refresh, the production-only npm audit reports 5 findings (3 high and 2 moderate). Re-run the full audit independently. This upgrade is not a production-readiness declaration. Follow-up requires targeted dependency remediation and reachability review, including Drizzle, nested PostCSS, websocket and email dependency chains. Static schema identifiers and UUID v4 calls do not exercise the specific audited identifier-injection and UUID v3/v5/v6 paths, but this is not a blanket exemption for their dependencies.
+The final paired upgrade pins Drizzle ORM to 0.45.2 and @libsql/client to 0.10.0, satisfying Drizzle's client peer requirement. Next's scoped PostCSS override resolves to 8.5.28; Kysely resolves to 0.28.17. UUID generation now uses Node's built-in randomUUID, and the uuid dependencies have been removed.
+
+Validation on the updated lockfile: all 40 tests pass, the production build passes with synthetic/local configuration, and the subsequent TypeScript check passes. Production-only npm audit reports zero findings. The full audit still reports seven development dependency findings (two high, five moderate); these require separate remediation. Audit results describe the checked dependency graph, not complete application security or launch readiness.
+
+The database compatibility test uses only an in-memory database, exercises insert/select/update and timestamp/boolean/null mapping, and applies the three SQL literals from the existing signature migration without executing its environment-loading script. No live database, hosted migrations or migration-runner changes were involved. The existing drizzle-kit generation/migration tooling has not been separately validated against the upgraded ORM; do not infer migration-tool compatibility from runtime CRUD tests.
 
 ## Independent review commands
 
 1. Use a clean checkout and `npm ci --ignore-scripts` from the checked-in npm lockfile; do not commit generated node_modules or a second package-manager lockfile.
-2. Run `npm test` (36 tests) and `npx tsc --noEmit --incremental false`.
+2. Run `npm test` (40 tests, including local database compatibility) and `npx tsc --noEmit --incremental false`.
 3. Build with a local database URL, dummy MFC/email keys, empty Parchment configuration and telemetry disabled. Override every environment-file value before running `npm run build`; no hosted database or provider credentials are needed. Google Fonts is fetched during the build.
 4. Inspect the pending-versus-processing receipt, neutral direct success page and request-only email templates. No success display constitutes partner delivery evidence.
 5. Confirm health returns 503 for absent/unmigrated storage or missing transport configuration; public debug/test routes return 404. A healthy configuration does not establish partner connectivity.
