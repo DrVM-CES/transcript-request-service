@@ -19,12 +19,12 @@ Acceptance requires the updated npm lockfile, a clean lockfile install, isolated
 
 ## Remaining security work
 
-The post-upgrade production-only npm audit still reports 17 findings (11 high, 5 moderate, 1 low). The full audit reports 24. This upgrade is not a production-readiness declaration. Follow-up requires targeted dependency remediation and reachability review, including Drizzle, nested PostCSS, websocket and email dependency chains. Static schema identifiers and UUID v4 calls do not exercise the specific audited identifier-injection and UUID v3/v5/v6 paths, but this is not a blanket exemption for their dependencies.
+After the targeted compatible dependency refresh, the production-only npm audit reports 5 findings (3 high and 2 moderate). Re-run the full audit independently. This upgrade is not a production-readiness declaration. Follow-up requires targeted dependency remediation and reachability review, including Drizzle, nested PostCSS, websocket and email dependency chains. Static schema identifiers and UUID v4 calls do not exercise the specific audited identifier-injection and UUID v3/v5/v6 paths, but this is not a blanket exemption for their dependencies.
 
 ## Independent review commands
 
 1. Use a clean checkout and `npm ci --ignore-scripts` from the checked-in npm lockfile; do not commit generated node_modules or a second package-manager lockfile.
-2. Run `npm test` (24 tests) and `npx tsc --noEmit --incremental false`.
+2. Run `npm test` (36 tests) and `npx tsc --noEmit --incremental false`.
 3. Build with a local database URL, dummy MFC/email keys, empty Parchment configuration and telemetry disabled. Override every environment-file value before running `npm run build`; no hosted database or provider credentials are needed. Google Fonts is fetched during the build.
 4. Inspect the pending-versus-processing receipt, neutral direct success page and request-only email templates. No success display constitutes partner delivery evidence.
 5. Confirm health returns 503 for absent/unmigrated storage or missing transport configuration; public debug/test routes return 404. A healthy configuration does not establish partner connectivity.

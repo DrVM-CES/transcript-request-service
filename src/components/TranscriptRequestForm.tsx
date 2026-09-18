@@ -161,7 +161,7 @@ export function TranscriptRequestForm() {
       if (!response.ok) {
         const error = await response.json();
         console.error('API error:', error);
-        throw new Error(error.message || 'Failed to submit request');
+        throw new Error(error.error || error.message || 'Failed to submit request');
       }
 
       const result = await response.json();

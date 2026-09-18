@@ -1,3 +1,4 @@
+import { getDeliveryPolicy } from './delivery-policy';
 import Client from 'ssh2-sftp-client';
 import { isDeliveryConfigured, type DeliveryConfig } from './delivery-readiness';
 
@@ -20,7 +21,7 @@ export class ParchmentSFTPClient {
       path: process.env.PARCHMENT_SFTP_PATH || '/incoming'
     };
 
-    this.isProduction = isDeliveryConfigured(this.config);
+    this.isProduction = getDeliveryPolicy(process.env).mode === 'live' && isDeliveryConfigured(this.config);
   }
 
   /**
@@ -31,7 +32,7 @@ export class ParchmentSFTPClient {
       return { success: false, error: 'SFTP_NOT_CONFIGURED' };
     }
     const sftp = new Client();
-    
+
     try {
       // Connect to SFTP server
       await sftp.connect({
@@ -45,12 +46,12 @@ export class ParchmentSFTPClient {
 
       // Ensure the upload directory exists
       const remotePath = `${this.config.path}/${fileName}_request.xml`;
-      
+
       // Upload the XML content
       await sftp.put(Buffer.from(xmlContent, 'utf8'), remotePath);
 
-      console.log(`Successfully uploaded XML to: ${remotePath}`);
-      
+
+
       return {
         success: true,
         path: remotePath
@@ -58,8 +59,8 @@ export class ParchmentSFTPClient {
 
     } catch (error) {
       const errorMessage = 'SFTP_UPLOAD_FAILED';
-      console.error('SFTP upload failed:', errorMessage);
-      
+      console.error('SFTP_UPLOAD_FAILED');
+
       return {
         success: false,
         error: errorMessage
@@ -81,7 +82,7 @@ export class ParchmentSFTPClient {
       return { success: false, error: 'SFTP_NOT_CONFIGURED' };
     }
     const sftp = new Client();
-    
+
     try {
       await sftp.connect({
         host: this.config.host,
@@ -102,8 +103,8 @@ export class ParchmentSFTPClient {
 
     } catch (error) {
       const errorMessage = 'SFTP_CONNECTION_FAILED';
-      console.error('SFTP connection test failed:', errorMessage);
-      
+      console.error('SFTP_OPERATION_FAILED');
+
       return {
         success: false,
         error: errorMessage
@@ -130,7 +131,7 @@ export class ParchmentSFTPClient {
   getConfigSummary() {
     return {
       host: this.config.host ? '***configured***' : 'not set',
-      username: this.config.username ? '***configured***' : 'not set', 
+      username: this.config.username ? '***configured***' : 'not set',
       password: this.config.password ? '***configured***' : 'not set',
       port: this.config.port,
       path: this.config.path,

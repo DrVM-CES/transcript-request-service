@@ -1,3 +1,5 @@
+import { readBoundedJson, RequestBodyError } from '../../../../lib/request-body';
+import { getDeliveryPolicy, publicSubmissionsEnabled } from '../../../../lib/delivery-policy';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
@@ -13,7 +15,7 @@ export const runtime = 'nodejs';
 const externalSubmissionSchema = z.object({
   // Authentication
   apiKey: z.string().min(1, 'API key required'),
-  
+
   // Student Information (pre-populated from MFC)
   studentFirstName: z.string().min(1, 'First name required'),
   studentLastName: z.string().min(1, 'Last name required'),
@@ -21,7 +23,7 @@ const externalSubmissionSchema = z.object({
   studentEmail: z.string().email('Valid email required'),
   studentDob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
   studentPartialSsn: z.string().optional(),
-  
+
   // Source School Information (pre-populated from MFC)
   schoolName: z.string().min(1, 'School name required'),
   schoolCeeb: z.string().optional(),
@@ -31,13 +33,13 @@ const externalSubmissionSchema = z.object({
   schoolZip: z.string().optional(),
   schoolPhone: z.string().optional(),
   schoolEmail: z.string().optional(),
-  
+
   // Student Attendance (pre-populated from MFC)
   enrollDate: z.string().optional(),
   exitDate: z.string().optional(),
   currentEnrollment: z.boolean().default(false),
   graduationDate: z.string().optional(),
-  
+
   // Destination Information (user selected in MFC)
   destinationSchool: z.string().min(1, 'Destination school required'),
   destinationCeeb: z.string().min(1, 'Destination CEEB code required'),
@@ -45,17 +47,17 @@ const externalSubmissionSchema = z.object({
   destinationCity: z.string().optional(),
   destinationState: z.string().optional(),
   destinationZip: z.string().optional(),
-  
+
   // Request Settings
   documentType: z.string().default('Transcript - Final'),
-  
+
   // Consent (handled in MFC interface)
   consentGiven: z.boolean().refine(val => val === true, 'Consent required'),
   ferpaDisclosureShown: z.boolean().refine(val => val === true, 'FERPA disclosure required'),
-  
+
   // Callback for status updates
   callbackUrl: z.string().url().optional(),
-  
+
   // Reference data
   mfcUserId: z.string().optional(),
   mfcRequestId: z.string().optional(),
@@ -67,8 +69,8 @@ const externalSubmissionSchema = z.object({
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    
+    const body = await readBoundedJson(request);
+
     // Validate API key
     const expectedApiKey = process.env.MFC_API_KEY;
     if (!expectedApiKey || body.apiKey !== expectedApiKey) {
@@ -77,10 +79,14 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-    
+
+    if (getDeliveryPolicy(process.env).mode === 'disabled') {
+      return NextResponse.json({ error: 'Transcript processing is not enabled' }, { status: 503 });
+    }
+
     // Validate request data
     const validatedData = externalSubmissionSchema.parse(body);
-    
+
     // Generate PESC XML
     const { xml, documentId, fileName } = generateTranscriptRequestXML({
       studentFirstName: validatedData.studentFirstName,
@@ -112,7 +118,7 @@ export async function POST(request: NextRequest) {
 
     const requestId = uuidv4();
     const now = new Date();
-    
+
     // Get client information
     const clientIP = request.headers.get('x-forwarded-for') || 'api-request';
     const userAgent = request.headers.get('user-agent') || 'external-api';
@@ -160,18 +166,18 @@ export async function POST(request: NextRequest) {
 
     // Upload to Parchment SFTP
     const uploadResult = await uploadTranscriptXML(xml, fileName);
-    
+
     let finalStatus = 'processing';
     let statusMessage = `XML uploaded to ${uploadResult.path}`;
-    
+
     if (!uploadResult.success) {
       finalStatus = 'failed';
       statusMessage = `SFTP upload failed: ${uploadResult.error}`;
     }
-    
+
     // Update status
     await db.update(transcriptRequests)
-      .set({ 
+      .set({
         status: finalStatus,
         statusMessage: statusMessage,
         updatedAt: new Date()
@@ -181,15 +187,15 @@ export async function POST(request: NextRequest) {
     // If callback URL provided, notify MFC (implement webhook later)
     if (validatedData.callbackUrl && uploadResult.success) {
       // TODO: Implement webhook notification to MFC
-      console.log(`Would notify MFC at: ${validatedData.callbackUrl}`);
+
     }
 
     if (!uploadResult.success) {
       return NextResponse.json(
-        { 
+        {
           error: 'Failed to process transcript request',
           requestId,
-          details: uploadResult.error 
+          details: uploadResult.error
         },
         { status: 500 }
       );
@@ -209,18 +215,21 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('External API submission error:', error);
-    
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    console.error('EXTERNAL_SUBMISSION_FAILED');
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { 
-          error: 'Invalid request data', 
+        {
+          error: 'Invalid request data',
           details: error.errors.map(e => ({ field: e.path.join('.'), message: e.message }))
         },
         { status: 400 }
       );
     }
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

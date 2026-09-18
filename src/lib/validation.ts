@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MAX_SIGNATURE_CHARACTERS, isBoundedPngSignature } from './request-body';
 
 const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
 const ceebCodeRegex = /^[A-Za-z0-9]{6}$/;
@@ -158,7 +159,10 @@ export const transcriptRequestSchema = z.object({
 
   // Digital Signature
   studentSignature: z.string()
-    .min(1, 'Digital signature is required'),
+    .min(1, 'Digital signature is required')
+    .max(MAX_SIGNATURE_CHARACTERS, 'Signature image is too large')
+    .regex(/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/, 'Signature must be a PNG image')
+    .refine(isBoundedPngSignature, 'Signature image is invalid or too large'),
   
   signatureDate: z.string()
     .min(1, 'Signature date is required')

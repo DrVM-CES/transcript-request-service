@@ -1,3 +1,5 @@
+import { readBoundedJson, RequestBodyError } from '../../../lib/request-body';
+import { getDeliveryPolicy, publicSubmissionsEnabled } from '../../../lib/delivery-policy';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 import { eq } from 'drizzle-orm';
@@ -12,15 +14,17 @@ import { transcriptRequests } from '../../../db/schema';
 export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 API ROUTE CALLED: /api/submit-request');
+  if (!publicSubmissionsEnabled(process.env)) {
+    return NextResponse.json({ error: 'Public transcript requests are not available yet. Please contact your school or MFC administrator.' }, { status: 503 });
+  }
   try {
-    const body = await request.json();
-    console.log('📥 Request body received');
-    
+    const body = await readBoundedJson(request);
+
+
     // Validate the request data
     const validatedData = transcriptRequestSchema.parse(body);
-    console.log('✅ Validation passed');
-    
+
+
     // Generate the PESC XML
     const { xml, documentId, fileName } = generateTranscriptRequestXML({
       studentFirstName: validatedData.studentFirstName,
@@ -56,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     const requestId = uuidv4();
     const now = new Date();
-    console.log('💾 About to store in database, requestId:', requestId);
+
 
     // Store the request in the database
     await db.insert(transcriptRequests).values({
@@ -102,7 +106,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Generate PDF for email attachment
-    console.log('Starting PDF generation...');
+
     let pdfBuffer: Buffer | null = null;
     try {
       const pdfData = {
@@ -110,16 +114,16 @@ export async function POST(request: NextRequest) {
         requestTrackingId: requestId
       };
       pdfBuffer = await generateTranscriptRequestPDF(pdfData);
-      console.log('✅ PDF generated successfully, size:', pdfBuffer.length, 'bytes');
+
     } catch (pdfError) {
-      console.error('❌ PDF generation failed:', pdfError);
+      console.error('PDF_GENERATION_FAILED');
       // Continue without PDF - don't block submission
     }
 
     // Send confirmation email to student
-    console.log('Checking if we have PDF buffer:', pdfBuffer ? 'YES' : 'NO');
+
     if (pdfBuffer) {
-      console.log('Starting email sending process...');
+
       const emailData = {
         studentName: `${validatedData.studentFirstName} ${validatedData.studentLastName}`,
         studentEmail: validatedData.studentEmail,
@@ -136,57 +140,51 @@ export async function POST(request: NextRequest) {
         })
       };
 
-      console.log('Calling sendTranscriptRequestConfirmation with data:', {
-        studentEmail: emailData.studentEmail,
-        requestId: emailData.requestId,
-        pdfSize: pdfBuffer.length
-      });
+
       const emailResult = await sendTranscriptRequestConfirmation(emailData, pdfBuffer);
-      
-      console.log('Email result:', emailResult);
-      if (emailResult.success) {
-        console.log('✅ Confirmation email sent to:', validatedData.studentEmail);
-      } else {
-        console.error('❌ Email send failed:', emailResult.error);
+
+
+      if (!emailResult.success) {
+        console.error('EMAIL_DELIVERY_FAILED');
         // Continue - don't block submission if email fails
       }
 
       // Optionally send notification to school registrar
       if (validatedData.schoolEmail) {
-        console.log('Sending notification to school:', validatedData.schoolEmail);
+
         await sendSchoolNotification(validatedData.schoolEmail, emailData);
       }
     } else {
-      console.warn('⚠️ No PDF buffer - skipping email sending');
+      console.warn('EMAIL_DELIVERY_FAILED');
     }
 
     // Upload XML to Parchment SFTP
     const uploadResult = await uploadTranscriptXML(xml, fileName);
-    
+
     if (uploadResult.success) {
-      console.log('✅ Successfully uploaded XML to SFTP:', uploadResult.path);
-      
+
+
       // Update status to processing
       await db.update(transcriptRequests)
-        .set({ 
+        .set({
           status: 'processing',
           statusMessage: `XML uploaded to ${uploadResult.path}`,
           updatedAt: new Date()
         })
         .where(eq(transcriptRequests.id, requestId));
     } else {
-      console.error('⚠️ SFTP upload failed (non-blocking):', uploadResult.error);
-      
+      console.error('SFTP_UPLOAD_FAILED');
+
       // Update status to pending - manual review needed
       // Preserve the saved request for manual processing; delivery has not occurred.
       await db.update(transcriptRequests)
-        .set({ 
+        .set({
           status: 'pending',
           statusMessage: `Awaiting manual processing - SFTP: ${uploadResult.error}`,
           updatedAt: new Date()
         })
         .where(eq(transcriptRequests.id, requestId));
-      
+
       // Continue with success response - request is saved and can be processed manually
     }
 
@@ -201,15 +199,18 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Submit request error:', error);
-    
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    console.error('TRANSCRIPT_PROCESSING_FAILED');
+
     if (error instanceof Error && error.name === 'ZodError') {
       return NextResponse.json(
         { error: 'Invalid request data', details: error.message },
         { status: 400 }
       );
     }
-    
+
     return NextResponse.json(
       { error: 'Failed to submit transcript request' },
       { status: 500 }

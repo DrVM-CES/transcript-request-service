@@ -1,7 +1,8 @@
+import { emailRecipient, escapeHtml, getDeliveryPolicy } from './delivery-policy';
 import { Resend } from 'resend';
 
 // Initialize Resend only if API key is available (prevents build errors)
-const resend = process.env.RESEND_API_KEY 
+const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
@@ -32,43 +33,33 @@ export async function sendTranscriptRequestConfirmation(
   data: TranscriptRequestEmailData,
   pdfBuffer: Buffer
 ): Promise<{ success: boolean; error?: string }> {
-  console.log('📧 Email service called with:', {
-    studentEmail: data.studentEmail,
-    requestId: data.requestId,
-    pdfSize: pdfBuffer?.length,
-    resendConfigured: !!resend,
-    apiKeyPresent: !!process.env.RESEND_API_KEY
-  });
+  const recipient = emailRecipient(process.env, data.studentEmail);
+  if (!recipient) return { success: false, error: 'EMAIL_DELIVERY_DISABLED' };
+
 
   try {
     // Check if Resend is configured
     if (!resend) {
-      console.warn('❌ RESEND_API_KEY not configured - skipping email');
+      console.warn('EMAIL_DELIVERY_UNAVAILABLE');
       return { success: false, error: 'Email service not configured' };
     }
 
-    console.log('✅ Resend client initialized');
+
 
     const html = generateConfirmationEmailHTML(data);
-    console.log('✅ Email HTML generated');
+
 
     // Use verified domain for production, sandbox for testing
-    const useSandbox = process.env.USE_SANDBOX_EMAIL === 'true';
+    const useSandbox = getDeliveryPolicy(process.env).mode === 'staging';
     const fromEmail = useSandbox
       ? 'onboarding@resend.dev'
       : 'My Future Capacity <transcripts@myfuturecapacity.com>';
 
-    console.log('📤 Sending email via Resend:', {
-      from: fromEmail,
-      to: data.studentEmail,
-      subject: `Transcript Request Confirmation - ${data.requestId}`,
-      useSandbox,
-      attachmentSize: pdfBuffer.length
-    });
+
 
     const result = await resend.emails.send({
       from: fromEmail,
-      to: data.studentEmail,
+      to: recipient,
       subject: `Transcript Request Confirmation - ${data.requestId}`,
       html: html,
       attachments: [
@@ -79,18 +70,18 @@ export async function sendTranscriptRequestConfirmation(
       ],
     });
 
-    console.log('📬 Resend API response:', result);
+
 
     if (result.error) {
-      console.error('❌ Resend API error:', result.error);
-      return { success: false, error: result.error.message };
+      console.error('EMAIL_DELIVERY_FAILED');
+      return { success: false, error: 'EMAIL_DELIVERY_FAILED' };
     }
 
-    console.log('✅ Email sent successfully! ID:', result.data?.id);
+
     return { success: true };
   } catch (error: any) {
-    console.error('❌ Email service error:', error);
-    return { success: false, error: error.message };
+    console.error('EMAIL_DELIVERY_FAILED');
+    return { success: false, error: 'EMAIL_DELIVERY_FAILED' };
   }
 }
 
@@ -101,44 +92,47 @@ export async function sendSchoolNotification(
   schoolEmail: string,
   data: TranscriptRequestEmailData
 ): Promise<{ success: boolean; error?: string }> {
+  const recipient = emailRecipient(process.env, schoolEmail);
+  if (!recipient) return { success: false, error: 'EMAIL_DELIVERY_DISABLED' };
   try {
     // Check if Resend is configured
     if (!resend) {
-      console.warn('RESEND_API_KEY not configured - skipping school notification');
+      console.warn('EMAIL_DELIVERY_UNAVAILABLE');
       return { success: false, error: 'Email service not configured' };
     }
 
     const html = generateSchoolNotificationHTML(data);
 
     // Use Resend sandbox for testing until domain is verified
-    const useSandbox = process.env.USE_SANDBOX_EMAIL !== 'false';
+    const useSandbox = getDeliveryPolicy(process.env).mode === 'staging';
     const fromEmail = useSandbox
       ? 'onboarding@resend.dev'
       : 'My Future Capacity <transcripts@myfuturecapacity.com>';
 
     const result = await resend.emails.send({
       from: fromEmail,
-      to: schoolEmail,
-      subject: `New Transcript Request - ${data.studentName}`,
+      to: recipient,
+      subject: `New Transcript Request - ${data.studentName.replace(/[\r\n]/g, " ")}`,
       html: html,
     });
 
     if (result.error) {
-      console.error('Resend API error:', result.error);
-      return { success: false, error: result.error.message };
+      console.error('EMAIL_DELIVERY_FAILED');
+      return { success: false, error: 'EMAIL_DELIVERY_FAILED' };
     }
 
     return { success: true };
   } catch (error: any) {
-    console.error('School notification error:', error);
-    return { success: false, error: error.message };
+    console.error('EMAIL_DELIVERY_FAILED');
+    return { success: false, error: 'EMAIL_DELIVERY_FAILED' };
   }
 }
 
 /**
  * Generate HTML for student confirmation email
  */
-function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string {
+function generateConfirmationEmailHTML(rawData: TranscriptRequestEmailData): string {
+  const data = escapeEmailData(rawData);
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +146,7 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
     <tr>
       <td style="padding: 40px 20px;">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-          
+
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #5B5FF5 0%, #764ba2 100%); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
@@ -255,7 +249,7 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
 
               <!-- Support -->
               <p style="margin: 30px 0 0 0; font-size: 14px; color: #666; line-height: 1.6; text-align: center; padding-top: 30px; border-top: 1px solid #eee;">
-                Questions? Contact your school's guidance office or visit 
+                Questions? Contact your school's guidance office or visit
                 <a href="https://myfuturecapacity.com" style="color: #5B5FF5; text-decoration: none; font-weight: 600;">My Future Capacity</a>
               </p>
             </td>
@@ -288,7 +282,8 @@ function generateConfirmationEmailHTML(data: TranscriptRequestEmailData): string
 /**
  * Generate HTML for school notification email
  */
-function generateSchoolNotificationHTML(data: TranscriptRequestEmailData): string {
+function generateSchoolNotificationHTML(rawData: TranscriptRequestEmailData): string {
+  const data = escapeEmailData(rawData);
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -302,7 +297,7 @@ function generateSchoolNotificationHTML(data: TranscriptRequestEmailData): strin
     <tr>
       <td style="padding: 40px 20px;">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          
+
           <!-- Header -->
           <tr>
             <td style="background: #5B5FF5; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
@@ -380,16 +375,20 @@ function generateSchoolNotificationHTML(data: TranscriptRequestEmailData): strin
  */
 export async function testEmailConfiguration(): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) {
-    console.error('RESEND_API_KEY not configured');
+    console.error('EMAIL_DELIVERY_UNAVAILABLE');
     return false;
   }
 
   try {
     // Resend automatically validates the API key on first use
-    console.log('Resend API key configured');
+
     return true;
   } catch (error) {
-    console.error('Email configuration test failed:', error);
+    console.error('EMAIL_DELIVERY_FAILED');
     return false;
   }
+}
+
+function escapeEmailData(data: TranscriptRequestEmailData): TranscriptRequestEmailData {
+  return Object.fromEntries(Object.entries(data).map(([key, value]) => [key, escapeHtml(value)])) as unknown as TranscriptRequestEmailData;
 }
