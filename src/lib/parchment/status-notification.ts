@@ -23,8 +23,19 @@ export interface NotificationVerification {
 
 /** Pure verification only. No webhook registration, HTTP acknowledgment or DB mutation. */
 export function verifyParchmentStatusNotification(input: NotificationVerification) {
+  const body = authenticateParchmentNotification(input);
+  if (!body) return null;
+  const item = body.orderLineItem;
+  if (!input.expectedExternalOrderId || !input.expectedSenderCode || item.externalDocumentId !== input.expectedExternalOrderId || item.sender.parchmentId !== input.expectedSenderCode || (input.expectedDocumentId !== undefined && item.documentId !== input.expectedDocumentId)) return null;
+  return Object.freeze({ externalOrderId: item.externalDocumentId, documentId: item.documentId, eventTime: body.eventTime,
+    providerStatus: item.status, status: statuses[item.status], providerReportedDelivery: item.status === 'DELIVERED' || item.status === 'COMPLETE',
+    deliveryVerified: false as const, reconciliationRequired: true as const });
+}
+
+/** Authenticate raw bytes BEFORE parsing a correlation key or querying orders. */
+export function authenticateParchmentNotification(input: Pick<NotificationVerification,'rawPayload'|'signature'|'secret'|'signatureEncoding'>) {
   try {
-    if (!input.rawPayload.length || input.rawPayload.length > 128_000 || !input.secret || !input.expectedExternalOrderId || !input.expectedSenderCode) return null;
+    if (!input.rawPayload.length || input.rawPayload.length > 128_000 || !input.secret) return null;
     if (input.signatureEncoding !== 'hex' && input.signatureEncoding !== 'base64') return null;
     if (input.signatureEncoding === 'hex' ? !/^[0-9a-fA-F]{64}$/.test(input.signature) : !/^[A-Za-z0-9+/]{43}=$/.test(input.signature)) return null;
     const supplied = Buffer.from(input.signature, input.signatureEncoding);
@@ -32,11 +43,6 @@ export function verifyParchmentStatusNotification(input: NotificationVerificatio
     if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) return null;
     const body = notification.safeParse(JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(input.rawPayload)));
     if (!body.success) return null;
-    const item = body.data.orderLineItem;
-    if (item.externalDocumentId !== input.expectedExternalOrderId || item.sender.parchmentId !== input.expectedSenderCode || (input.expectedDocumentId !== undefined && item.documentId !== input.expectedDocumentId)) return null;
-    return Object.freeze({ externalOrderId: item.externalDocumentId, documentId: item.documentId, eventTime: body.data.eventTime,
-      providerStatus: item.status, status: statuses[item.status], providerReportedDelivery: item.status === 'DELIVERED' || item.status === 'COMPLETE',
-      deliveryVerified: false as const,
-      reconciliationRequired: true as const });
+    return body.data;
   } catch { return null; }
 }
