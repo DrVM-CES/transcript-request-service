@@ -4,7 +4,7 @@ import { IntLedger, LedgerConflict } from './int-ledger';
 import { authenticateParchmentNotification, verifyParchmentStatusNotification } from './status-notification';
 
 const AUTH_URL='https://fubdevscyujktpqsvpak.supabase.co/auth/v1/user';
-const uuid=z.string().uuid();
+const uuid=z.string().uuid().transform(value=>value.toLowerCase());
 const prepareInput=z.object({mfcOrderId:uuid,requestDigest:z.string().regex(/^[0-9a-f]{64}$/),releaseReference:z.string().min(1).max(256)}).strict();
 const lookupInput=z.object({mfcOrderId:uuid}).strict();
 export interface IntLedgerConfig {
@@ -34,7 +34,8 @@ async function owner(request:Request,config:IntLedgerConfig,signal:AbortSignal,f
   if(!response.ok)return null;
   const bytes=await rawBody(new Request(AUTH_URL,{method:'POST',body:response.body,duplex:'half',headers:{'content-type':'application/json',...(response.headers.get('content-length')?{'content-length':response.headers.get('content-length')!}:{})}} as RequestInit),32_768,signal);
   const value=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
-  return uuid.safeParse(value?.id).success?String(value.id):null;
+  const verified=uuid.safeParse(value?.id);
+  return verified.success?verified.data:null;
 }
 
 /** No dispatch path is exposed. All routes are default-off, staging-only. */

@@ -19,6 +19,7 @@ export class IntLedger {
     finally{tx.close();}
   }
   async prepare(input:PreparedOrder) {
+    input={...input,ownerId:input.ownerId.toLowerCase(),mfcOrderId:input.mfcOrderId.toLowerCase()};
     return this.write(async tx=>{
       const existing=(await tx.execute({sql:'SELECT * FROM parchment_int_orders WHERE owner_id=? AND mfc_order_id=?',args:[input.ownerId,input.mfcOrderId]})).rows[0];
       if(existing){
@@ -31,12 +32,14 @@ export class IntLedger {
     });
   }
   async readOwned(ownerId:string,mfcOrderId:string) {
+    ownerId=ownerId.toLowerCase();mfcOrderId=mfcOrderId.toLowerCase();
     const row=(await this.client.execute({sql:'SELECT external_order_id,dispatch_state,reconciliation_required FROM parchment_int_orders WHERE owner_id=? AND mfc_order_id=?',args:[ownerId,mfcOrderId]})).rows[0];
     return row?{externalOrderId:String(row.external_order_id),state:String(row.dispatch_state),reconciliationRequired:row.reconciliation_required===1}:null;
   }
   /** Internal worker seam only. Commit uncertainty BEFORE any provider I/O.
    * No public route calls this, and an unknown claim is never automatically reclaimed. */
   async claim(ownerId:string,mfcOrderId:string,requestDigest:string) {
+    ownerId=ownerId.toLowerCase();mfcOrderId=mfcOrderId.toLowerCase();
     return this.write(async tx=>{
       const id=randomUUID();
       const result=await tx.execute({sql:"UPDATE parchment_int_orders SET dispatch_state='unknown',claim_id=?,claimed_at=?,reconciliation_required=1 WHERE owner_id=? AND mfc_order_id=? AND request_digest=? AND dispatch_state='prepared' AND claim_id IS NULL RETURNING external_order_id",args:[id,new Date().toISOString(),ownerId,mfcOrderId,requestDigest]});

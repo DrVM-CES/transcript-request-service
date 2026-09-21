@@ -56,6 +56,22 @@ test('actual HTTP intake requires MFC service authentication AND verified learne
  assert.equal((await handlers.prepare(request({...body(),requestDigest:'b'.repeat(64)}))).status,409);
 }finally{client.close();}});
 
+test('UUID case variants share one HTTP order, owner lookup and committed claim',async()=>{const {client,ledger}=await fixture();try{
+ const canonicalOwner='abcdefab-cdef-4abc-8def-abcdefabcdef',canonicalOrder='fedcbafe-dcba-4fed-8cba-fedcbafedcba';
+ let verifiedOwner=canonicalOwner.toUpperCase();
+ const handlers=createIntLedgerHandlers(config,async()=>ledger,async()=>Response.json({id:verifiedOwner}));
+ const firstResponse=await handlers.prepare(request({...body(),mfcOrderId:canonicalOrder.toUpperCase()}));assert.equal(firstResponse.status,200);const first=await firstResponse.json();
+ verifiedOwner=canonicalOwner;
+ const replayResponse=await handlers.prepare(request({...body(),mfcOrderId:canonicalOrder}));assert.equal(replayResponse.status,200);const replay=await replayResponse.json();assert.equal(replay.externalOrderId,first.externalOrderId);assert.equal(replay.replayed,true);
+ for(const mfcOrderId of [canonicalOrder,canonicalOrder.toUpperCase()]){const response=await handlers.status(request({mfcOrderId}));assert.equal(response.status,200);assert.equal((await response.json()).externalOrderId,first.externalOrderId);}
+ assert.equal((await ledger.prepare({...input,ownerId:canonicalOwner.toUpperCase(),mfcOrderId:canonicalOrder.toUpperCase()})).externalOrderId,first.externalOrderId);
+ assert.ok(await ledger.claim(canonicalOwner.toUpperCase(),canonicalOrder.toUpperCase(),input.requestDigest));assert.equal(await ledger.claim(canonicalOwner,canonicalOrder,input.requestDigest),null);
+ assert.equal((await ledger.readOwned(canonicalOwner.toUpperCase(),canonicalOrder.toUpperCase())).state,'unknown');
+ const rows=(await client.execute('SELECT owner_id,mfc_order_id,claim_id FROM parchment_int_orders')).rows;assert.equal(rows.length,1);assert.equal(rows[0].owner_id,canonicalOwner);assert.equal(rows[0].mfc_order_id,canonicalOrder);assert.ok(rows[0].claim_id);
+ assert.equal((await handlers.prepare(request({...body(),mfcOrderId:canonicalOrder+' '}))).status,400);
+ verifiedOwner=canonicalOwner+' ';assert.equal((await handlers.status(request({mfcOrderId:canonicalOrder}))).status,401);
+}finally{client.close();}});
+
 test('raw HMAC authentication happens before order lookup; stored receipt is minimal and duplicate-safe',async()=>{const {client,ledger}=await fixture();try{
  const p=await ledger.prepare(input);await ledger.claim(owner,order,input.requestDigest);
  const handlers=createIntLedgerHandlers(config,async()=>ledger,auth);
