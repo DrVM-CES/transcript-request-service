@@ -63,7 +63,7 @@ export function extractMFCUser(request: Request): MFCUser | null {
     username,
     email: email || undefined,
     userId: userId || undefined,
-    isMFCClient: true,
+    isMFCClient: false,
   };
 }
 
@@ -109,7 +109,8 @@ export function getMFCUserClient(): MFCUser | null {
     const stored = sessionStorage.getItem('mfc_user');
     if (stored) {
       try {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        return { ...parsed, isMFCClient: false };
       } catch {
         return null;
       }
@@ -121,7 +122,7 @@ export function getMFCUserClient(): MFCUser | null {
     username,
     email: email || undefined,
     userId: userId || undefined,
-    isMFCClient: true,
+    isMFCClient: false,
   };
   
   // Store in sessionStorage for persistence
@@ -134,7 +135,7 @@ export function getMFCUserClient(): MFCUser | null {
 /**
  * Verify if a user is an MFC client
  * In production, this would make an API call to MFC's user database
- * For now, returns true if user came from MFC
+ * Fails closed until a server-side membership verifier is implemented.
  */
 export async function verifyMFCClient(username: string): Promise<boolean> {
   // TODO: Implement actual MFC API verification
@@ -146,8 +147,8 @@ export async function verifyMFCClient(username: string): Promise<boolean> {
   // });
   // return response.ok;
   
-  // For now, assume user is MFC client if they came from MFC
-  return true;
+  // Unverified hints never authorize membership. Await a real server-side verifier.
+  return false;
 }
 
 /**

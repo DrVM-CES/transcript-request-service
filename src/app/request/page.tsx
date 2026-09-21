@@ -1,3 +1,5 @@
+import { publicSubmissionsEnabled } from '../../lib/delivery-policy';
+export const dynamic = 'force-dynamic';
 import { TranscriptRequestForm } from '../../components/TranscriptRequestForm';
 
 export default function RequestPage() {
@@ -9,11 +11,13 @@ export default function RequestPage() {
         </h1>
         <p className="text-lg text-neutral-600">
           Complete the following steps to submit your official transcript request. 
-          All information is secure and FERPA compliant.
+          Submission records your request; transcript delivery must be confirmed separately.
         </p>
       </div>
 
-      <TranscriptRequestForm />
+      {publicSubmissionsEnabled(process.env)
+        ? <TranscriptRequestForm />
+        : <p role="status" className="rounded-lg border p-6">Public transcript requests are not available yet. Please contact your school or MFC administrator.</p>}
     </div>
   );
 }

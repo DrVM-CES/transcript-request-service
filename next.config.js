@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ['@libsql/client', 'ssh2-sftp-client']
-  },
+  serverExternalPackages: ['@libsql/client', 'ssh2-sftp-client'],
   
-  // Skip TypeScript checking in Netlify builds (already verified locally)
+  // Reject deployments that fail TypeScript checking.
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   
   // Production optimizations

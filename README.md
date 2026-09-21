@@ -1,6 +1,12 @@
 # My Future Capacity - Transcript Request Service
 
-A secure, FERPA-compliant web application for high school students to request official transcripts to be sent to colleges and universities. Part of the My Future Capacity platform, providing free transcript services to students.
+A web application for high school students to request official transcripts to be sent to colleges and universities. Part of the My Future Capacity platform, providing free transcript services to students.
+
+## Launch readiness
+
+This repository remains under staging hardening. Public submissions and outbound delivery are disabled by default by the server rollout controls in [SUBMISSION_ROLLOUT.md](SUBMISSION_ROLLOUT.md). A configured test sink is required for staging email; staging never sends SFTP requests.
+
+Authentication and learner ownership, standalone abuse/rate controls, idempotency, privacy and consent review, retention/deletion, incident response, real provider integration and deployed acceptance tests remain launch gates. Existing historical completion labels below are not evidence that these gates have passed. No legal-compliance certification or verified real transcript delivery is claimed by the current staging changes.
 
 **🌐 Live Site:** https://frolicking-horse-f44773.netlify.app
 
